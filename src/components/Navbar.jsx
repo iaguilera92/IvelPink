@@ -32,8 +32,8 @@ import { useLocation } from 'react-router-dom';
 
 
 const socialData = {
-  Instagram: { href: "https://www.instagram.com/plataformas.web/?hl=es-la", Icon: InstagramIcon, bgColor: "linear-gradient(45deg, #cf198c, #f41242)", hoverColor: "#cf198c" },
-  Facebook: { href: "https://www.facebook.com/profile.php?id=100063452866880", Icon: FacebookIcon, bgColor: "linear-gradient(45deg, #00B5F5, #002A8F)", hoverColor: "#0077b7" },
+  Instagram: { href: "https://www.instagram.com/ivelpink.chile/?hl=es-la", Icon: InstagramIcon, bgColor: "linear-gradient(45deg, #cf198c, #f41242)", hoverColor: "#cf198c" },
+  Facebook: { href: "https://www.facebook.com/people/Ivelpink/61573460535717/#", Icon: FacebookIcon, bgColor: "linear-gradient(45deg, #00B5F5, #002A8F)", hoverColor: "#0077b7" },
   LinkedIn: { href: "https://www.linkedin.com/company/plataformas-web/", Icon: LinkedInIcon, bgColor: "linear-gradient(45deg, #00B5F5, #0077b7)", hoverColor: "#0077b7" }
 };
 
@@ -242,22 +242,23 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
           "& .MuiDrawer-paper": {
             display: "flex",
             flexDirection: "column",
-            height: "100dvh",// ✅ Dinámico y confiable
+            height: "100dvh",
             width: { xs: '80vw', sm: '60vw', md: '50vw' },
             maxWidth: '700px',
             minWidth: '300px',
-            background: `linear-gradient(135deg, rgba(18, 22, 35, 0.92), rgba(24, 29, 47, 0.95)),
-                        radial-gradient(circle at 25% 20%, rgba(63,141,245,0.3) 0%, transparent 40%),
-                        radial-gradient(circle at 80% 80%, rgba(160,64,255,0.15) 0%, transparent 50%)`,
+            background: `linear-gradient(135deg, rgba(110, 30, 70, 0.94), rgba(130, 40, 90, 0.97)),
+                  radial-gradient(circle at 25% 20%, rgba(255, 100, 150, 0.4) 0%, transparent 45%),
+                  radial-gradient(circle at 80% 80%, rgba(255, 120, 170, 0.25) 0%, transparent 50%)`,
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
             color: '#ffffff',
             boxShadow: '0 0 30px rgba(0, 0, 0, 0.6)',
-            borderLeft: '1px solid rgba(255,255,255,0.05)',
+            borderLeft: '1px solid rgba(255, 180, 200, 0.3)', // borde con leve tinte rosado
             p: 0,
           },
         }}
       >
+
         <Box sx={{ overflowY: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ display: "flex", justifyContent: "flex-end", p: 0.5 }}>
             <IconButton
@@ -302,7 +303,7 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
                       <ListItemText
                         primary={
                           <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                            <Box sx={{ color: "#7ab7ff", fontSize: "1.7rem", marginBottom: "-5px" }}>
+                            <Box sx={{ color: "white", fontSize: "1.7rem", marginBottom: "-5px" }}>
                               {item.icon}
                             </Box>
                             <span style={{ color: "#fff", fontWeight: "500", fontSize: "1.05rem" }}>
@@ -353,7 +354,7 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
                   <Box sx={{ display: "flex", alignItems: "center", mb: 0 }}>
                     <Box
                       component="img"
-                      src="/logo-plataformas-web.png"
+                      src="/logo-ivelpink.png"
                       alt="Bienvenidos"
                       sx={{
                         width: 110,
@@ -371,7 +372,7 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
                         letterSpacing: 0.3,
                       }}
                     >
-                      Bienvenid@ a plataformas.web
+                      Bienvenid@ a IvelPink
                     </Typography>
                   </Box>
 
@@ -537,7 +538,7 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
             color: "#1a237e",
           }}
         >
-          Presentación Plataformas.web - PDF
+          Presentación IvelPink - PDF
           <IconButton aria-label="close" onClick={handleClosePDF} sx={{ position: "absolute", right: 12, top: 12, color: "#1a237e" }}>
             <CloseIcon />
           </IconButton>

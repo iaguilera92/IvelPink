@@ -68,9 +68,9 @@ const Footer = () => {
         backgroundColor: "rgba(23, 24, 25, 0.97)",
         padding: "20px 0",
         color: "white",
-        backgroundImage: "url(/fondo-footer.jpg)",
+        backgroundImage: "url(/footer-ivelpink.avif)",
         backgroundSize: "cover",
-        backgroundPosition: "center -150px",
+        backgroundPosition: "bottom -150px",
         "@media (max-width: 600px)": {
           backgroundPosition: "center center",
           padding: "10px 0",
@@ -132,7 +132,7 @@ const Footer = () => {
                 }}
               >
                 <SocialButton
-                  href="https://www.instagram.com/plataformas.web/?hl=es-la"
+                  href="https://www.instagram.com/ivelpink.chile/?hl=es-la"
                   Icon={InstagramIcon}
                   bgColor="linear-gradient(45deg, #cf198c, #f41242)"
                   hoverStyles={{
@@ -145,7 +145,7 @@ const Footer = () => {
 
                 {/* Facebook con su hover personalizado */}
                 <SocialButton
-                  href="https://www.facebook.com/profile.php?id=100063452866880"
+                  href="https://www.facebook.com/people/Ivelpink/61573460535717/#"
                   Icon={FacebookIcon}
                   bgColor="linear-gradient(45deg, #00B5F5, #002A8F)"
                   hoverStyles={{
@@ -191,13 +191,13 @@ const Footer = () => {
         {isMobile && (
           <Box display="flex" flexDirection="column" alignItems="center" mb={7}>
             <Box ref={logoRef} sx={{ animation: logoInView ? `${growElement} 1s forwards` : "none" }}>
-              <img src="/logo-plataformas-web.png" alt="Logo" style={{ height: "85px", marginBottom: "0" }} />
+              <img src="/logo-ivelpink.png" alt="Logo" style={{ height: "85px", marginBottom: "0" }} />
             </Box>
 
             {/* Redes Sociales */}
             <Box ref={socialRef} sx={{ display: "flex", gap: 6, mb: 2, animation: socialInView ? `${growElement} 1s forwards` : "none", }}            >
-              <SocialButton href="https://www.instagram.com/plataformas.web/?hl=es-la" Icon={InstagramIcon} bgColor="linear-gradient(45deg, #cf198c, #f41242)" isMobile={isMobile} />
-              <SocialButton href="https://www.facebook.com/profile.php?id=100063452866880" Icon={FacebookIcon} bgColor="linear-gradient(45deg, #00B5F5, #002A8F)" isMobile={isMobile} />
+              <SocialButton href="https://www.instagram.com/ivelpink.chile/?hl=es-la" Icon={InstagramIcon} bgColor="linear-gradient(45deg, #cf198c, #f41242)" isMobile={isMobile} />
+              <SocialButton href="https://www.facebook.com/people/Ivelpink/61573460535717/#" Icon={FacebookIcon} bgColor="linear-gradient(45deg, #00B5F5, #002A8F)" isMobile={isMobile} />
               <SocialButton href="https://www.linkedin.com/company/mittarentacar/?viewAsMember=true" Icon={LinkedInIcon} bgColor="linear-gradient(45deg, #00B5F5, #0077b7)" isMobile={isMobile} />
             </Box>
 
@@ -216,7 +216,7 @@ const Footer = () => {
         )}
 
         <Typography variant="body2" align="center" mt={2} sx={{ marginTop: "5vh" }}>
-          @Plataformas web React 2025 {version && `- v${version}`}
+          @IvelPink 2025 {version && `- v${version}`}
         </Typography>
       </Container>
     </Box>

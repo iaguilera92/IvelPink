@@ -127,14 +127,14 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
 
   const handleContactClick = (title) => {
     const mensaje = `¡Hola! Me interesó la promoción de ${encodeURIComponent(title)} ¿Me comentas?`;
-    window.open(`https://api.whatsapp.com/send?phone=56992914526&text=${mensaje}`, "_blank");
+    window.open(`https://api.whatsapp.com/send?phone=56979897336&text=${mensaje}`, "_blank");
   };
   return (
     <Box
       sx={{
         position: "relative",
         zIndex: 10,
-        backgroundImage: 'url(fondo-blizz.avif)',
+        backgroundImage: 'url(fondo-blizz-ivelpink.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
@@ -340,7 +340,7 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
                             height: 70,
                             borderRadius: "50%",
                             border: "2px solid white",
-                            backgroundColor: "#072138",
+                            backgroundColor: "rgb(233 144 181)",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",

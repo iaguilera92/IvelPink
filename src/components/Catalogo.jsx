@@ -185,8 +185,8 @@ const Catalogo = () => {
             position: 'relative',
             overflow: 'hidden',
             backgroundImage: isMobile
-              ? 'url(fondo-blizz.avif)'
-              : 'url(fondo-blizz.avif)',
+              ? 'url(fondo-blizz-ivelpink.png)'
+              : 'url(fondo-blizz-ivelpink.png)',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundAttachment: 'fixed',
@@ -435,7 +435,7 @@ const Catalogo = () => {
                 }}
                 onClick={() => {
                   const mensaje = `Me interesó el ${videoFullScreenProducto.NombreProducto}, ¿sigue disponible?`;
-                  const telefono = '56992914526';
+                  const telefono = '56979897336';
                   const urlWhatsapp = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
                   window.open(urlWhatsapp, '_blank');
                 }}

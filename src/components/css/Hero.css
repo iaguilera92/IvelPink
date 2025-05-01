@@ -1,8 +1,8 @@
 /* Botón animado */
 .btn-3 {
-  background: rgb(0, 172, 238);
-  background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgba(2, 126, 251, 1) 100%);
-  width: 130px;
+  background: rgb(255, 94, 157);
+  background: linear-gradient(0deg, rgba(255, 94, 157, 1) 0%, rgba(255, 142, 197, 1) 100%);
+  width: 165px;
   height: 40px;
   line-height: 42px;
   padding: 0;

@@ -105,7 +105,7 @@ const Cargando = () => {
                             display: 'block',
                             position: 'relative',
                             zIndex: 2,
-                            filter: glow ? 'drop-shadow(0 0 6px #00e0ff88)' : 'none',
+                            filter: glow ? 'drop-shadow(0 0 6px #ff69b488)' : 'none',
                         }}
                     />
 
@@ -122,7 +122,7 @@ const Cargando = () => {
                             display: 'block',
                             position: 'relative',
                             zIndex: 2,
-                            filter: glow ? 'drop-shadow(0 0 6px #00e0ff88)' : 'none',
+                            filter: glow ? 'drop-shadow(0 0 6px #ff69b488)' : 'none',
                         }}
                     />
                 </Box>

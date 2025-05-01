@@ -164,7 +164,7 @@ const ConfigurarServicios = () => {
 
 
   return (
-    <Container maxWidth={false} disableGutters sx={{ minHeight: '100vh', width: '100vw', overflowX: 'hidden', py: 1, px: 0, pb: 3.5, backgroundImage: 'url(fondo-blizz.avif)', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed', backgroundPosition: 'center' }}>
+    <Container maxWidth={false} disableGutters sx={{ minHeight: '100vh', width: '100vw', overflowX: 'hidden', py: 1, px: 0, pb: 3.5, backgroundImage: 'url(fondo-blizz-ivelpink.png)', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed', backgroundPosition: 'center' }}>
       <Box ref={containerRef} sx={{ pt: 12, pb: 4, px: { xs: 1, md: 4 } }}>
         <Box mb={4} px={2} sx={{ width: '100%', overflowX: 'hidden' }}>
           <Grid container spacing={2}>
