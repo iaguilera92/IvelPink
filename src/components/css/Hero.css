@@ -1,0 +1,183 @@
+/* Botón animado */
+.btn-3 {
+  background: rgb(0, 172, 238);
+  background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgba(2, 126, 251, 1) 100%);
+  width: 130px;
+  height: 40px;
+  line-height: 42px;
+  padding: 0;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-3 span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 40px;
+}
+
+.btn-3:before,
+.btn-3:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  top: 0;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.btn-3:before {
+  height: 0%;
+  width: 2px;
+}
+
+.btn-3:after {
+  width: 0%;
+  height: 2px;
+}
+
+.btn-3:hover {
+  background: transparent;
+  box-shadow: none;
+}
+
+.btn-3:hover:before {
+  height: 100%;
+}
+
+.btn-3:hover:after {
+  width: 100%;
+}
+
+.btn-3 span:hover {
+  color: white;
+}
+
+.btn-3 span:before,
+.btn-3 span:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  bottom: 0;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.btn-3 span:before {
+  width: 2px;
+  height: 0%;
+}
+
+.btn-3 span:after {
+  width: 0%;
+  height: 2px;
+}
+
+.btn-3 span:hover:before {
+  height: 100%;
+}
+
+.btn-3 span:hover:after {
+  width: 100%;
+}
+
+.text {
+  color: white;
+  font-size: 4vw;
+  /* Escala con el tamaño de la pantalla */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  font-weight: 1000 !important;
+  line-height: 1 !important;
+}
+
+
+.btn-3-features {
+  background: transparent;
+  /* Se vuelve transparente */
+  width: 130px;
+  height: 35px;
+  line-height: 35px;
+  padding: 0;
+  border: none;
+  color: white !important;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  filter: none !important;
+}
+
+/* Texto dentro del botón en estado features */
+.btn-3-features span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 35px;
+  color: white !important;
+}
+
+/* Bordes en su estado features (completamente visibles) */
+.btn-3-features::before,
+.btn-3-features::after {
+  content: "";
+  position: absolute;
+  background: white !important;
+  transition: all 0.3s ease;
+}
+
+/* Borde lateral derecho completamente expandido */
+.btn-3-features::before {
+  width: 2px;
+  height: 100%;
+  right: 0;
+  top: 0;
+}
+
+/* Borde superior completamente expandido */
+.btn-3-features::after {
+  width: 100%;
+  height: 2px;
+  right: 0;
+  top: 0;
+}
+
+/* Bordes del `span` completamente expandidos */
+.btn-3-features span::before,
+.btn-3-features span::after {
+  content: "";
+  position: absolute;
+  background: white !important;
+  transition: all 0.3s ease;
+
+}
+
+/* Borde lateral izquierdo completamente expandido */
+.btn-3-features span::before {
+  width: 2px;
+  height: 100%;
+  left: 0;
+  bottom: 0;
+}
+
+/* Borde inferior completamente expandido */
+.btn-3-features span::after {
+  width: 100%;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+}

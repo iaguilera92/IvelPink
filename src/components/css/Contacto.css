@@ -1,0 +1,145 @@
+.image {
+  background-position: center center;
+  position: absolute;
+  width: 50%;
+  /* Aseguramos que cubra el 100% del contenedor */
+  height: 100vh;
+  background-size: cover;
+  /* Asegura que la imagen cubra toda el área sin distorsión */
+  /*transform: skewX(-20deg); /* Sigue el ladeo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 1.1s ease-in-out;
+}
+
+.image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  /* Cambia el 0.45 según la intensidad */
+  z-index: 1;
+}
+
+.image-left {
+  left: 0%;
+  /* 20% fuera de la pantalla */
+  background-image: url('/mapa.webp');
+  transform-origin: right center;
+  z-index: 3;
+}
+
+.image-right {
+  right: 0%;
+  /* 20% fuera de la pantalla */
+  background-image: url('/contactar.webp');
+  transform-origin: left center;
+  z-index: 3;
+}
+
+.animate-left {
+  left: -115%;
+  /* Mueve la imagen hacia la izquierda, cubriendo el contenido */
+  z-index: 4;
+}
+
+.animate-right {
+  right: -115%;
+  /* Mueve la imagen hacia la derecha, cubriendo el contenido */
+  z-index: 4;
+}
+
+#loader {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 6px solid transparent;
+  border-top-color: #00d2ff;
+  border-left-color: #00d2ff;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.04));
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 20px rgba(0, 210, 255, 0.2), 0 0 40px rgba(58, 123, 213, 0.2);
+  z-index: 1001;
+}
+
+
+#loader::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: -16px;
+  right: -16px;
+  bottom: -16px;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  border-top-color: #00d2ff;
+  border-left-color: #00d2ff;
+  animation: spin 2s linear infinite;
+  z-index: 2;
+}
+
+#loader::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #00d2ff;
+  border-left-color: #00d2ff;
+  animation: spin 3s linear infinite;
+  z-index: 0;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#loader,
+#loader::before,
+#loader::after {
+  animation-timing-function: linear !important;
+  will-change: transform;
+}
+
+/* Contenedor para el mapa e imagen */
+.image-container {
+  perspective: 1500px;
+  /* Establece la distancia de perspectiva para el efecto 3D */
+}
+
+.rotate-3d {
+  transform-style: preserve-3d;
+  transform: rotateY(180deg);
+  transition: transform 1s ease-in-out;
+}
+
+.rotate-3d.active {
+  transform: rotateY(0deg);
+}
+
+/* Estilo para la imagen de fondo */
+.image-content {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  overflow: hidden;
+  background-image: url('https://cdn-jeogh.nitrocdn.com/svPVqNThfGfQjwyBRxWYUktDoEOCGAjs/assets/images/optimized/rev-91227c4/www.tichile.cl/wp-content/uploads/2024/07/foto_nosotros_2.png');
+  background-size: cover;
+  background-position: center;
+}
