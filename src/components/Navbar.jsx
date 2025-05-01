@@ -182,7 +182,7 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
                       }}
                       style={{ cursor: "pointer" }}
                     >
-                      <img src="/logo-plataformas-web.png" alt="Logo" style={{ height: "55px", marginTop: "10px" }} onClick={LogoInicio} />
+                      <img src="/logo-ivelpink.png" alt="Logo" style={{ height: "55px", marginTop: "10px" }} onClick={LogoInicio} />
                     </motion.div>
                   )}
                 </AnimatePresence>

@@ -121,7 +121,7 @@ const Footer = () => {
                 animation: logoInView ? `${growElement} 1s forwards` : "none",
               }}
             >
-              <img src="/logo-plataformas-web.png" alt="Logo" style={{ height: "95px", marginBottom: "10px" }} />
+              <img src="/logo-ivelpink.png" alt="Logo" style={{ height: "95px", marginBottom: "10px" }} />
               <Box
                 ref={socialRef}
                 sx={{

@@ -82,8 +82,8 @@ const Cargando = () => {
                                 width: '120px',
                                 height: '60px',
                                 borderRadius: '50%',
-                                background: 'radial-gradient(circle, rgba(0,255,255,0.7) 0%, rgba(0,125,224,0.4) 40%, transparent 70%)',
-                                boxShadow: `0 0 12px #00fff0, 0 0 24px #00ccff, 0 0 36px #007de0`,
+                                background: 'radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(200,200,200,0.4) 40%, transparent 70%)',
+                                boxShadow: `0 0 12px #ffffff, 0 0 24px #e0e0e0, 0 0 36px #ffffff`,
                                 filter: 'blur(6px)',
                                 pointerEvents: 'none',
                                 zIndex: 0,
@@ -91,9 +91,10 @@ const Cargando = () => {
                         />
                     )}
 
+
                     {/* Logo Izquierdo */}
                     <motion.img
-                        src="/logo-plataformas-1.png"
+                        src="/logo-ivelpink-1.png"
                         alt="Logo izquierda"
                         initial={{ x: -80, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
@@ -110,7 +111,7 @@ const Cargando = () => {
 
                     {/* Logo Derecho */}
                     <motion.img
-                        src="/logo-plataformas-2.png"
+                        src="/logo-ivelpink-2.png"
                         alt="Logo derecha"
                         initial={{ x: 80, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
