@@ -94,7 +94,7 @@ const Evidencias = () => {
                     alignItems: 'flex-start',
                     justifyContent: 'center',
                     pt: { xs: 11, sm: 10 },
-                    backgroundImage: `url('fondo-telefono.webp')`, // Imagen de fondo
+                    backgroundImage: `url('costuras-fondo.jpg')`, // Imagen de fondo
                     backgroundSize: 'cover',
                     // Efecto Parallax con scroll
                     backgroundPosition: isMobile
@@ -133,7 +133,7 @@ const Evidencias = () => {
                                 px: 4,
                             }}
                         >
-                            Conoce cómo ayudamos a otras empresas a <span style={{ color: '#ffe037' }}>crecer.</span>
+                            Descubre cómo ayudamos a marcas de moda a <span style={{ color: '#ffe037' }}>destacar.</span>
                         </Typography>
                     </motion.div>
                 </Box>

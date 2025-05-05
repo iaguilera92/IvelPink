@@ -4,72 +4,70 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaTshirt } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useInView } from 'react-intersection-observer';
-import Public from '@mui/icons-material/Public';
-import GroupAdd from '@mui/icons-material/GroupAdd';
-import Verified from '@mui/icons-material/Verified'
-import DashboardCustomize from '@mui/icons-material/DashboardCustomize';
 import { useOutletContext } from "react-router-dom";
 import CheckIcon from '@mui/icons-material/Check';
+import { Checkroom, Storefront, DesignServices, TrendingUp } from "@mui/icons-material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import "./css/Informations.css";
 import "swiper/css";
 
 const promotions = [
   {
-    title: "Sitios web",
-    description: "Diseño y desarrollo de sitios web modernos.",
+    title: "Catálogo digital",
+    description: "Muestra tu colección de ropa de forma profesional.",
     image: "/Informations-1.jpg",
-    price: "$99.990",
+    price: "$49.990",
     extraPrices: [
       { label: "Dominio anual", price: "$10.000" },
-      { label: "Hosting mensual", price: "$10.000" }
+      { label: "Hosting mensual", price: "$8.000" }
     ],
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3))",
     textColor: "white",
     descriptors: [
-      "Diseño o renovación completa de tu sitio web.",
-      "Incluye dominio .cl personalizado.",
-      "Gestión y mantenimiento técnico permanente.",
-      "Garantía de calidad, seguridad y soporte técnico."
+      "Diseño moderno para mostrar tus prendas.",
+      "Galería de productos con tallas y precios.",
+      "Incluye dominio personalizado y formulario de contacto.",
+      "Ideal para emprendimientos de moda y costura."
     ]
   },
   {
-    title: "Tienda online",
-    description: "Vende tus productos online de forma segura.",
+    title: "Tienda online de ropa",
+    description: "Vende tus prendas en línea de forma segura.",
     image: "/Informations-2.jpg",
-    price: null,
+    price: "$89.990",
     extraPrices: [
-      { label: "Dominio anual", price: "-" },
-      { label: "Hosting mensual", price: "-" }
+      { label: "Dominio anual", price: "$10.000" },
+      { label: "Hosting mensual", price: "$10.000" }
     ],
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2))",
     textColor: "white",
     descriptors: [
-      "eCommerce con diseño profesional.",
-      "Carrito de compras y gestión de stock.",
-      "Panel de administración para seguimiento de pedidos.",
-      "Integración con WebPay u otros métodos de pago."
+      "Carrito de compras y pago online.",
+      "Gestión de stock y catálogo personalizado.",
+      "Panel para actualizar productos fácilmente.",
+      "Integración con medios de pago como WebPay y transferencia."
     ]
   },
   {
-    title: "Sistemas a la medida",
-    description: "Desarrollo de sistemas adaptados a tu negocio.",
+    title: "Sistema de pedidos personalizados",
+    description: "Recibe pedidos a medida desde tu sitio web.",
     image: "/Informations-3.jpg",
-    price: null,
+    price: "$119.990",
     extraPrices: [
-      { label: "Dominio anual", price: "-" },
-      { label: "Hosting mensual", price: "-" }
+      { label: "Dominio anual", price: "$10.000" },
+      { label: "Hosting mensual", price: "$12.000" }
     ],
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2))",
     textColor: "white",
     descriptors: [
-      "Desarrollo de sistemas web o apps personalizadas.",
-      "Panel de administración y base de datos incluida.",
-      "Adaptación total a tus procesos y necesidades.",
-      "Soporte técnico y mantenimiento continuo."
+      "Formulario para encargos personalizados y tallas a medida.",
+      "Base de datos con historial de pedidos.",
+      "Panel de administración para gestionar clientes y entregas.",
+      "Ideal para talleres de costura o moda personalizada."
     ]
   }
 ];
+
 
 function Informations({ informationsRef, triggerInformations, setHasSeenInformations }) {
 
@@ -249,27 +247,27 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
           <Grid item xs={12} md={6}>
             {[
               {
-                icon: <Public sx={{ color: "white", fontSize: "2.2rem" }} />,
-                text: "Muestra tu negocio al mundo.",
-                desc: "Haz visible tu marca con presencia digital moderna y profesional.",
+                icon: <Storefront sx={{ color: "white", fontSize: "2.2rem" }} />,
+                text: "Abre tu vitrina digital.",
+                desc: "Vende tus prendas desde cualquier lugar con una tienda online atractiva.",
                 hideLine: false,
               },
               {
-                icon: <GroupAdd sx={{ color: "white", fontSize: "2.2rem" }} />,
-                text: "Atrae más clientes potenciales.",
-                desc: "Conecta con clientes ideales mediante estrategias digitales inteligentes.",
+                icon: <Checkroom sx={{ color: "white", fontSize: "2.2rem" }} />,
+                text: "Muestra tu colección personalizada.",
+                desc: "Exhibe tus diseños, tallas y estilos de forma visual y ordenada.",
                 hideLine: false,
               },
               {
-                icon: <Verified sx={{ color: "white", fontSize: "2.2rem" }} />,
-                text: "Gana la confianza de tus clientes.",
-                desc: "Refleja confianza mostrando tu negocio de forma clara y profesional.",
+                icon: <DesignServices sx={{ color: "white", fontSize: "2.2rem" }} />,
+                text: "Promociona tu taller de costura.",
+                desc: "Ofrece arreglos, diseños a medida y personalización con estilo.",
                 hideLine: false,
               },
               {
-                icon: <DashboardCustomize sx={{ color: "white", fontSize: "2.2rem" }} />,
-                text: "Administra y potencia tu negocio.",
-                desc: "Toma decisiones con herramientas de monitoreo y gestión digital.",
+                icon: <TrendingUp sx={{ color: "white", fontSize: "2.2rem" }} />,
+                text: "Haz crecer tu negocio.",
+                desc: "Aumenta tus ventas con herramientas digitales simples y efectivas.",
                 hideLine: true,
               },
             ].map((item, index) => {
@@ -415,7 +413,7 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
                       }}
                     >
 
-                      {promo.title === "Sitios web" && (
+                      {promo.title === "Catálogo digital" && (
                         <motion.div
                           initial={{ opacity: 0, y: 50 }}
                           animate={showPopularBadge ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
@@ -456,60 +454,76 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
                           "&::after": { content: '""', position: "absolute", inset: 0, background: promo.bgColor || "linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3))" }, zIndex: 0
                         }} />
 
-                        <Box sx={{
-                          position: "relative", zIndex: 2, p: 2, pt: 3, display: "flex",
-                          flexDirection: "column", alignItems: "center", justifyContent: "flex-start", flexGrow: 1
-                        }}>
-                          <Box sx={{ width: isMobile ? "100%" : "80%", display: "flex", flexDirection: "column", alignItems: "flex-start", mb: 2 }}>
-                            <Typography variant="h6" sx={{ fontWeight: "bold", fontSize: "1.2rem", textAlign: "left", color: promo.textColor || "white", mb: 1 }}>{promo.title}</Typography>
-                            <Typography variant="body2" sx={{ textAlign: "left", fontSize: "0.9rem", color: "#ddd" }}>{promo.description}</Typography>
+                        <Box
+                          sx={{
+                            position: "relative",
+                            zIndex: 2,
+                            p: 2,
+                            pt: 3,
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "flex-start",
+                            flexGrow: 1,
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              width: isMobile ? "100%" : "80%",
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "flex-start",
+                              mb: 2,
+                            }}
+                          >
+                            <Typography
+                              variant="h6"
+                              sx={{
+                                fontWeight: "bold",
+                                fontSize: "1.2rem",
+                                textAlign: "left",
+                                color: promo.textColor || "white",
+                                mb: 1,
+                              }}
+                            >
+                              {promo.title}
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                textAlign: "left",
+                                fontSize: "0.9rem",
+                                color: "#ddd",
+                              }}
+                            >
+                              {promo.description}
+                            </Typography>
                           </Box>
 
-                          <Box sx={{ backgroundColor: "#edf4ff", borderRadius: "12px", py: promo.price ? 1.3 : 1.5, px: 3, mb: 0.5, width: "100%", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "90px" }}>
-                            {promo.price ? (
+                          {/* 💡 Aquí colocamos el mt: 'auto' para empujarlo al final */}
+                          <Box
+                            sx={{
+                              backgroundColor: "#edf4ff",
+                              borderRadius: "12px",
+                              py: promo.price ? 1.3 : 1.5,
+                              px: 3,
+                              width: "100%",
+                              textAlign: "center",
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              mt: "auto",
+                            }}
+                          >
+                            {promo.price && (
                               <>
                                 <Typography variant="caption" sx={{ color: "gray", fontSize: "0.7rem", mb: 0.2 }}>
-                                  Precio desarrollo
+                                  Precio
                                 </Typography>
-
-                                <Box sx={{ display: "flex", alignItems: "baseline", justifyContent: "center", minHeight: "2.5rem" }}>
-                                  <AnimatePresence mode="wait">
-                                    {!showPopularBadge ? (
-                                      <motion.div key="old" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.6 }} style={{ display: "flex", alignItems: "baseline" }}>
-                                        <Typography variant="h4" sx={{ fontWeight: "bold", color: "gray", fontSize: "2rem", textDecoration: "line-through", mr: 0.2 }}>
-                                          $140.000
-                                        </Typography>
-                                        <Typography variant="caption" sx={{ fontSize: "0.9rem", color: "gray" }}>/CLP</Typography>
-                                      </motion.div>
-                                    ) : (
-                                      <motion.div
-                                        key="new"
-                                        initial={{ opacity: 0, x: 30 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{ duration: 0.6 }}
-                                        style={{ display: "flex", alignItems: "baseline" }}
-                                      >
-                                        <Typography
-                                          variant="h4"
-                                          sx={{
-                                            fontWeight: "bold",
-                                            color: "black",
-                                            fontSize: "2rem",
-                                            mr: 0.2
-                                          }}
-                                        >
-                                          {promo.price}
-                                        </Typography>
-                                        <Typography
-                                          variant="caption"
-                                          sx={{ fontSize: "0.9rem", color: "black" }}
-                                        >/CLP</Typography>
-                                      </motion.div>
-                                    )}
-                                  </AnimatePresence>
-                                </Box>
-
+                                <Typography variant="h4" sx={{ fontWeight: "bold", color: "black", fontSize: "2rem", mb: 0.5 }}>
+                                  {promo.price}
+                                </Typography>
                                 <Box
                                   component="button"
                                   onClick={() => handleContactClick(promo.title)}
@@ -524,114 +538,14 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
                                     fontSize: "0.9rem",
                                     cursor: "pointer",
                                     transition: "background-color 0.3s",
-                                    mt: 0.5,
                                     "&:hover": { backgroundColor: "#005bb5" }
                                   }}
                                 >
                                   Cotizar
                                 </Box>
                               </>
-                            ) : (
-                              <>
-                                <Typography variant="h6" sx={{ fontWeight: "bold", color: "black", fontSize: "1.5rem", mt: 2 }}>
-                                  Por definir
-                                </Typography>
-                                <Box component="button" sx={{
-                                  backgroundColor: "#007de0",
-                                  color: "white",
-                                  border: "none",
-                                  borderRadius: "8px",
-                                  width: "80%",
-                                  py: 1,
-                                  fontWeight: "bold",
-                                  fontSize: "0.9rem",
-                                  cursor: "pointer",
-                                  transition: "background-color 0.3s",
-                                  mt: 1.7,
-                                  "&:hover": { backgroundColor: "#005bb5" }
-                                }}>
-                                  Cotizar
-                                </Box>
-                              </>
                             )}
                           </Box>
-
-
-                          <Box sx={{
-                            width: isMobile ? "100%" : "80%", mt: 0.5,
-                            display: "flex", flexDirection: "column", alignItems: "flex-start"
-                          }}>
-                            {promo.descriptors.map((desc, idx) => (
-                              <Typography key={idx} variant="caption" sx={{
-                                display: "flex", alignItems: "center", mb: 0.3,
-                                fontSize: "0.8rem", color: "#eee"
-                              }}>
-                                <Box sx={{
-                                  width: 15, height: 15, bgcolor: "white", borderRadius: "50%",
-                                  display: "flex", alignItems: "center", justifyContent: "center", mr: 0, flexShrink: 0
-                                }}>
-                                  <CheckIcon sx={{ fontSize: 13, color: "black" }} />
-                                </Box>&nbsp;{desc}
-                              </Typography>
-                            ))}
-                          </Box>
-
-                          <Box sx={{
-                            width: "80%", mt: 0.4, display: "flex",
-                            justifyContent: "space-between", gap: 2
-                          }}>
-                            {promo.extraPrices?.map(({ label, price }, idx) => (
-                              <Box key={idx} sx={{
-                                flex: 1,
-                                border: "1px solid white",
-                                borderRadius: "8px",
-                                p: 1,
-                                textAlign: "center",
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                position: "relative"
-                              }}>
-                                <Box sx={{
-                                  position: "absolute",
-                                  top: 4,
-                                  right: 5,
-                                  fontSize: "0.49rem",
-                                  color: "#aaa",
-                                  fontWeight: 300,
-                                  lineHeight: 1,
-                                }}>
-                                  Requerido
-                                </Box>
-
-                                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0.3 }}>
-                                  <Typography
-                                    variant="h5"
-                                    sx={{
-                                      fontWeight: "bold",
-                                      color: "white",
-                                      fontSize: "1.4rem",
-                                      lineHeight: 1.2,
-                                      mt: 1 // 🔽 Mueve el número más abajo
-                                    }}
-                                  >
-                                    {price || "-"}
-                                  </Typography>
-                                  <Typography
-                                    variant="caption"
-                                    sx={{
-                                      color: "#ddd",
-                                      fontSize: "0.68rem",
-                                      lineHeight: 1.2
-                                    }}
-                                  >
-                                    {label}
-                                  </Typography>
-                                </Box>
-                              </Box>
-                            ))}
-                          </Box>
-
                         </Box>
                       </Box>
                     </Box>

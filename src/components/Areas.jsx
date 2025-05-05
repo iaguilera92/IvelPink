@@ -6,12 +6,29 @@ import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
 
 const data = [
-  { count: 20, text: "Proyectos terminados en distintas empresas", image: "ProyectoTerminado.mp4" },
-  { count: 45, text: "Proyectos a Pymes e Independientes", image: "ProyectoPymes.mp4" },
-  { count: 6, text: "Años de Experiencia como desarrolladores", image: "Experience.mp4" },
-  { count: 8, text: "Tazas de café en el día ☕", image: "Cafe.mp4" },
+  {
+    count: 850,
+    text: "Prendas confeccionadas con amor y detalle",
+    image: "PrendasConfeccionadas.mp4",
+  },
+  {
+    count: 80,
+    text: "Clientes felices con diseños personalizados",
+    image: "ClientesFelices.mp4",
+  },
+  {
+    count: 12,
+    text: "Años de experiencia en costura profesional",
+    image: "ExperienciaCostura.mp4",
+  },
+  {
+    count: 50,
+    text: "Hilos usados por día en creaciones 🎀",
+    image: "HilosDelDia.mp4",
+  },
 ];
-const images = ["servicios.png", "computador.png"];
+
+const images = ["servicios.png", "maquina-coser.webp"];
 
 const Areas = () => {
   const [currentImage, setCurrentImage] = useState(0);
