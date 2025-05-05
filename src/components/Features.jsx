@@ -9,10 +9,14 @@ import "./css/Features.css"; // Importamos el CSS
 
 // DATOS
 const features = [
-  { id: 1, title: "Nachito trabajando...", desc: "Diseñamos sitios web modernos, rápidos y adaptables para impulsar tus emprendimientos.", image: "https://www.chio-lecca.edu.pe/cdn/shop/articles/chio-lecca-blog-tecnicas-de-costura.jpg?v=1703181447" },
-  { id: 2, title: "Amando a su mujer", desc: "Soporte evolutivo y mantenimiento de sistemas, brindamos soporte TI para el mantenimiento de tus sistemas.", image: "https://deposeguro.com/wp-content/uploads/2024/04/taller-de-costura-1.jpg" },
-  { id: 3, title: "Mi novia hermosa", desc: "Desarrollo de sistemas a medida, creamos software y sitios web personalizados para tu negocio.", image: "https://static.wixstatic.com/media/f41b81_0ebad24c16ac43a28277ad2b0bba0905~mv2.jpg/v1/fill/w_520,h_349,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/f41b81_0ebad24c16ac43a28277ad2b0bba0905~mv2.jpg" }
+  { imageSrc: 'https://m.media-amazon.com/images/I/71d9aL875PL._AC_UY580_.jpg', label: 'Invierno' },
+  { imageSrc: 'https://img.ltwebstatic.com/images3_pi/2023/07/21/16899049705cd10efc724e3b9c5d715c6f1a20faa8_thumbnail_405x.webp', label: 'Verano' },
+  { imageSrc: 'https://scontent.fscl19-1.fna.fbcdn.net/v/t51.75761-15/489832258_17991198932813850_3875989616024828700_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=uo10qeZoPRYQ7kNvwFmiKqp&_nc_oc=Adnc3bQJqS5xAHdwvKOmSHGB2PMyrAh1Uk6S2MEVhclDxqaPhT6VMNQlB1xSDnALA44&_nc_zt=23&_nc_ht=scontent.fscl19-1.fna&_nc_gid=WvbCv3_UnZoaeib_eC3Lig&oh=00_AfGlTSslzMr-C4ovYLFk7mwt73q9CiRt3HhWuavgxlh1sw&oe=681DBF27', label: 'Pijamas' },
+  { imageSrc: 'https://img.ltwebstatic.com/images3_pi/2024/12/21/45/173476402702f144f0c5cba6439964db6031d6b08b_thumbnail_405x.webp', label: 'Jeans' },
+  { imageSrc: 'https://img.ltwebstatic.com/images3_pi/2025/03/20/3a/17424556395aa953a27574ca9beac76a8ca40d94ba_thumbnail_405x.webp', label: 'Shorts' },
+
 ];
+
 
 
 // EFECTOS
@@ -108,89 +112,67 @@ function Features({ videoReady }) {
       }}
     >
       <Container sx={{ py: 0, maxWidth: "1500px !important", overflow: 'hidden' }}>
-        <Box ref={ref}>
-          <Grid container spacing={2}>
-            {features.map((feature, index) => (
-              <Grid item xs={12} md={4} key={feature.id}>
-                <motion.div
-                  initial="hidden"
-                  animate={hasAnimated ? "visible" : "hidden"}
-                  variants={cardAnimation}
-                  custom={index}
-                >
-                  <Card sx={{ position: "relative", overflow: "hidden" }}>
-                    <StyledCardActionArea href={feature.link} target="_self">
-                      <CardMedia
-                        className="card-media"
-                        component="img"
-                        image={feature.image}
-                        alt={feature.title}
+        <Box ref={ref} sx={{ mt: 2 }}>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid container spacing={2} justifyContent="center">
+              {features.map((feature, index) => (
+                <Grid item xs={4} sm={3} md={2} key={index}>
+                  <motion.div
+                    initial="hidden"
+                    animate={hasAnimated ? "visible" : "hidden"}
+                    variants={cardAnimation}
+                    custom={index}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        cursor: "pointer"
+                      }}
+                    >
+                      <Box
                         sx={{
-                          height: isMobile ? 205 : 250,
-                          transition: "transform 1s",
+                          width: 100,
+                          height: 100,
+                          borderRadius: '50%',
+                          overflow: 'hidden',
+                          backgroundColor: '#fff',
+                          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                          mb: 1,
                         }}
-                      />
-                      <Overlay className="overlay">
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            fontWeight: "bold",
-                            marginTop: isMobile ? "20px" : "30px",
-                            mb: 1,
-                            textAlign: "left",
-                            width: "100%",
-                            marginLeft: "9px",
-                            fontSize: isMobile ? "1.15rem" : "1.4rem",
+                      >
+                        <img
+                          src={feature.imageSrc}
+                          alt={feature.label}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
                           }}
-                        >
-                          {feature.title}
-                        </Typography>
+                        />
+                      </Box>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontWeight: 500,
+                          color: '#fff',
+                          fontFamily: '"Poppins", sans-serif;',
+                          letterSpacing: '0.3px',
+                        }}
+                      >
+                        {feature.label}
+                      </Typography>
 
-                        <AdditionalContent className="additional">
-                          <Typography
-                            variant="body2"
-                            sx={{ mb: 1, px: 1, fontSize: "1rem" }}
-                          >
-                            {feature.desc}
-                          </Typography>
+                    </Box>
+                  </motion.div>
+                </Grid>
+              ))}
+            </Grid>
 
-                          {/* ✅ Botón personalizado, fuera del <button> de CardActionArea */}
-                          <Box sx={{ textAlign: "center", mt: 2 }}>
-                            <Box
-                              component="span"
-                              role="button"
-                              tabIndex={0}
-                              className="btn-3-features"
-                              sx={{
-                                zIndex: 5,
-                                cursor: "pointer",
-                                display: "inline-block",
-                              }}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                handleContactClick(feature.title);
-                              }}
-                              onKeyDown={(e) => {
-                                if (e.key === "Enter" || e.key === " ") {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  handleContactClick(feature.title);
-                                }
-                              }}
-                            >
-                              <span>Contratar</span>
-                            </Box>
-                          </Box>
-                        </AdditionalContent>
-                      </Overlay>
-                    </StyledCardActionArea>
-                  </Card>
-
-                </motion.div>
-              </Grid>
-            ))}
           </Grid>
+
           <br />
           <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
             <motion.div
@@ -210,7 +192,7 @@ function Features({ videoReady }) {
             >
 
               <Button
-                onClick={() => { navigate('/servicios'); }}
+                onClick={() => { navigate('/catalogo'); }}
                 variant="contained"
                 target="_self"
                 sx={{
@@ -271,7 +253,7 @@ function Features({ videoReady }) {
                     transform: hasAnimated ? "translateX(0)" : "translateX(15px)", // Inicialmente a la derecha (15px)
                   }}
                 >
-                  + SOLUCIONES PARA TU EMPRESA
+                  REVISA NUESTRAS OFERTAS
                 </Box>
               </Button>
             </motion.div>

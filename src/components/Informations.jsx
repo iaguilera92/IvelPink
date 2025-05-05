@@ -1,7 +1,7 @@
 import { Box, Typography, Container, Grid, Button, ListItem, ListItemIcon, ListItemText, useMediaQuery, useTheme, IconButton } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaCode } from "react-icons/fa";
+import { FaTshirt } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useInView } from 'react-intersection-observer';
 import Public from '@mui/icons-material/Public';
@@ -184,7 +184,7 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
                 height: "100%",
               }}
             >
-              <FaCode size={17} color="black" />
+              <FaTshirt size={17} color="black" />
             </motion.div>
           </Box>
 
@@ -199,8 +199,8 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
               sx={{
                 fontFamily: "'Montserrat', Helvetica, Arial, sans-serif !important",
                 fontSize: { xs: "1.5rem", md: "2rem" },
-                paddingLeft: { xs: "100px", md: "30px" },
-                paddingRight: { xs: "100px", md: "30px" },
+                paddingLeft: { xs: "40px", md: "30px" },
+                paddingRight: { xs: "40px", md: "30px" },
                 letterSpacing: "3px",
                 my: 0,
                 display: "inline-block",
@@ -220,7 +220,7 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
                 },
               }}
             >
-              Impulsa tu negocio con tecnología
+              Estilo, calidad y elegancia femenina
             </Typography>
           </motion.div>
 

@@ -91,22 +91,22 @@ const Footer = () => {
           >
             {/* 🔹 Columna 1: Contacto */}
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
-              <Typography variant="h6" sx={{ color: "var(--darkreader-text-00b4ff, #1abcff)" }}>
+              <Typography variant="h6" sx={{ color: "rgb(245 96 206)" }}>
                 Contacto
               </Typography>
 
               <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <img src="https://www.connectic.cl/wp-content/uploads/2021/04/telephone.png" alt="Teléfono" width={16} />
-                <Link href="tel:+56999999999" color="inherit">+56 987654321</Link>
+                <img src="telefono-icon.png" alt="Teléfono" width={16} style={{ filter: 'invert(66%) sepia(39%) saturate(746%) hue-rotate(285deg) brightness(104%) contrast(101%)' }} />
+                <Link href="tel:+56999999999" color="rgb(245 96 206)">+56 987654321</Link>
               </Typography>
 
               <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <img src="https://www.connectic.cl/wp-content/uploads/2021/04/correo-1.png" alt="Correo" width={16} />
-                <Link href="mailto:aguileraignacio1992@gmail.com" color="inherit">aguileraignacio1992@gmail.com</Link>
+                <img src="mail-icon.png" alt="Correo" width={16} style={{ filter: 'invert(66%) sepia(39%) saturate(746%) hue-rotate(285deg) brightness(104%) contrast(101%)' }} />
+                <Link href="mailto:aguileraignacio1992@gmail.com" color="rgb(245 96 206)">mherrera@gmail.com</Link>
               </Typography>
 
-              <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <img src="https://www.connectic.cl/wp-content/uploads/2021/04/location.png" alt="Ubicación" width={16} />
+              <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }} color="rgb(245 96 206)">
+                <img src="location-icon.png" alt="Ubicación" width={16} style={{ filter: 'invert(66%) sepia(39%) saturate(746%) hue-rotate(285deg) brightness(104%) contrast(101%)' }} />
                 Dardignac #38, Santiago.
               </Typography>
             </Box>
@@ -174,9 +174,9 @@ const Footer = () => {
             {/* 🔹 Columna 3: Proveedores */}
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0.5 }}>
 
-              <img src="area-clientes.png" width={120} alt="Área Clientes" style={{ marginTop: -35, marginBottom: "10px" }} />
+              <img src="area-clientes.png" width={120} alt="Área Clientes" style={{ filter: 'invert(66%) sepia(39%) saturate(746%) hue-rotate(285deg) brightness(104%) contrast(101%)', marginTop: -35, marginBottom: "10px" }} />
 
-              <Typography sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+              <Typography sx={{ display: "flex", alignItems: "center", gap: 0.5 }} color="rgb(245 96 206)">
                 <AdminPanelSettingsIcon fontSize="small" />
                 <Link href="administracion" color="inherit" onClick={handleClick}>
                   Administración
@@ -203,9 +203,9 @@ const Footer = () => {
 
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "left", gap: 0.5 }}
             >
-              <img src="area-clientes.png" width={120} alt="Área Clientes" style={{ marginTop: 30, marginRight: 30, marginBottom: "20px" }} />
+              <img src="area-clientes.png" width={120} alt="Área Clientes" style={{ marginTop: 10, marginRight: 30, marginBottom: "0px" }} />
 
-              <Typography ml={"10px"} sx={{ display: "flex", alignItems: "center", gap: 0 }}              >
+              <Typography ml={"10px"} sx={{ display: "flex", alignItems: "center", gap: 0 }} color="rgb(245 96 206)">
                 <AdminPanelSettingsIcon fontSize="small" />
                 <Link href="administracion" color="inherit" onClick={handleClick}>
                   Administración

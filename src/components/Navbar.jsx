@@ -84,8 +84,7 @@ const SocialButton = ({ href, Icon, bgColor, hoverStyles }) => (
 );
 
 const menuItems = [
-  { name: "Inicio", icon: <Home /> }, { name: "Servicios", icon: <ViewListIcon /> },
-  { name: "Catálogo", icon: <ViewCarouselIcon /> }, { name: "Presentación", icon: <SlideshowIcon /> },
+  { name: "Inicio", icon: <Home /> }, { name: "Catálogo", icon: <ViewCarouselIcon /> },
   { name: "Nosotros", icon: <GroupsIcon /> }, { name: "Contacto", icon: <Mail /> }
 ];
 

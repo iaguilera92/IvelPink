@@ -5,11 +5,13 @@ import { motion } from 'framer-motion';
 const Cargando = () => {
     const [glow, setGlow] = useState(false);
     const [showElectricEffect, setShowElectricEffect] = useState(false);
+    const [showDots, setShowDots] = useState(false);
 
     useEffect(() => {
         const timerGlow = setTimeout(() => {
             setGlow(true);
             setShowElectricEffect(true);
+            setShowDots(true); // 👈 habilita los puntos de forma independiente
 
             setTimeout(() => {
                 setShowElectricEffect(false);
@@ -33,16 +35,15 @@ const Cargando = () => {
                 zIndex: 9999,
             }}
         >
-            {/* Fondo separado */}
+            {/* Fondo */}
             <Box
                 sx={{
                     position: 'absolute',
                     inset: 0,
-                    backgroundImage: 'url(fondo-ivelpink.jpg)',
+                    backgroundImage: 'url(footer-ivelpink.avif)',
                     backgroundSize: 'cover',
-                    backgroundPosition: { xs: '25% 20%', md: 'center 20%' },
+                    backgroundPosition: { xs: '25% 5%', md: 'center 90%' },
                     backgroundRepeat: 'no-repeat',
-                    filter: 'brightness(0.7) contrast(1.2)',
                     zIndex: 0,
                 }}
             />
@@ -55,20 +56,19 @@ const Cargando = () => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     transform: 'translateY(-40%)',
-                    zIndex: 1, // 👈 Este es el contenido sobre el fondo
+                    zIndex: 1,
                 }}
             >
-                {/* Imágenes + Efecto eléctrico */}
                 <Box
                     sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '0px',
+                        justifyContent: 'center',
                         marginBottom: '20px',
                         position: 'relative',
                     }}
                 >
-                    {/* ⚡ Rayo eléctrico */}
+                    {/* ⚡ Efecto eléctrico */}
                     {showElectricEffect && (
                         <motion.div
                             initial={{ opacity: 0 }}
@@ -91,71 +91,57 @@ const Cargando = () => {
                         />
                     )}
 
-
-                    {/* Logo Izquierdo */}
-                    <motion.img
-                        src="/logo-ivelpink-1.png"
-                        alt="Logo izquierda"
-                        initial={{ x: -80, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 1.2, ease: 'easeOut' }}
-                        style={{
-                            width: 130,
-                            height: 'auto',
-                            display: 'block',
-                            position: 'relative',
-                            zIndex: 2,
-                            filter: glow ? 'drop-shadow(0 0 6px #ff69b488)' : 'none',
-                        }}
-                    />
-
-                    {/* Logo Derecho */}
-                    <motion.img
-                        src="/logo-ivelpink-2.png"
-                        alt="Logo derecha"
-                        initial={{ x: 80, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 1.2, ease: 'easeOut' }}
-                        style={{
-                            width: 130,
-                            height: 'auto',
-                            display: 'block',
-                            position: 'relative',
-                            zIndex: 2,
-                            filter: glow ? 'drop-shadow(0 0 6px #ff69b488)' : 'none',
-                        }}
-                    />
-                </Box>
-
-                {/* Barra de carga */}
-                <Box
-                    sx={{
-                        width: '260px',
-                        height: '8px',
-                        backgroundColor: '#111',
-                        borderRadius: '50px',
-                        overflow: 'hidden',
-                        position: 'relative',
-                        boxShadow: '0 0 14px #ff00cc66', // glow de fondo más fuerte
-                    }}
-                >
+                    {/* Logo */}
                     <motion.div
-                        style={{
-                            width: '70px',
-                            height: '100%',
-                            background: 'linear-gradient(90deg, #ff00cc, #ff66e0)', // rosa intenso a más claro
-                            borderRadius: '50px',
-                            boxShadow: '0 0 15px #ff33cc, 0 0 30px #ff00cc', // glow animado más fuerte
-                        }}
-                        initial={{ x: -80 }}
-                        animate={{ x: 260 }}
-                        transition={{
-                            repeat: Infinity,
-                            repeatType: 'loop',
-                            duration: 1,
-                            ease: 'linear',
-                        }}
-                    />
+                        initial={{ y: -60, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 1.2, ease: 'easeOut' }}
+                        style={{ position: 'relative', zIndex: 2 }}
+                    >
+                        <img
+                            src="/logo-ivelpink.png"
+                            alt="Logo"
+                            style={{
+                                width: 245,
+                                height: 'auto',
+                                display: 'block',
+                                filter: glow ? 'drop-shadow(0 0 6px #ff69b488)' : 'none',
+                            }}
+                        />
+
+                        {/* Puntos superpuestos */}
+                        {showDots && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 1, ease: 'easeOut' }}
+                                style={{
+                                    position: 'absolute',
+                                    top: '80%',     // ⬇️ más abajo
+                                    left: '100%',   // ⬅️ más cerca del logo
+                                    display: 'flex',
+                                    gap: 6,
+                                    paddingLeft: 4,
+                                }}
+                            >
+                                {[0, 1, 2].map((i) => (
+                                    <motion.div
+                                        key={i}
+                                        animate={{ y: [0, -6, 0] }}
+                                        transition={{ repeat: Infinity, duration: 1, delay: i * 0.2 }}
+                                        style={{
+                                            width: 10,
+                                            height: 10,
+                                            borderRadius: '50%',
+                                            backgroundColor: '#ff66cc',
+                                            boxShadow: '0 0 6px #ff99dd',
+                                        }}
+                                    />
+                                ))}
+                            </motion.div>
+                        )}
+
+                    </motion.div>
                 </Box>
 
             </Box>
