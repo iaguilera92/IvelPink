@@ -42,7 +42,7 @@ const Cargando = () => {
                     inset: 0,
                     backgroundImage: 'url(footer-ivelpink.avif)',
                     backgroundSize: 'cover',
-                    backgroundPosition: { xs: '25% 5%', md: 'center 90%' },
+                    backgroundPosition: { xs: 'center 100%', md: 'center 100%' },
                     backgroundRepeat: 'no-repeat',
                     zIndex: 0,
                 }}

@@ -9,22 +9,22 @@ const data = [
   {
     count: 850,
     text: "Prendas confeccionadas con amor y detalle",
-    image: "PrendasConfeccionadas.mp4",
+    image: "ProyectoTerminado.mp4",
   },
   {
     count: 80,
     text: "Clientes felices con diseños personalizados",
-    image: "ClientesFelices.mp4",
+    image: "ProyectoPymes.mp4",
   },
   {
     count: 12,
     text: "Años de experiencia en costura profesional",
-    image: "ExperienciaCostura.mp4",
+    image: "Experience.mp4",
   },
   {
     count: 50,
     text: "Hilos usados por día en creaciones 🎀",
-    image: "HilosDelDia.mp4",
+    image: "Cafe.mp4",
   },
 ];
 

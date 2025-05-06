@@ -16,18 +16,13 @@ function Hero({ informationsRef, setVideoReady }) {
   const heroRef = useRef(null);
   const intervalRef = useRef(null);
 
-  const texts = [
-    { title: "TU NACHITO TE AMA", description: "" },
-    { title: "AUN DESARROLLANDO PARA MI AMOR", description: "" },
-    { title: "EL SITIO WEB DE MI AMORCITO", description: "" },
+  const titulos = [
+    { title: "Venta de prendas exclusivas", description: "" },
+    { title: "Confección personalizada a medida", description: "" },
+    { title: "Producción textil para mayoristas", description: "" },
   ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentText((prev) => (prev + 1) % texts.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, []);
+
 
   // Activa el botón con un delay de 1s después de cargar la página
   useEffect(() => {
@@ -102,7 +97,7 @@ function Hero({ informationsRef, setVideoReady }) {
   const startTextRotation = () => {
     if (intervalRef.current) return;
     intervalRef.current = setInterval(() => {
-      setCurrentText((prev) => (prev + 1) % texts.length);
+      setCurrentText((prev) => (prev + 1) % titulos.length);
     }, 6000);
   };
 
@@ -142,6 +137,109 @@ function Hero({ informationsRef, setVideoReady }) {
 
     return () => clearTimeout(fallbackTimer);
   }, [loadingVideo]);
+
+
+  const TypingText = ({ text, isMobile, onAnimationComplete }) => {
+    const letters = text.split("");
+    const [phase, setPhase] = useState("entering");
+    const [visibleLetters, setVisibleLetters] = useState([]);
+    const [exitingLetters, setExitingLetters] = useState([]);
+
+    useEffect(() => {
+      const delayPerLetter = 40;
+      const totalDuration = 6000;
+      const entranceDuration = 2000;
+      const exitDuration = 2000;
+      const visibleDuration = totalDuration - entranceDuration - exitDuration;
+
+      let enterTimers = [];
+      let exitTimers = [];
+      let visibilityTimer;
+      let completeTimer;
+
+      setVisibleLetters([]);
+      setExitingLetters([]);
+      setPhase("entering");
+
+      // Etapa de entrada letra por letra
+      letters.forEach((_, i) => {
+        enterTimers.push(setTimeout(() => {
+          setVisibleLetters((prev) => [...prev, i]);
+        }, i * (entranceDuration / letters.length)));
+      });
+
+      // Etapa quieta
+      visibilityTimer = setTimeout(() => {
+        setPhase("exiting");
+
+        // Etapa de salida letra por letra (hacia arriba)
+        letters.forEach((_, i) => {
+          exitTimers.push(setTimeout(() => {
+            setExitingLetters((prev) => [...prev, i]);
+          }, i * (exitDuration / letters.length)));
+        });
+
+      }, entranceDuration + visibleDuration);
+
+      // Final y notificación para siguiente frase
+      completeTimer = setTimeout(() => {
+        onAnimationComplete();
+      }, totalDuration);
+
+      return () => {
+        enterTimers.forEach(clearTimeout);
+        exitTimers.forEach(clearTimeout);
+        clearTimeout(visibilityTimer);
+        clearTimeout(completeTimer);
+      };
+    }, [text]);
+
+    return (
+      <Typography
+        variant="h3"
+        gutterBottom
+        className="text"
+        sx={{
+          fontSize: isMobile ? "1.64rem !important" : "2.5rem !important",
+          whiteSpace: "pre",
+          textAlign: "center",
+          position: "relative",
+          display: "inline-block",
+        }}
+      >
+        {letters.map((char, index) => {
+          const isVisible = visibleLetters.includes(index);
+          const isExiting = exitingLetters.includes(index);
+
+          return (
+            <motion.span
+              key={`${char}-${index}-${text}`}
+              initial={{ y: -30, opacity: 0 }}
+              animate={
+                isExiting
+                  ? { y: -30, opacity: 0 }
+                  : isVisible
+                    ? { y: 0, opacity: 1 }
+                    : {}
+              }
+              transition={{
+                duration: 0.2,
+                ease: "easeOut",
+              }}
+              style={{
+                position: "relative",
+                display: "inline-block",
+                whiteSpace: "pre",
+              }}
+            >
+              {char}
+            </motion.span>
+          );
+        })}
+      </Typography>
+    );
+  };
+
 
 
   return (
@@ -232,57 +330,66 @@ function Hero({ informationsRef, setVideoReady }) {
               height: "150px",
             }}
           >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentText}
-                initial={{ rotateY: -180, opacity: 0 }}
-                animate={{ rotateY: 0, opacity: 1 }}
-                exit={{ rotateY: 180, opacity: 0 }}
-                transition={{ duration: 1, ease: "easeInOut" }}
-                style={{
-                  position: "absolute",
-                  transformStyle: "preserve-3d",
-                  textAlign: "center",
-                }}
+
+            <TypingText
+              key={titulos[currentText].title} // clave importante para forzar re-render
+              text={titulos[currentText].title}
+              isMobile={isMobile}
+              onAnimationComplete={() => {
+                setCurrentText((prev) => (prev + 1) % titulos.length);
+              }}
+            />
+
+            {titulos[currentText].description && (
+              <Typography
+                variant="h3"
+                gutterBottom
+                className="text"
+                sx={{ fontSize: isMobile ? "1.64rem !important" : "2.5rem !important", display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
               >
-                <Typography
-                  variant="h3"
-                  gutterBottom
-                  className="text"
-                  sx={{ fontSize: isMobile ? "1.64rem !important" : "2.5rem !important" }} // Cambia tamaño en móvil
-                >
-                  {texts[currentText].title}
-                </Typography>
-                <Typography variant="h6" paragraph>
-                  {texts[currentText].description}
-                </Typography>
-
-                {/* Botón con animación después de 1s */}
-                {showButton && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
+                {titulos[currentText].title.split(" ").map((word, index) => (
+                  <motion.span
+                    key={index}
+                    initial={{ y: -30, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.15 }}
+                    style={{ marginRight: '8px', display: 'inline-block' }}
                   >
-                    <Box sx={{ mt: isMobile ? 4 : 1 }}>
-                      <button className="btn-3"
-                        onClick={() => {
-                          setOpenAlert(true);
+                    {word}
+                  </motion.span>
+                ))}
+              </Typography>
 
-                          const isMobile = window.innerWidth < 768;
-                          const offset = isMobile ? 490 : -50; // más abajo en mobile
 
-                          const y = informationsRef.current.getBoundingClientRect().top + window.scrollY + offset;
-                          window.scrollTo({ top: y, behavior: 'smooth' });
-                        }}
-                      >
-                        <span>Nuestros Precios</span>
-                      </button>
-                    </Box>
-                  </motion.div>
-                )}
+            )}
+
+            {showButton && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                <Box sx={{ mt: isMobile ? 4 : 1 }}>
+                  <button
+                    className="btn-3"
+                    onClick={() => {
+                      setOpenAlert(true);
+
+                      const isMobile = window.innerWidth < 768;
+                      const offset = isMobile ? 490 : -50;
+
+                      const y = informationsRef.current.getBoundingClientRect().top + window.scrollY + offset;
+                      window.scrollTo({ top: y, behavior: 'smooth' });
+                    }}
+                  >
+
+                    <span>Nuestros Precios</span>
+                  </button>
+                </Box>
               </motion.div>
-            </AnimatePresence>
+            )}
+
           </Box>
         </Container>
       )}

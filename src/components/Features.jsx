@@ -114,62 +114,61 @@ function Features({ videoReady }) {
       <Container sx={{ py: 0, maxWidth: "1500px !important", overflow: 'hidden' }}>
         <Box ref={ref} sx={{ mt: 2 }}>
           <Grid container spacing={2} justifyContent="center">
-            <Grid container spacing={2} justifyContent="center">
-              {features.map((feature, index) => (
-                <Grid item xs={4} sm={3} md={2} key={index}>
-                  <motion.div
-                    initial="hidden"
-                    animate={hasAnimated ? "visible" : "hidden"}
-                    variants={cardAnimation}
-                    custom={index}
+            {features.map((feature, index) => (
+              <Grid item xs={4} sm={3} md={1.2} key={index}>
+                <motion.div
+                  initial="hidden"
+                  animate={hasAnimated ? "visible" : "hidden"}
+                  variants={cardAnimation}
+                  custom={index}
+                >
+                  <Box
+                    onClick={() => { navigate('/catalogo'); }}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                      cursor: "pointer"
+                    }}
                   >
                     <Box
                       sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        textAlign: 'center',
-                        cursor: "pointer"
+                        width: 100,
+                        height: 100,
+                        borderRadius: '50%',
+                        overflow: 'hidden',
+                        backgroundColor: '#fff',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                        mb: 1,
                       }}
                     >
-                      <Box
-                        sx={{
-                          width: 100,
-                          height: 100,
-                          borderRadius: '50%',
-                          overflow: 'hidden',
-                          backgroundColor: '#fff',
-                          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                          mb: 1,
+                      <img
+                        src={feature.imageSrc}
+                        alt={feature.label}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
                         }}
-                      >
-                        <img
-                          src={feature.imageSrc}
-                          alt={feature.label}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                          }}
-                        />
-                      </Box>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          fontWeight: 500,
-                          color: '#fff',
-                          fontFamily: '"Poppins", sans-serif;',
-                          letterSpacing: '0.3px',
-                        }}
-                      >
-                        {feature.label}
-                      </Typography>
-
+                      />
                     </Box>
-                  </motion.div>
-                </Grid>
-              ))}
-            </Grid>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontWeight: 500,
+                        color: '#fff',
+                        fontFamily: '"Poppins", sans-serif;',
+                        letterSpacing: '0.3px',
+                      }}
+                    >
+                      {feature.label}
+                    </Typography>
+
+                  </Box>
+                </motion.div>
+              </Grid>
+            ))}
 
           </Grid>
 
