@@ -88,7 +88,7 @@ function Contacto() {
         paddingTop: 0,
         paddingBottom: "20px",
         minHeight: isMobile ? containerHeight : containerHeight, // 👈 Cambia esto
-        backgroundImage: isMobile ? 'url(/fondo-mundo-mobile.png)' : 'url(/fondo-mundo.png)',
+        backgroundImage: isMobile ? 'url(/fondo-celeste.avif)' : 'url(/fondo-celeste.avif)',
         backgroundColor: "rgb(0 30 43/var(--tw-bg-opacity,1))",
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -177,7 +177,7 @@ function Contacto() {
                   animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                   transition={{ delay: 0.3 }}
                   style={{
-                    color: "green",
+                    color: "rgb(155 34 97)",
                     fontWeight: "bold",
                     fontSize: isMobile ? "1.3rem" : "1.3rem",
                     display: "inline-block",

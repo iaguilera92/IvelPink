@@ -70,11 +70,7 @@ const Footer = () => {
         color: "white",
         backgroundImage: "url(/footer-ivelpink.avif)",
         backgroundSize: "cover",
-        backgroundPosition: "bottom -150px",
-        "@media (max-width: 600px)": {
-          backgroundPosition: "center center",
-          padding: "10px 0",
-        },
+        backgroundPosition: "center 80%"
       }}
     >
       <Container maxWidth="lg">
@@ -219,7 +215,7 @@ const Footer = () => {
           @IvelPink 2025 {version && `- v${version}`}
         </Typography>
       </Container>
-    </Box>
+    </Box >
   );
 };
 

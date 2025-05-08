@@ -112,7 +112,7 @@ function Features({ videoReady }) {
       }}
     >
       <Container sx={{ py: 0, maxWidth: "1500px !important", overflow: 'hidden' }}>
-        <Box ref={ref} sx={{ mt: 2 }}>
+        <Box ref={ref} sx={{ mt: 0 }}>
           <Grid container spacing={2} justifyContent="center">
             {features.map((feature, index) => (
               <Grid item xs={4} sm={3} md={1.2} key={index}>
@@ -173,7 +173,7 @@ function Features({ videoReady }) {
           </Grid>
 
           <br />
-          <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+          <Box sx={{ display: "flex", justifyContent: "center", my: 1 }}>
             <motion.div
               ref={buttonRef}
               initial={{ opacity: 0, y: 50 }}
@@ -252,7 +252,7 @@ function Features({ videoReady }) {
                     transform: hasAnimated ? "translateX(0)" : "translateX(15px)", // Inicialmente a la derecha (15px)
                   }}
                 >
-                  REVISA NUESTRAS OFERTAS
+                  NUESTRAS OFERTAS
                 </Box>
               </Button>
             </motion.div>

@@ -112,7 +112,7 @@ const ContactoForm = ({ setSnackbar }) => {
                     flexDirection: "column",
                     gap: 3,
                     mt: 0,
-                    backgroundColor: "#0D1117",
+                    backgroundColor: "#183D54",
                     padding: "20px",
                     borderRadius: 5,
                     boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.2)",
@@ -138,7 +138,7 @@ const ContactoForm = ({ setSnackbar }) => {
                             }}
                             error={Boolean(errors.name)}
                             sx={{
-                                backgroundColor: "#161B22",
+                                backgroundColor: "#132D40",
                                 borderRadius: 2,
                                 input: { color: "#E6EDF3", fontSize: "0.9rem" },
                                 label: { color: errors.name ? "#ff4d4f" : "#E6EDF3" },
@@ -188,7 +188,7 @@ const ContactoForm = ({ setSnackbar }) => {
                                 sx={{
                                     opacity: isSubmitting ? 0.6 : 1,
                                     pointerEvents: isSubmitting ? "none" : "auto",
-                                    backgroundColor: "#161B22",
+                                    backgroundColor: "#132D40",
                                     borderRadius: 2,
                                     input: { color: "#E6EDF3", fontSize: "0.9rem" },
                                     label: { color: errors.phone ? "#ff4d4f" : "#E6EDF3" },
@@ -248,7 +248,7 @@ const ContactoForm = ({ setSnackbar }) => {
                                     error={Boolean(!emailCopia.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) && emailCopia.length > 0}
                                     sx={{
                                         width: "200px",
-                                        backgroundColor: "#161B22",
+                                        backgroundColor: "#132D40",
                                         borderRadius: 2,
 
                                         input: {
@@ -310,7 +310,7 @@ const ContactoForm = ({ setSnackbar }) => {
                             onChange={(e) => setMessage(e.target.value)}
                             error={Boolean(errors.message)}
                             sx={{
-                                backgroundColor: "#161B22",
+                                backgroundColor: "#132D40",
                                 borderRadius: 2,
                                 textarea: { color: "#E6EDF3", fontSize: "0.9rem" },
                                 label: { color: errors.message ? "#ff4d4f" : "#E6EDF3" },

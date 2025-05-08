@@ -33,7 +33,7 @@ const promotions = [
   {
     title: "Tienda online de ropa",
     description: "Vende tus prendas en línea de forma segura.",
-    image: "/Informations-2.jpg",
+    image: "/Informations-2.webp",
     price: "$89.990",
     extraPrices: [
       { label: "Dominio anual", price: "$10.000" },
@@ -137,7 +137,7 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
         py: isMobile ? 8 : 3,
-        pt: 5,
+        pt: 1,
         marginTop: "0",
         marginBottom: "-10px",
         color: "white",

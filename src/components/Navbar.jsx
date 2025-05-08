@@ -245,9 +245,12 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
             width: { xs: '80vw', sm: '60vw', md: '50vw' },
             maxWidth: '700px',
             minWidth: '300px',
-            background: `linear-gradient(135deg, rgba(110, 30, 70, 0.94), rgba(130, 40, 90, 0.97)),
-                  radial-gradient(circle at 25% 20%, rgba(255, 100, 150, 0.4) 0%, transparent 45%),
-                  radial-gradient(circle at 80% 80%, rgba(255, 120, 170, 0.25) 0%, transparent 50%)`,
+            background: `
+  linear-gradient(135deg, rgba(231, 138, 174, 0.95), rgba(200, 100, 140, 0.95)),
+  radial-gradient(circle at 20% 30%, rgba(255, 180, 210, 0.4) 0%, transparent 40%),
+  radial-gradient(circle at 80% 70%, rgba(255, 200, 220, 0.3) 0%, transparent 45%)
+`,
+
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
             color: '#ffffff',

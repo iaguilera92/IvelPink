@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 
 const Cargando = () => {
     const [glow, setGlow] = useState(false);
     const [showElectricEffect, setShowElectricEffect] = useState(false);
     const [showDots, setShowDots] = useState(false);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     useEffect(() => {
         const timerGlow = setTimeout(() => {
@@ -40,7 +42,7 @@ const Cargando = () => {
                 sx={{
                     position: 'absolute',
                     inset: 0,
-                    backgroundImage: 'url(footer-ivelpink.avif)',
+                    backgroundImage: isMobile ? 'url(fondo-ivelpink-mobile.jpg)' : 'url(footer-ivelpink.avif)',
                     backgroundSize: 'cover',
                     backgroundPosition: { xs: 'center 100%', md: 'center 100%' },
                     backgroundRepeat: 'no-repeat',
@@ -72,8 +74,8 @@ const Cargando = () => {
                     {showElectricEffect && (
                         <motion.div
                             initial={{ opacity: 0 }}
-                            animate={{ opacity: [0, 1, 0] }}
-                            transition={{ duration: 1, ease: "easeInOut" }}
+                            animate={{ opacity: [0, 0.6, 1, 0.6, 0] }}
+                            transition={{ duration: 1.8, ease: [0.4, 0, 0.2, 1] }}
                             style={{
                                 position: 'absolute',
                                 top: '50%',
@@ -105,8 +107,12 @@ const Cargando = () => {
                                 width: 245,
                                 height: 'auto',
                                 display: 'block',
-                                filter: glow ? 'drop-shadow(0 0 6px #ff69b488)' : 'none',
+                                filter: glow
+                                    ? 'drop-shadow(0 0 12px #ff69b4) saturate(1.3)'
+                                    : 'none',
+                                transition: 'filter 0.6s ease-in-out',
                             }}
+
                         />
 
                         {/* Puntos superpuestos */}
@@ -127,16 +133,27 @@ const Cargando = () => {
                                 {[0, 1, 2].map((i) => (
                                     <motion.div
                                         key={i}
-                                        animate={{ y: [0, -6, 0] }}
-                                        transition={{ repeat: Infinity, duration: 1, delay: i * 0.2 }}
+                                        animate={{
+                                            y: [0, -6, 0],
+                                            scale: glow ? [1, 1.15, 1] : 1, // ⬅️ Pulsación cuando glow es true
+                                        }}
+                                        transition={{
+                                            repeat: Infinity,
+                                            duration: 1,
+                                            delay: i * 0.2,
+                                            ease: 'easeInOut',
+                                        }}
                                         style={{
                                             width: 10,
                                             height: 10,
                                             borderRadius: '50%',
                                             backgroundColor: '#ff66cc',
                                             boxShadow: '0 0 6px #ff99dd',
+                                            filter: glow ? 'drop-shadow(0 0 8px #ff99dd) saturate(1.3)' : 'none',
+                                            transition: 'filter 0.6s ease-in-out',
                                         }}
                                     />
+
                                 ))}
                             </motion.div>
                         )}

@@ -94,7 +94,7 @@ const Evidencias = () => {
                     alignItems: 'flex-start',
                     justifyContent: 'center',
                     pt: { xs: 11, sm: 10 },
-                    backgroundImage: `url('costuras-fondo.jpg')`, // Imagen de fondo
+                    backgroundImage: `url('fondo-areas1.avif')`, // Imagen de fondo
                     backgroundSize: 'cover',
                     // Efecto Parallax con scroll
                     backgroundPosition: isMobile
@@ -143,7 +143,7 @@ const Evidencias = () => {
             <Box
                 sx={{
                     position: 'relative',
-                    backgroundImage: `url('/fondo-blanco2.webp')`,
+                    backgroundImage: `url('/fondo-blanco2.png')`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
@@ -169,9 +169,9 @@ const Evidencias = () => {
                         clipPath: isMobile
                             ? "polygon(0 0, 50% 40%, 100% 0, 100% 100%, 0 100%)"
                             : "polygon(0 0, 50% 70%, 100% 0, 100% 100%, 0 100%)",
-                        backgroundImage: `url('/fondo-blanco2.webp')`,
+                        backgroundImage: `url('/fondo-blanco2.png')`,
                         backgroundSize: 'cover',
-                        backgroundPosition: 'center',
+                        backgroundPosition: 'top center',
                         backgroundRepeat: 'no-repeat',
                         pointerEvents: 'none',
                     }}
@@ -189,7 +189,7 @@ const Evidencias = () => {
                         <Box
                             sx={{
                                 zIndex: 3,
-                                background: "#241a1a",
+                                background: "#99D7F2",
                                 borderRadius: 4,
                                 p: { xs: 2, sm: 4 },
                                 boxShadow: '0 8px 30px rgba(0, 0, 0, 0.25)',
@@ -213,7 +213,7 @@ const Evidencias = () => {
                                     justifyContent: "center", // 👈 ahora el contenido dentro queda al centro
                                     alignItems: "center",
                                     backgroundColor: "transparent",
-                                    color: "lightgray",
+                                    color: "white",
                                     textAlign: "center", // 👈 adicional para asegurar texto centrado
                                 }}
                             >
