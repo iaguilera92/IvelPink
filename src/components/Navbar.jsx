@@ -337,10 +337,6 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
               >
                 <Box
                   sx={{
-                    background: `
-        radial-gradient(circle at top left, rgba(144,202,249,0.1), transparent 70%),
-        linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))
-      `,
                     borderRadius: 3,
                     px: 2,
                     py: 1,
@@ -349,10 +345,15 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
                     pt: 0,
                     color: "#ffffff",
                     backdropFilter: "blur(8px)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    boxShadow: "0 0 12px rgba(255,255,255,0.05)",
+                    background: `
+  radial-gradient(circle at top left, rgba(255, 105, 180, 0.25), transparent 70%),
+  linear-gradient(135deg, rgba(255, 182, 193, 0.12), rgba(255, 105, 180, 0.05))
+`,
+                    border: "1px solid rgba(255, 182, 193, 0.3)",
+                    boxShadow: "0 0 12px rgba(255, 182, 193, 0.1)"
                   }}
                 >
+
                   <Box sx={{ display: "flex", alignItems: "center", mb: 0 }}>
                     <Box
                       component="img"

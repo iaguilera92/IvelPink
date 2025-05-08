@@ -133,7 +133,8 @@ const Evidencias = () => {
                                 px: 4,
                             }}
                         >
-                            Descubre cómo ayudamos a marcas de moda a <span style={{ color: '#ffe037' }}>destacar.</span>
+                            Descubre cómo ayudamos a marcas de moda a <span style={{ color: '#99D7F2' }}>destacar.</span>
+
                         </Typography>
                     </motion.div>
                 </Box>
