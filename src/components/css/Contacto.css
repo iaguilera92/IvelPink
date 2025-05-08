@@ -60,14 +60,16 @@
   height: 120px;
   border-radius: 50%;
   border: 6px solid transparent;
-  border-top-color: #00d2ff;
-  border-left-color: #00d2ff;
+  border-top-color: #FF69B4;
+  /* rosa fuerte */
+  border-left-color: #FF69B4;
+  /* rosa fuerte */
   background: radial-gradient(circle, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.04));
   animation: spin 1s linear infinite;
-  box-shadow: 0 0 20px rgba(0, 210, 255, 0.2), 0 0 40px rgba(58, 123, 213, 0.2);
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.2), 0 0 40px rgba(255, 105, 180, 0.2);
+  /* sombra rosada */
   z-index: 1001;
 }
-
 
 #loader::before {
   content: "";
@@ -78,8 +80,10 @@
   bottom: -16px;
   border-radius: 50%;
   border: 4px solid transparent;
-  border-top-color: #00d2ff;
-  border-left-color: #00d2ff;
+  border-top-color: #FF69B4;
+  /* rosa fuerte */
+  border-left-color: #FF69B4;
+  /* rosa fuerte */
   animation: spin 2s linear infinite;
   z-index: 2;
 }
@@ -93,8 +97,10 @@
   bottom: 20px;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-top-color: #00d2ff;
-  border-left-color: #00d2ff;
+  border-top-color: #FF69B4;
+  /* rosa fuerte */
+  border-left-color: #FF69B4;
+  /* rosa fuerte */
   animation: spin 3s linear infinite;
   z-index: 0;
 }
