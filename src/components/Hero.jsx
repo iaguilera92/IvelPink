@@ -1,156 +1,68 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Container, Typography, Box, Snackbar, Alert, useMediaQuery, useTheme } from "@mui/material";
-import { motion, AnimatePresence } from "framer-motion";
-import "./css/Hero.css"; // Asegúrate de importar el CSS
+import { motion } from "framer-motion";
+import "./css/Hero.css";
 import CircularProgress from "@mui/material/CircularProgress";
 
 function Hero({ informationsRef, setVideoReady }) {
-
   const [currentText, setCurrentText] = useState(0);
   const [openAlert, setOpenAlert] = useState(false);
-  const [showButton, setShowButton] = useState(false); // Estado para mostrar el botón después del delay
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [showButton, setShowButton] = useState(false);
   const [loadingVideo, setLoadingVideo] = useState(true);
   const [isHeroVisible, setIsHeroVisible] = useState(true);
+  const [canAdvance, setCanAdvance] = useState(true);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const heroRef = useRef(null);
-  const intervalRef = useRef(null);
 
   const titulos = [
-    { title: "Venta de prendas exclusivas", description: "" },
-    { title: "Confección personalizada a medida", description: "" },
-    { title: "Producción textil para mayoristas", description: "" },
+    { title: "Venta de prendas", description: "" },
+    { title: "Confección a la medida", description: "" },
+    { title: "Producción para mayoristas", description: "" },
   ];
 
-
-
-  // Activa el botón con un delay de 1s después de cargar la página
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowButton(true);
-    }, 1000);
+    const timer = setTimeout(() => setShowButton(true), 1000);
     return () => clearTimeout(timer);
   }, []);
 
-  //PAUSAR VIDEO SI NO SE VE
   useEffect(() => {
     const video = document.getElementById("background-video");
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          video?.play();
-        } else {
-          video?.pause();
-        }
-      },
-      { threshold: 0.3 } // Se pausa si menos del 30% del video es visible
-    );
+    const observer = new IntersectionObserver(([entry]) => {
+      entry.isIntersecting ? video?.play() : video?.pause();
+    }, { threshold: 0.3 });
 
     if (video) observer.observe(video);
-
     return () => video && observer.unobserve(video);
   }, []);
 
-
-
-  // Detectar visibilidad con IntersectionObserver
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsHeroVisible(entry.isIntersecting);
-      },
-      { threshold: 0.3 }
-    );
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsHeroVisible(entry.isIntersecting);
+    }, { threshold: 0.3 });
 
     if (heroRef.current) observer.observe(heroRef.current);
-
-    return () => {
-      if (heroRef.current) observer.unobserve(heroRef.current);
-    };
+    return () => heroRef.current && observer.unobserve(heroRef.current);
   }, []);
 
-  // Cambiar texto cada 6 segundos solo si la sección está visible y la pestaña activa
   useEffect(() => {
-    const handleVisibilityChange = () => {
-      const isPageVisible = document.visibilityState === "visible";
-
-      if (isPageVisible && isHeroVisible) {
-        startTextRotation();
-      } else {
-        stopTextRotation();
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    // Start on mount if visible
-    if (document.visibilityState === "visible" && isHeroVisible) {
-      startTextRotation();
-    }
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      stopTextRotation();
-    };
-  }, [isHeroVisible]);
-  const startTextRotation = () => {
-    if (intervalRef.current) return;
-    intervalRef.current = setInterval(() => {
-      setCurrentText((prev) => (prev + 1) % titulos.length);
-    }, 6000);
-  };
-
-  const stopTextRotation = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  };
-  //MONITOREAR - COMENTAR PRD
-  /*useEffect(() => {
-    const video = document.getElementById("background-video");
-
-    const onPlay = () => console.log("▶️ El video está reproduciéndose");
-    const onPause = () => console.log("⏸ El video fue pausado");
-
-    if (video) {
-      video.addEventListener("play", onPlay);
-      video.addEventListener("pause", onPause);
-    }
-
-    return () => {
-      if (video) {
-        video.removeEventListener("play", onPlay);
-        video.removeEventListener("pause", onPause);
-      }
-    };
-  }, []);*/
-
-
-  useEffect(() => {
-    const fallbackTimer = setTimeout(() => {
-      if (loadingVideo) {
-        setLoadingVideo(false);
-      }
+    const fallback = setTimeout(() => {
+      if (loadingVideo) setLoadingVideo(false);
     }, 3000);
-
-    return () => clearTimeout(fallbackTimer);
+    return () => clearTimeout(fallback);
   }, [loadingVideo]);
-
 
   const TypingText = ({ text, isMobile, onAnimationComplete }) => {
     const letters = text.split("");
-    const [phase, setPhase] = useState("entering");
     const [visibleLetters, setVisibleLetters] = useState([]);
     const [exitingLetters, setExitingLetters] = useState([]);
 
     useEffect(() => {
-      const delayPerLetter = 40;
-      const totalDuration = 6000;
       const entranceDuration = 2000;
       const exitDuration = 2000;
-      const visibleDuration = totalDuration - entranceDuration - exitDuration;
+      const visibleDuration = 2000;
+      const totalDuration = entranceDuration + visibleDuration + exitDuration;
 
       let enterTimers = [];
       let exitTimers = [];
@@ -159,29 +71,21 @@ function Hero({ informationsRef, setVideoReady }) {
 
       setVisibleLetters([]);
       setExitingLetters([]);
-      setPhase("entering");
 
-      // Etapa de entrada letra por letra
       letters.forEach((_, i) => {
         enterTimers.push(setTimeout(() => {
           setVisibleLetters((prev) => [...prev, i]);
         }, i * (entranceDuration / letters.length)));
       });
 
-      // Etapa quieta
       visibilityTimer = setTimeout(() => {
-        setPhase("exiting");
-
-        // Etapa de salida letra por letra (hacia arriba)
         letters.forEach((_, i) => {
           exitTimers.push(setTimeout(() => {
             setExitingLetters((prev) => [...prev, i]);
           }, i * (exitDuration / letters.length)));
         });
-
       }, entranceDuration + visibleDuration);
 
-      // Final y notificación para siguiente frase
       completeTimer = setTimeout(() => {
         onAnimationComplete();
       }, totalDuration);
@@ -222,10 +126,7 @@ function Hero({ informationsRef, setVideoReady }) {
                     ? { y: 0, opacity: 1 }
                     : {}
               }
-              transition={{
-                duration: 0.2,
-                ease: "easeOut",
-              }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
               style={{
                 position: "relative",
                 display: "inline-block",
@@ -240,10 +141,27 @@ function Hero({ informationsRef, setVideoReady }) {
     );
   };
 
-
+  const memoizedTypingText = useMemo(() => (
+    <TypingText
+      text={titulos[currentText].title}
+      isMobile={isMobile}
+      onAnimationComplete={() => {
+        if (isHeroVisible && canAdvance) {
+          setCanAdvance(false);
+          setCurrentText((prev) => {
+            const next = (prev + 1) % titulos.length;
+            console.log(`✅ Terminó animación del título: "${titulos[prev].title}" → Siguiente: "${titulos[next].title}"`);
+            return next;
+          });
+          setTimeout(() => setCanAdvance(true), 100);
+        }
+      }}
+    />
+  ), [currentText, isHeroVisible, isMobile, canAdvance]);
 
   return (
     <Box
+      ref={heroRef}
       sx={{
         position: "relative",
         height: "400px",
@@ -254,7 +172,6 @@ function Hero({ informationsRef, setVideoReady }) {
         overflow: "hidden",
       }}
     >
-      {/* Video de fondo */}
       <Box
         sx={{
           position: "absolute",
@@ -265,7 +182,6 @@ function Hero({ informationsRef, setVideoReady }) {
           overflow: "hidden",
         }}
       >
-        {/* Loader encima del video */}
         {loadingVideo && (
           <Box
             sx={{
@@ -293,26 +209,21 @@ function Hero({ informationsRef, setVideoReady }) {
           onLoadedData={() => {
             console.log("🎥 Componentes cargados");
             setLoadingVideo(false);
-            if (setVideoReady) setVideoReady(true); // Opcional si lo estás usando en App
+            if (setVideoReady) setVideoReady(true);
           }}
           style={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            pointerEvents: "none", // Evita interacción del usuario
+            pointerEvents: "none",
           }}
           disablePictureInPicture
           controlsList="nodownload nofullscreen noremoteplayback"
         >
-          <source
-            src="video-inicio.mp4"
-            type="video/mp4"
-          />
+          <source src="video-inicio.mp4" type="video/mp4" />
         </video>
-
       </Box>
 
-      {/* Contenido sobre el video */}
       {!loadingVideo && (
         <Container
           sx={{
@@ -330,39 +241,7 @@ function Hero({ informationsRef, setVideoReady }) {
               height: "150px",
             }}
           >
-
-            <TypingText
-              key={titulos[currentText].title} // clave importante para forzar re-render
-              text={titulos[currentText].title}
-              isMobile={isMobile}
-              onAnimationComplete={() => {
-                setCurrentText((prev) => (prev + 1) % titulos.length);
-              }}
-            />
-
-            {titulos[currentText].description && (
-              <Typography
-                variant="h3"
-                gutterBottom
-                className="text"
-                sx={{ fontSize: isMobile ? "1.64rem !important" : "2.5rem !important", display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
-              >
-                {titulos[currentText].title.split(" ").map((word, index) => (
-                  <motion.span
-                    key={index}
-                    initial={{ y: -30, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.15 }}
-                    style={{ marginRight: '8px', display: 'inline-block' }}
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </Typography>
-
-
-            )}
+            {memoizedTypingText}
 
             {showButton && (
               <motion.div
@@ -375,25 +254,20 @@ function Hero({ informationsRef, setVideoReady }) {
                     className="btn-3"
                     onClick={() => {
                       setOpenAlert(true);
-
-                      const isMobile = window.innerWidth < 768;
-                      const offset = isMobile ? 490 : -50;
-
+                      const offset = window.innerWidth < 768 ? 490 : -50;
                       const y = informationsRef.current.getBoundingClientRect().top + window.scrollY + offset;
-                      window.scrollTo({ top: y, behavior: 'smooth' });
+                      window.scrollTo({ top: y, behavior: "smooth" });
                     }}
                   >
-
                     <span>Nuestros Precios</span>
                   </button>
                 </Box>
               </motion.div>
             )}
-
           </Box>
         </Container>
       )}
-      {/* Snackbar con alerta animada */}
+
       <Snackbar
         open={openAlert}
         autoHideDuration={4000}
@@ -401,7 +275,7 @@ function Hero({ informationsRef, setVideoReady }) {
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
         <Alert onClose={() => setOpenAlert(false)} severity="success" sx={{ width: "100%" }}>
-          Ahora podrás ingresar tu información para contactarnos. Te agradecemos!
+          Ahora podrás ingresar tu información para contactarnos. ¡Te agradecemos!
         </Alert>
       </Snackbar>
     </Box>
