@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
+import "./css/Cargando.css";
 
 const Cargando = () => {
     const [glow, setGlow] = useState(false);
@@ -37,6 +38,14 @@ const Cargando = () => {
                 zIndex: 9999,
             }}
         >
+            <Box
+                sx={{
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundColor: 'rgb(255, 222, 246)',
+                    zIndex: 0,
+                }}
+            />
             {/* Fondo */}
             <Box
                 sx={{
@@ -46,7 +55,9 @@ const Cargando = () => {
                     backgroundSize: 'cover',
                     backgroundPosition: { xs: 'center 100%', md: 'center 100%' },
                     backgroundRepeat: 'no-repeat',
-                    zIndex: 0,
+                    zIndex: 1,
+                    opacity: 0, // Puedes animar esto si quieres aparición progresiva
+                    animation: 'fadeInBg 2s ease-in forwards', // ejemplo animación
                 }}
             />
 

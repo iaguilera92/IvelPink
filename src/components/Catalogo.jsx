@@ -38,20 +38,32 @@ const Catalogo = () => {
 
   const ImgUrlAleatorio = (imgUrl) => {
     const urls = [
-      'https://emprendepyme.net/wp-content/uploads/2023/03/comercializar-productos.jpg',
-      'https://www.hostingplus.cl/wp-content/uploads/2023/08/Importancia-del-carrito-de-compra.jpg',
-      'https://logistica360.pe/wp-content/uploads/2023/11/compras-inte.jpg',
-      'https://www.ticobuycr.com/wp-content/uploads/2021/04/venta-por-internet_1.jpg',
-      'https://emprendepyme.net/wp-content/uploads/2023/03/cualidades-producto.jpg',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpK3luyjdef0_KFW3p1I7upURnq3Rf31eVyQ&s'
+      'producto1.jpg',
+      'producto2.jpg',
+      'producto3.jpg',
+      'producto4.jpg',
+      'producto5.jpg',
+      'producto6.jpg',
+      'producto7.jpg',
+      'producto8.jpg',
+      'producto9.jpg',
+      'producto10.jpg',
+      'producto11.jpg',
+      'producto12.jpg',
+      'producto13.jpg',
+      'producto14.jpg',
+      'producto15.jpg',
+      'producto16.jpg',
+      'producto17.jpg',
+      'producto18.jpg',
     ];
     return urls[imgUrl - 1] || urls[0];
   };
 
   const GetProducto = (id, precio, img, stock = 1, descuento = false) => ({
     IdProducto: id,
-    NombreProducto: `Producto ${id}`,
-    Descripcion: 'Esta es una descripción del producto en stock, click para agregar al carrito.',
+    NombreProducto: `Pijama ${id}`,
+    Descripcion: 'Diseñados en colombia, piel de durazno.',
     Valor: precio,
     Stock: stock,
     ImageUrl: ImgUrlAleatorio(img),
@@ -65,16 +77,21 @@ const Catalogo = () => {
       GetProducto(1, 20000, 1, 2, true),
       GetProducto(2, 15000, 2, 10, false),
       GetProducto(3, 35000, 3, 3, false),
-      GetProducto(4, 23990, 4, 4, true),
-      GetProducto(5, 17990, 5, 12, true),
+      GetProducto(4, 23990, 4, 4, false),
+      GetProducto(5, 17990, 5, 12, false),
       GetProducto(6, 7000, 6, 1, false),
-      GetProducto(7, 23990, 4, 4, true),
-      GetProducto(8, 17990, 5, 12, true),
+      GetProducto(7, 23990, 4, 4, false),
+      GetProducto(8, 17990, 5, 12, false),
       GetProducto(9, 7000, 6, 1, false),
       GetProducto(10, 7000, 6, 1, false),
-      GetProducto(11, 23990, 4, 4, true),
-      GetProducto(12, 17990, 5, 12, true),
-      GetProducto(13, 7000, 6, 1, false)
+      GetProducto(11, 23990, 4, 4, false),
+      GetProducto(12, 17990, 5, 12, false),
+      GetProducto(13, 7000, 6, 1, false),
+      GetProducto(14, 7000, 6, 1, false),
+      GetProducto(15, 23990, 4, 4, false),
+      GetProducto(16, 17990, 5, 12, false),
+      GetProducto(17, 7000, 6, 1, false),
+      GetProducto(18, 7000, 6, 1, false)
     ]);
 
     window.scrollTo(0, 0);

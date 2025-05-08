@@ -271,10 +271,10 @@ function Contacto() {
                             <Marker
                               position={finalPosition}
                               icon={new L.Icon({
-                                iconUrl: "/logo-mapa.png",
-                                iconSize: [160, 160],
-                                iconAnchor: [80, 80],
-                                popupAnchor: [0, -80],
+                                iconUrl: "/costura-mapa.webp",
+                                iconSize: [125, 105],        // Imagen más pequeña
+                                iconAnchor: [65, 65],       // Punto exacto donde "pincha" el mapa (más abajo del centro)
+                                popupAnchor: [0, -110],      // Popup justo encima del icono
                               })}
                             />
                             <ZoomEffect zoom={finalZoom} />
@@ -333,11 +333,11 @@ function Contacto() {
                       }}
                     >
                       <img
-                        src="/contacto.webp"
+                        src="/mapa-contacto.png"
                         alt="Imagen de contacto"
                         style={{
                           width: isMobile ? "100%" : "80%",
-                          height: isMobile ? "85%" : "100%",
+                          height: isMobile ? "100%" : "100%",
                           borderRadius: 2,
                         }}
                       />

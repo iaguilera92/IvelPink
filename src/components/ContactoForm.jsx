@@ -415,7 +415,7 @@ const ContactoForm = ({ setSnackbar }) => {
                                             lineHeight: 1.2, // 👈 Ajusta el centro del texto para que no se despegue
                                         }}
                                     >
-                                        Soporte técnico
+                                        Servicio al cliente
                                     </Typography>
                                 </Box>
 

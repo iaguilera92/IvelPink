@@ -207,7 +207,6 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',
-                  filter: 'brightness(0.6)',
                   position: 'absolute',
                   top: 0,
                   left: 0,
