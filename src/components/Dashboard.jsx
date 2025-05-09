@@ -131,7 +131,7 @@ const Dashboard = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                backgroundImage: 'url(fondo-blizz-ivelpink.png)',
+                backgroundImage: 'url(fondo-blizz-ivelpink.webp)',
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",

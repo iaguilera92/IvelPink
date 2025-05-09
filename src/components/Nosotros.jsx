@@ -41,7 +41,7 @@ const Nosotros = () => {
         pb: 3.5,
         position: 'relative',
         overflow: 'hidden',
-        backgroundImage: isMobile ? 'url(fondo-blizz-ivelpink.png)' : 'url(fondo-blizz-ivelpink.png)',
+        backgroundImage: isMobile ? 'url(fondo-blizz-ivelpink.webp)' : 'url(fondo-blizz-ivelpink.webp)',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'fixed',

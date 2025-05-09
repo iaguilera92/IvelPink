@@ -51,7 +51,7 @@ const Cargando = () => {
                 sx={{
                     position: 'absolute',
                     inset: 0,
-                    backgroundImage: isMobile ? 'url(fondo-ivelpink-mobile.jpg)' : 'url(footer-ivelpink.avif)',
+                    backgroundImage: isMobile ? 'url(fondo-ivelpink-mobile.webp)' : 'url(footer-ivelpink.avif)',
                     backgroundSize: 'cover',
                     backgroundPosition: { xs: 'center 100%', md: 'center 100%' },
                     backgroundRepeat: 'no-repeat',

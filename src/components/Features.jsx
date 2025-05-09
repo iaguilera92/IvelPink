@@ -101,7 +101,7 @@ function Features({ videoReady }) {
   return (
     <Box
       sx={{
-        backgroundImage: 'url(fondo-blizz-ivelpink.png)',
+        backgroundImage: 'url(fondo-blizz-ivelpink.webp)',
         backgroundSize: 'cover',  // Asegura que la imagen cubra todo el contenedor
         backgroundPosition: 'center',  // Centra la imagen en el fondo
         backgroundAttachment: 'fixed',  // Asegura que la imagen de fondo no se mueva al hacer scroll

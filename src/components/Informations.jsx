@@ -15,7 +15,7 @@ const promotions = [
   {
     title: "Catálogo digital",
     description: "Muestra tu colección de ropa de forma profesional.",
-    image: "/Informations-1.jpg",
+    image: "/Informations-1.webp",
     price: "Por definir",
     extraPrices: [
       { label: "Dominio anual", price: "$10.000" },
@@ -51,7 +51,7 @@ const promotions = [
   {
     title: "Sistema de pedidos personalizados",
     description: "Recibe pedidos a medida desde tu sitio web.",
-    image: "/Informations-3.jpg",
+    image: "/Informations-3.webp",
     price: "Por definir",
     extraPrices: [
       { label: "Dominio anual", price: "$10.000" },
@@ -132,7 +132,7 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
       sx={{
         position: "relative",
         zIndex: 10,
-        backgroundImage: 'url(fondo-blizz-ivelpink.png)',
+        backgroundImage: 'url(fondo-blizz-ivelpink.webp)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',

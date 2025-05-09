@@ -201,6 +201,7 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
             <Card sx={{ width: '100%', height: '100%', position: 'relative' }}>
               <Box
                 component="img"
+                decode="async"
                 loading="lazy"
                 src={producto.ImageUrl}
                 alt={producto.NombreProducto}
@@ -365,12 +366,11 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
                 <Box
                   component="video"
                   ref={videoRef}
-                  className="swiper-lazy"
                   src={producto.VideoUrl}
                   poster={producto.ImageUrl}
                   muted
                   playsInline
-                  preload="metadata"
+                  preload={girado ? 'auto' : 'none'}
                   decode="async"
                   sx={{
                     position: 'absolute',

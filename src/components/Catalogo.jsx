@@ -27,32 +27,8 @@ const Catalogo = () => {
   const [animarFlecha, setAnimarFlecha] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
 
-
-  const ImgUrlAleatorio = (imgUrl) => {
-    const urls = [
-      'producto1.jpg',
-      'producto2.jpg',
-      'producto3.jpg',
-      'producto4.jpg',
-      'producto5.jpg',
-      'producto6.jpg',
-      'producto7.jpg',
-      'producto8.jpg',
-      'producto9.jpg',
-      'producto10.jpg',
-      'producto11.jpg',
-      'producto12.jpg',
-      'producto13.jpg',
-      'producto14.jpg',
-      'producto15.jpg',
-      'producto16.jpg',
-      'producto17.jpg',
-      'producto18.jpg',
-    ];
-    return urls[imgUrl - 1] || urls[0];
-  };
   const VideoUrlAleatorio = () => {
-    const opciones = [1, 2, 3, 4]; // Número de videos disponibles
+    const opciones = [1]; // Número de videos disponibles
     const index = Math.floor(Math.random() * opciones.length);
     return `/Producto${opciones[index]}.mp4`;
   };
@@ -62,7 +38,7 @@ const Catalogo = () => {
     Descripcion: 'Diseñados en colombia, piel de durazno.',
     Valor: precio,
     Stock: stock,
-    ImageUrl: `producto${id}.jpg`, // ← imagen fija y única para cada id
+    ImageUrl: `producto${id}.webp`, // ← imagen fija y única para cada id
     ConDescuento: descuento,
     VideoUrl: VideoUrlAleatorio(),
   });
@@ -73,7 +49,8 @@ const Catalogo = () => {
     const nuevosProductos = [];
 
     for (let i = 1; i <= 18; i++) {
-      nuevosProductos.push(GetProducto(i, 13000));
+      const tieneDescuento = i === 1 || i === 15; // 👈 Solo estos tendrán descuento
+      nuevosProductos.push(GetProducto(i, 13000, 1, tieneDescuento));
     }
 
     setProductos(nuevosProductos);
@@ -185,8 +162,8 @@ const Catalogo = () => {
             position: 'relative',
             overflow: 'hidden',
             backgroundImage: isMobile
-              ? 'url(fondo-blizz-ivelpink.png)'
-              : 'url(fondo-blizz-ivelpink.png)',
+              ? 'url(fondo-blizz-ivelpink.webp)'
+              : 'url(fondo-blizz-ivelpink.webp)',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundAttachment: 'fixed',
@@ -215,6 +192,8 @@ const Catalogo = () => {
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8, ml: 1 }}>
                       <Box
                         component="img"
+                        loading="lazy"
+                        decoding="async"
                         src="cine.png"
                         alt="Reels icon"
                         sx={{

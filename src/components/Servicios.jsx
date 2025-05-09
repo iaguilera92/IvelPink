@@ -92,7 +92,7 @@ const Servicios = () => {
   return (
     <Container maxWidth={false} disableGutters sx={{
       minHeight: '100vh', width: '100%', overflowX: 'hidden', py: 1, px: 0, pb: 3.5,
-      backgroundImage: 'url(fondo-blizz-ivelpink.png)', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed', backgroundPosition: 'center'
+      backgroundImage: 'url(fondo-blizz-ivelpink.webp)', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed', backgroundPosition: 'center'
     }}>
 
       <Box ref={containerRef} sx={{ pt: 12, pb: 4, px: { xs: 1, md: 4 } }}>
