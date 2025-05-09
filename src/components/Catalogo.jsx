@@ -11,6 +11,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { IconButton } from '@mui/material';
 import { Virtual } from 'swiper/modules';
 import Cargando from './Cargando';
+import { cargarProductos } from '../helpers/HelperProductos';
 
 const Catalogo = () => {
   const [productos, setProductos] = useState([]);
@@ -27,35 +28,25 @@ const Catalogo = () => {
   const [animarFlecha, setAnimarFlecha] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const VideoUrlAleatorio = () => {
-    const opciones = [1]; // Número de videos disponibles
-    const index = Math.floor(Math.random() * opciones.length);
-    return `/Producto${opciones[index]}.mp4`;
-  };
-  const GetProducto = (id, precio, stock = 1, descuento = false) => ({
-    IdProducto: id,
-    NombreProducto: `Pijama ${id}`,
-    Descripcion: 'Diseñados en colombia, piel de durazno.',
-    Valor: precio,
-    Stock: stock,
-    ImageUrl: `producto${id}.webp`, // ← imagen fija y única para cada id
-    ConDescuento: descuento,
-    VideoUrl: VideoUrlAleatorio(),
-  });
-
-
-
   useEffect(() => {
-    const nuevosProductos = [];
+    let cancelado = false;
 
-    for (let i = 1; i <= 18; i++) {
-      const tieneDescuento = i === 1 || i === 15; // 👈 Solo estos tendrán descuento
-      nuevosProductos.push(GetProducto(i, 13000, 1, tieneDescuento));
-    }
+    const cargarDatos = async () => {
+      if (cancelado) return;
+      const timestamp = new Date().getTime();
+      const urlConCacheBust = `https://ivelpink.s3.us-east-2.amazonaws.com/Productos.xlsx?t=${timestamp}`;
 
-    setProductos(nuevosProductos);
-    window.scrollTo(0, 0);
+      const datos = await cargarProductos(urlConCacheBust);
+      if (!cancelado) setProductos(datos);
+    };
+
+    cargarDatos();
+
+    return () => {
+      cancelado = true;
+    };
   }, []);
+
 
   //CARGAR ANTES DE EMPEZAR
   useEffect(() => {

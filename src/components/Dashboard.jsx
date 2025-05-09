@@ -159,7 +159,7 @@ const Dashboard = () => {
                             justifyContent: "center",
                         }}
                     >
-                        {"Bienvenido ".split("").map((char, index) => (
+                        {"Bienvenida ".split("").map((char, index) => (
                             <motion.span
                                 key={`char-${index}`}
                                 custom={index}

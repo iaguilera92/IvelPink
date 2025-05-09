@@ -11,4 +11,4 @@
     Access-Control-Allow-Methods = "GET, POST, OPTIONS"
 
 [functions]
-included_files = ["netlify/functions/Servicios.xlsx"]
+included_files = ["netlify/functions/Productos.xlsx"]

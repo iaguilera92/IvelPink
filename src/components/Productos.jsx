@@ -143,7 +143,7 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
         }}
       >
         {/* Stock badge */}
-        {/* <Box
+        <Box
           sx={{
             position: 'absolute',
             top: -12,
@@ -169,7 +169,7 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
           }}
         >
           {producto.Stock}
-        </Box>*/}
+        </Box>
 
         <motion.div
           animate={{ rotateY: girado ? 180 : 0 }}

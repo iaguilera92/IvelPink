@@ -6,13 +6,13 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import { useNavigate } from 'react-router-dom';
 
-const MenuInferior = ({ cardSize, modo = "servicios" }) => {
+const MenuInferior = ({ cardSize, modo = "productos" }) => {
     const navigate = useNavigate();
     const isDashboard = modo === "dashboard";
 
     const IconoCentral = isDashboard ? BarChartIcon : HomeRepairServiceIcon;
     const colorCentral = isDashboard ? "success.main" : "success.main";
-    const textoCentral = isDashboard ? "Visitas" : "Servicios";
+    const textoCentral = isDashboard ? "Visitas" : "Productos";
     const goWithCleanCache = async (rutaDestino) => {
         try {
             // 🧹 Eliminar todas las caches
@@ -132,7 +132,7 @@ const MenuInferior = ({ cardSize, modo = "servicios" }) => {
                     boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                 },
             }}
-            onClick={() => goWithCleanCache(isDashboard ? "/configurar-servicios" : "/dashboard")}
+            onClick={() => goWithCleanCache(isDashboard ? "/configurar-productos" : "/dashboard")}
 
         >
             <Box
@@ -151,7 +151,7 @@ const MenuInferior = ({ cardSize, modo = "servicios" }) => {
                     <BarChartIcon sx={{ fontSize: 26, color: "primary.main" }} />
                 )}
                 <Typography variant="caption" fontSize={11}>
-                    {isDashboard ? "Servicios" : "Visitas"}
+                    {isDashboard ? "Productos" : "Visitas"}
                 </Typography>
             </Box>
         </Box>
