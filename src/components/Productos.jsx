@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Box, Card, Typography, Button, Stack } from '@mui/material';
 import { motion } from 'framer-motion';
 
@@ -6,6 +6,7 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
   const videoRef = useRef(null);
   const containerRef = useRef(null);
   const botonWhatsappRef = useRef(null);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   useEffect(() => {
     if (girado && videoRef.current) {
@@ -203,6 +204,7 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
                 loading="lazy"
                 src={producto.ImageUrl}
                 alt={producto.NombreProducto}
+                onLoad={() => setIsImageLoaded(true)}
                 sx={{
                   width: '100%',
                   height: '100%',
@@ -210,6 +212,8 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
                   position: 'absolute',
                   top: 0,
                   left: 0,
+                  filter: isImageLoaded ? 'none' : 'blur(12px) brightness(0.7)',
+                  transition: 'filter 0.6s ease',
                 }}
               />
               {/* Botones claramente visibles aquí abajo */}

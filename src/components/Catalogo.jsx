@@ -66,24 +66,24 @@ const Catalogo = () => {
 
   useEffect(() => {
     setProductos([
-      GetProducto(1, 20000, 1, 2, true),
-      GetProducto(2, 15000, 2, 10, false),
-      GetProducto(3, 35000, 3, 3, false),
-      GetProducto(4, 23990, 4, 4, false),
-      GetProducto(5, 17990, 5, 12, false),
-      GetProducto(6, 7000, 6, 1, false),
-      GetProducto(7, 23990, 4, 4, false),
-      GetProducto(8, 17990, 5, 12, false),
-      GetProducto(9, 7000, 6, 1, false),
-      GetProducto(10, 7000, 6, 1, false),
-      GetProducto(11, 23990, 4, 4, false),
-      GetProducto(12, 17990, 5, 12, false),
-      GetProducto(13, 7000, 6, 1, false),
-      GetProducto(14, 7000, 6, 1, false),
-      GetProducto(15, 23990, 4, 4, false),
-      GetProducto(16, 17990, 5, 12, false),
-      GetProducto(17, 7000, 6, 1, false),
-      GetProducto(18, 7000, 6, 1, false)
+      GetProducto(1, 13000, 1, 2, true),
+      GetProducto(2, 13000, 2, 10, false),
+      GetProducto(3, 13000, 3, 3, false),
+      GetProducto(4, 13000, 4, 4, false),
+      GetProducto(5, 13000, 5, 12, false),
+      GetProducto(6, 13000, 6, 1, false),
+      GetProducto(7, 13000, 4, 4, false),
+      GetProducto(8, 13000, 5, 12, false),
+      GetProducto(9, 13000, 6, 1, false),
+      GetProducto(10, 13000, 6, 1, false),
+      GetProducto(11, 13000, 4, 4, false),
+      GetProducto(12, 13000, 5, 12, false),
+      GetProducto(13, 13000, 6, 1, false),
+      GetProducto(14, 13000, 6, 1, false),
+      GetProducto(15, 13000, 4, 4, false),
+      GetProducto(16, 13000, 5, 12, false),
+      GetProducto(17, 13000, 6, 1, false),
+      GetProducto(18, 13000, 6, 1, false)
     ]);
 
     window.scrollTo(0, 0);
