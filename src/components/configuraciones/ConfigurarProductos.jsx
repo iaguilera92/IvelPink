@@ -42,7 +42,11 @@ const ConfigurarProductos = () => {
   const recargarProductos = async () => {
     const timestamp = Date.now();
     const data = await cargarProductos(`https://ivelpink.s3.us-east-2.amazonaws.com/Productos.xlsx?t=${timestamp}`);
-    setProductos(data);
+
+    const ordenados = [...data].sort((a, b) => String(a.IdProducto).localeCompare(String(b.IdProducto)));
+
+
+    setProductos(ordenados);
   };
 
   const handleEditar = (index) => {

@@ -36,7 +36,11 @@ const Catalogo = () => {
       const timestamp = new Date().getTime();
       const urlConCacheBust = `https://ivelpink.s3.us-east-2.amazonaws.com/Productos.xlsx?t=${timestamp}`;
 
-      const datos = await cargarProductos(urlConCacheBust);
+      let datos = await cargarProductos(urlConCacheBust);
+
+      // Ordena por IdProducto alfabéticamente
+      datos = datos.sort((a, b) => String(a.IdProducto).localeCompare(String(b.IdProducto)));
+
       if (!cancelado) setProductos(datos);
     };
 
@@ -46,6 +50,7 @@ const Catalogo = () => {
       cancelado = true;
     };
   }, []);
+
 
 
   //CARGAR ANTES DE EMPEZAR

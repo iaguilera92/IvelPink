@@ -133,7 +133,9 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
       }}
     >
       <Box
-        onClick={onGirar}
+        onClick={() => {
+          if (producto.Stock > 0) onGirar();
+        }}
         sx={{
           width: '100%',
           height: '100%',
@@ -213,10 +215,43 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
                   position: 'absolute',
                   top: 0,
                   left: 0,
-                  filter: isImageLoaded ? 'none' : 'blur(12px) brightness(0.7)',
+                  filter: producto.Stock === 0
+                    ? 'grayscale(100%) brightness(0.5)'
+                    : (isImageLoaded ? 'none' : 'blur(12px) brightness(0.7)'),
                   transition: 'filter 0.6s ease',
                 }}
               />
+              {producto.Stock === 0 && (
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    bgcolor: 'rgba(0, 0, 0, 0.6)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 3,
+                    pointerEvents: 'none',
+                    textAlign: 'center',
+                    px: 2
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: 'white',
+                      fontSize: '1rem',
+                      whiteSpace: 'pre-line'
+                    }}
+                  >
+                    {"Reponiendo stock.\nDisponible pronto..."}
+                  </Typography>
+                </Box>
+              )}
+
+
               {/* Botones claramente visibles aquí abajo */}
               <Box
                 sx={{
@@ -282,14 +317,14 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
                       sx={{
                         fontFamily: '"RC Type Cond", Arial, sans-serif',
                         fontSize: { xs: '1.2rem', sm: '1rem' },
-                        color: producto.ConDescuento ? '#00e676' : '#FFFFFF',
-                        textShadow: '0 1px 2px rgba(0, 0, 0, 20)', // contraste suav
+                        color: producto.Stock === 0 ? '#FF5252' : (producto.ConDescuento ? '#00e676' : '#FFFFFF'),
+                        textShadow: '0 1px 2px rgba(0, 0, 0, 20)',
                         letterSpacing: 0.5,
                         lineHeight: 1.2,
                         textAlign: 'center',
                       }}
                     >
-                      {FormatearPesos(producto.Valor)}
+                      {producto.Stock === 0 ? 'Agotado' : FormatearPesos(producto.Valor)}
                     </Typography>
 
                     {producto.ConDescuento && (
@@ -313,11 +348,16 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
                   {/* Botón Solicitar (derecha) */}
                   <Button
                     variant="contained"
+                    disabled={producto.Stock === 0}
                     sx={{
                       bgcolor: '#FFFFFF',
                       color: '#222222',
                       textTransform: 'none',
-                      '&:hover': { bgcolor: '#f0f0f0' },
+                      opacity: producto.Stock === 0 ? 0.4 : 1,
+                      cursor: producto.Stock === 0 ? 'not-allowed' : 'pointer',
+                      '&:hover': {
+                        bgcolor: producto.Stock === 0 ? '#FFFFFF' : '#f0f0f0'
+                      },
                       fontSize: '0.75rem',
                       borderRadius: '10px',
                       py: 0.5,
@@ -325,6 +365,7 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
                     }}
                     onClick={(e) => {
                       e.stopPropagation();
+                      if (producto.Stock === 0) return;
                       const mensaje = `Me interesó el ${producto.NombreProducto}, ¿sigue disponible?`;
                       const telefono = '56979897336';
                       const urlWhatsapp = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
