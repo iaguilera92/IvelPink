@@ -259,7 +259,7 @@ function Hero({ informationsRef, setVideoReady }) {
                       window.scrollTo({ top: y, behavior: "smooth" });
                     }}
                   >
-                    <span>Nuestros Precios</span>
+                    <span>Nuestros Servicios</span>
                   </button>
                 </Box>
               </motion.div>
@@ -275,7 +275,7 @@ function Hero({ informationsRef, setVideoReady }) {
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
         <Alert onClose={() => setOpenAlert(false)} severity="success" sx={{ width: "100%" }}>
-          Ahora podrás ingresar tu información para contactarnos. ¡Te agradecemos!
+          Revisa nuestros servicios y catálogo ¡Bienvenido!
         </Alert>
       </Snackbar>
     </Box>

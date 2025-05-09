@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import {
-  Container,
-  Snackbar,
-  Box,
-  Alert,
-  useTheme,
-  useMediaQuery,
-  Button
-} from '@mui/material';
+import { Container, Snackbar, Box, Alert, useTheme, useMediaQuery, Button } from '@mui/material';
 import './css/Catalogo.css';
 import { motion } from 'framer-motion';
 import Productos from './Productos';

@@ -16,7 +16,7 @@ const promotions = [
     title: "Catálogo digital",
     description: "Muestra tu colección de ropa de forma profesional.",
     image: "/Informations-1.jpg",
-    price: "$49.990",
+    price: "Por definir",
     extraPrices: [
       { label: "Dominio anual", price: "$10.000" },
       { label: "Hosting mensual", price: "$8.000" }
@@ -34,7 +34,7 @@ const promotions = [
     title: "Tienda online de ropa",
     description: "Vende tus prendas en línea de forma segura.",
     image: "/Informations-2.webp",
-    price: "$89.990",
+    price: "Por definir",
     extraPrices: [
       { label: "Dominio anual", price: "$10.000" },
       { label: "Hosting mensual", price: "$10.000" }
@@ -52,7 +52,7 @@ const promotions = [
     title: "Sistema de pedidos personalizados",
     description: "Recibe pedidos a medida desde tu sitio web.",
     image: "/Informations-3.jpg",
-    price: "$119.990",
+    price: "Por definir",
     extraPrices: [
       { label: "Dominio anual", price: "$10.000" },
       { label: "Hosting mensual", price: "$12.000" }
@@ -500,7 +500,7 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
                             </Typography>
                           </Box>
 
-                          {/* 💡 Aquí colocamos el mt: 'auto' para empujarlo al final */}
+
                           <Box
                             sx={{
                               backgroundColor: "#edf4ff",
