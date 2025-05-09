@@ -51,41 +51,32 @@ const Catalogo = () => {
     ];
     return urls[imgUrl - 1] || urls[0];
   };
-
-  const GetProducto = (id, precio, img, stock = 1, descuento = false) => ({
+  const VideoUrlAleatorio = () => {
+    const opciones = [1, 2, 3, 4]; // Número de videos disponibles
+    const index = Math.floor(Math.random() * opciones.length);
+    return `/Producto${opciones[index]}.mp4`;
+  };
+  const GetProducto = (id, precio, stock = 1, descuento = false) => ({
     IdProducto: id,
     NombreProducto: `Pijama ${id}`,
     Descripcion: 'Diseñados en colombia, piel de durazno.',
     Valor: precio,
     Stock: stock,
-    ImageUrl: ImgUrlAleatorio(img),
+    ImageUrl: `producto${id}.jpg`, // ← imagen fija y única para cada id
     ConDescuento: descuento,
-    VideoUrl: `/Producto${(id % 3) + 1}.mp4`, // entre 4 opciones distintas
+    VideoUrl: VideoUrlAleatorio(),
   });
 
 
-  useEffect(() => {
-    setProductos([
-      GetProducto(1, 13000, 1, 2, true),
-      GetProducto(2, 13000, 2, 10, false),
-      GetProducto(3, 13000, 3, 3, false),
-      GetProducto(4, 13000, 4, 4, false),
-      GetProducto(5, 13000, 5, 12, false),
-      GetProducto(6, 13000, 6, 1, false),
-      GetProducto(7, 13000, 4, 4, false),
-      GetProducto(8, 13000, 5, 12, false),
-      GetProducto(9, 13000, 6, 1, false),
-      GetProducto(10, 13000, 6, 1, false),
-      GetProducto(11, 13000, 4, 4, false),
-      GetProducto(12, 13000, 5, 12, false),
-      GetProducto(13, 13000, 6, 1, false),
-      GetProducto(14, 13000, 6, 1, false),
-      GetProducto(15, 13000, 4, 4, false),
-      GetProducto(16, 13000, 5, 12, false),
-      GetProducto(17, 13000, 6, 1, false),
-      GetProducto(18, 13000, 6, 1, false)
-    ]);
 
+  useEffect(() => {
+    const nuevosProductos = [];
+
+    for (let i = 1; i <= 18; i++) {
+      nuevosProductos.push(GetProducto(i, 13000));
+    }
+
+    setProductos(nuevosProductos);
     window.scrollTo(0, 0);
   }, []);
 
