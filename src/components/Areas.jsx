@@ -14,7 +14,7 @@ const data = [
   {
     count: 80,
     text: "Clientes felices con diseños personalizados",
-    image: "ProyectoPymes.mp4",
+    image: "costura-hilo.mp4",
   },
   {
     count: 12,
@@ -24,7 +24,7 @@ const data = [
   {
     count: 50,
     text: "Hilos usados por día en creaciones 🎀",
-    image: "Cafe.mp4",
+    image: "hilos.mp4",
   },
 ];
 

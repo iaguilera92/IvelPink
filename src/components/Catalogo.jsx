@@ -27,6 +27,11 @@ const Catalogo = () => {
   const [mostrarControlesVideo, setMostrarControlesVideo] = useState(false);
   const [animarFlecha, setAnimarFlecha] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
+  const fechaActual = new Date().toLocaleDateString('es-CL', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
 
   useEffect(() => {
     let cancelado = false;
@@ -185,7 +190,15 @@ const Catalogo = () => {
                     }}
                   >
                     {/* Título con ícono estilo reels */}
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8, ml: 1 }}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                        ml: 1,
+                      }}
+                    >
+                      {/* Columna 1: Ícono centrado */}
                       <Box
                         component="img"
                         loading="lazy"
@@ -193,24 +206,46 @@ const Catalogo = () => {
                         src="cine.png"
                         alt="Reels icon"
                         sx={{
-                          width: 18,
-                          height: 18,
-                          marginBottom: 0.5,
+                          width: 16,
+                          height: 16,
                           filter: 'invert(1)',
+                          alignSelf: 'center',
+                          mt: 0,
                         }}
                       />
+
+                      {/* Columna 2: Título + Fecha */}
                       <Box
                         sx={{
-                          fontWeight: 'bold',
-                          fontSize: '0.9rem',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
                           color: 'white',
-                          letterSpacing: 0.5,
                           fontFamily: '"Segoe UI", sans-serif',
+                          lineHeight: 1.2,
                         }}
                       >
-                        {grupoIndex === 0 ? 'Explora el catálogo' : 'Más productos..'}
+                        <Box sx={{ fontWeight: 'bold', fontSize: '0.85rem' }}>
+                          {grupoIndex === 0 ? 'Explora el catálogo' : 'Más productos activos..'}
+                        </Box>
+                        {grupoIndex === 0 && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 1.5, duration: 0.5, ease: 'easeOut' }}
+                          >
+                            <Box sx={{ fontWeight: 400, fontSize: '0.75rem', opacity: 0.9 }}>
+                              Última actualización de stock{' '}
+                              <Box component="span" sx={{ fontWeight: 'bold' }}>
+                                {fechaActual}
+                              </Box>
+                            </Box>
+
+                          </motion.div>
+                        )}
                       </Box>
                     </Box>
+
 
                     {/* Flecha o espacio */}
                     <Box sx={{ width: 40, textAlign: 'right' }}>

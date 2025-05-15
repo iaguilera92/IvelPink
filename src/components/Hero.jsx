@@ -3,6 +3,7 @@ import { Container, Typography, Box, Snackbar, Alert, useMediaQuery, useTheme } 
 import { motion } from "framer-motion";
 import "./css/Hero.css";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useNavigate } from "react-router-dom";
 
 function Hero({ informationsRef, setVideoReady }) {
   const [currentText, setCurrentText] = useState(0);
@@ -11,10 +12,11 @@ function Hero({ informationsRef, setVideoReady }) {
   const [loadingVideo, setLoadingVideo] = useState(true);
   const [isHeroVisible, setIsHeroVisible] = useState(true);
   const [canAdvance, setCanAdvance] = useState(true);
-
+  const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const heroRef = useRef(null);
+  const [mostrarTransicion, setMostrarTransicion] = useState(false);
 
   const titulos = [
     { title: "Venta de prendas", description: "" },
@@ -98,7 +100,9 @@ function Hero({ informationsRef, setVideoReady }) {
       };
     }, [text]);
 
+
     return (
+
       <Typography
         variant="h3"
         gutterBottom
@@ -150,7 +154,6 @@ function Hero({ informationsRef, setVideoReady }) {
           setCanAdvance(false);
           setCurrentText((prev) => {
             const next = (prev + 1) % titulos.length;
-            console.log(`✅ Terminó animación del título: "${titulos[prev].title}" → Siguiente: "${titulos[next].title}"`);
             return next;
           });
           setTimeout(() => setCanAdvance(true), 100);
@@ -160,125 +163,144 @@ function Hero({ informationsRef, setVideoReady }) {
   ), [currentText, isHeroVisible, isMobile, canAdvance]);
 
   return (
-    <Box
-      ref={heroRef}
-      sx={{
-        position: "relative",
-        height: "400px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-        overflow: "hidden",
-      }}
-    >
+    <>
+      {mostrarTransicion && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'hsl(322.86deg 95.45% 91.37%)',
+            zIndex: 9999,
+          }}
+        />
+      )}
+
       <Box
+        ref={heroRef}
         sx={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
+          position: "relative",
+          height: "400px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
           overflow: "hidden",
         }}
       >
-        {loadingVideo && (
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              zIndex: 2,
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0,0,0,0.4)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <CircularProgress size={60} sx={{ color: "#ffffff" }} />
-          </Box>
-        )}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          id="background-video"
-          onLoadedData={() => {
-            console.log("🎥 Componentes cargados");
-            setLoadingVideo(false);
-            if (setVideoReady) setVideoReady(true);
-          }}
-          style={{
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
             width: "100%",
             height: "100%",
-            objectFit: "cover",
-            pointerEvents: "none",
+            overflow: "hidden",
           }}
-          disablePictureInPicture
-          controlsList="nodownload nofullscreen noremoteplayback"
         >
-          <source src="video-inicio.mp4" type="video/mp4" />
-        </video>
-      </Box>
+          {loadingVideo && (
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                zIndex: 2,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0,0,0,0.4)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <CircularProgress size={60} sx={{ color: "#ffffff" }} />
+            </Box>
+          )}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            id="background-video"
+            onLoadedData={() => {
+              console.log("🎥 Componentes cargados");
+              setLoadingVideo(false);
+              if (setVideoReady) setVideoReady(true);
+            }}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              pointerEvents: "none",
+            }}
+            disablePictureInPicture
+            controlsList="nodownload nofullscreen noremoteplayback"
+          >
+            <source src="video-inicio.mp4" type="video/mp4" />
+          </video>
+        </Box>
 
-      {!loadingVideo && (
-        <Container
-          sx={{
-            position: "relative",
-            color: "white",
-            zIndex: 2,
-            perspective: "1000px",
-          }}
-        >
-          <Box
+        {!loadingVideo && (
+          <Container
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              height: "150px",
+              position: "relative",
+              color: "white",
+              zIndex: 2,
+              perspective: "1000px",
             }}
           >
-            {memoizedTypingText}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                height: "150px",
+              }}
+            >
+              {memoizedTypingText}
 
-            {showButton && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-              >
-                <Box sx={{ mt: isMobile ? 4 : 1 }}>
-                  <button
-                    className="btn-3"
-                    onClick={() => {
-                      setOpenAlert(true);
-                      const offset = window.innerWidth < 768 ? 490 : -50;
-                      const y = informationsRef.current.getBoundingClientRect().top + window.scrollY + offset;
-                      window.scrollTo({ top: y, behavior: "smooth" });
-                    }}
-                  >
-                    <span>Nuestros Servicios</span>
-                  </button>
-                </Box>
-              </motion.div>
-            )}
-          </Box>
-        </Container>
-      )}
+              {showButton && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                >
+                  <Box sx={{ mt: isMobile ? 4 : 1 }}>
+                    <button
+                      className="btn-3"
+                      onClick={() => {
+                        setMostrarTransicion(true);
+                        setTimeout(() => {
+                          navigate("/catalogo");
+                        }, 200); // puedes ajustar el tiempo si lo necesitas más largo
+                      }}
+                    >
+                      <span>Nuestro Catálogo</span>
+                    </button>
+                  </Box>
+                </motion.div>
+              )}
+            </Box>
+          </Container>
+        )}
 
-      <Snackbar
-        open={openAlert}
-        autoHideDuration={4000}
-        onClose={() => setOpenAlert(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert onClose={() => setOpenAlert(false)} severity="success" sx={{ width: "100%" }}>
-          Revisa nuestros servicios y catálogo ¡Bienvenido!
-        </Alert>
-      </Snackbar>
-    </Box>
+        <Snackbar
+          open={openAlert}
+          autoHideDuration={4000}
+          onClose={() => setOpenAlert(false)}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
+          <Alert onClose={() => setOpenAlert(false)} severity="success" sx={{ width: "100%" }}>
+            Revisa nuestros servicios y catálogo ¡Bienvenido!
+          </Alert>
+        </Snackbar>
+      </Box>
+    </>
   );
 }
 

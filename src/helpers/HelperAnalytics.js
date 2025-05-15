@@ -1,4 +1,4 @@
-export const MEASUREMENT_ID = "G-BXGJZQS44R";
+export const MEASUREMENT_ID = "G-RVKYEJG3F3";
 
 export const initGoogleAnalytics = () => {
     if (window.gtag) return; // evitar duplicar carga

@@ -31,7 +31,7 @@ exports.handler = async function (event, context) {
     console.log("▶️ Ejecutando runReport por país...");
 
     const [resPais] = await client.runReport({
-      property: "properties/485494483",
+      property: "properties/489531542",
       dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
       dimensions: [{ name: "country" }],
       metrics: [{ name: "activeUsers" }],
@@ -56,7 +56,7 @@ exports.handler = async function (event, context) {
     console.log("✅ Ejecutando runReport por dispositivo...");
 
     const [resDispositivos] = await client.runReport({
-      property: "properties/485494483",
+      property: "properties/489531542",
       dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
       dimensions: [{ name: "deviceCategory" }],
       metrics: [{ name: "activeUsers" }],

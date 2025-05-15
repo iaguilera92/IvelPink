@@ -11,7 +11,7 @@ import "./css/Features.css"; // Importamos el CSS
 const features = [
   { imageSrc: 'https://m.media-amazon.com/images/I/71d9aL875PL._AC_UY580_.jpg', label: 'Invierno' },
   { imageSrc: 'https://img.ltwebstatic.com/images3_pi/2023/07/21/16899049705cd10efc724e3b9c5d715c6f1a20faa8_thumbnail_405x.webp', label: 'Verano' },
-  { imageSrc: 'https://scontent.fscl19-1.fna.fbcdn.net/v/t51.75761-15/489832258_17991198932813850_3875989616024828700_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=uo10qeZoPRYQ7kNvwFmiKqp&_nc_oc=Adnc3bQJqS5xAHdwvKOmSHGB2PMyrAh1Uk6S2MEVhclDxqaPhT6VMNQlB1xSDnALA44&_nc_zt=23&_nc_ht=scontent.fscl19-1.fna&_nc_gid=WvbCv3_UnZoaeib_eC3Lig&oh=00_AfGlTSslzMr-C4ovYLFk7mwt73q9CiRt3HhWuavgxlh1sw&oe=681DBF27', label: 'Pijamas' },
+  { imageSrc: '/producto4.webp', label: 'Pijamas' },
   { imageSrc: 'https://img.ltwebstatic.com/images3_pi/2024/12/21/45/173476402702f144f0c5cba6439964db6031d6b08b_thumbnail_405x.webp', label: 'Jeans' },
   { imageSrc: 'https://img.ltwebstatic.com/images3_pi/2025/03/20/3a/17424556395aa953a27574ca9beac76a8ca40d94ba_thumbnail_405x.webp', label: 'Shorts' },
 

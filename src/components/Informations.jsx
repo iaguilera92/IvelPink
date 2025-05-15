@@ -13,32 +13,24 @@ import "swiper/css";
 
 const promotions = [
   {
-    title: "Catálogo digital",
-    description: "Muestra tu colección de ropa de forma profesional.",
+    title: "Producción para mayoristas",
+    description: "Ofrecemos confección de prendas por volumen para negocios de moda, talleres y marcas emergentes.",
     image: "/Informations-1.webp",
-    price: "Por definir",
-    extraPrices: [
-      { label: "Dominio anual", price: "$10.000" },
-      { label: "Hosting mensual", price: "$8.000" }
-    ],
+    price: "Consulta con nosotros",
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3))",
     textColor: "white",
     descriptors: [
       "Diseño moderno para mostrar tus prendas.",
       "Galería de productos con tallas y precios.",
       "Incluye dominio personalizado y formulario de contacto.",
-      "Ideal para emprendimientos de moda y costura."
+      "Ideal para emprendimientos de moda y costura por mayor."
     ]
   },
   {
     title: "Tienda online de ropa",
-    description: "Vende tus prendas en línea de forma segura.",
+    description: "Vende tus prendas directamente desde tu sitio con carrito de compras, catálogo y pagos en línea.",
     image: "/Informations-2.webp",
-    price: "Por definir",
-    extraPrices: [
-      { label: "Dominio anual", price: "$10.000" },
-      { label: "Hosting mensual", price: "$10.000" }
-    ],
+    price: "Consulta con nosotros",
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2))",
     textColor: "white",
     descriptors: [
@@ -49,24 +41,22 @@ const promotions = [
     ]
   },
   {
-    title: "Sistema de pedidos personalizados",
-    description: "Recibe pedidos a medida desde tu sitio web.",
+    title: "Envíos a todo Chile",
+    description: "Gestiona pedidos personalizados desde tu web y realiza envíos a cualquier región del país.",
     image: "/Informations-3.webp",
-    price: "Por definir",
-    extraPrices: [
-      { label: "Dominio anual", price: "$10.000" },
-      { label: "Hosting mensual", price: "$12.000" }
-    ],
+    price: "Consulta con nosotros",
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2))",
     textColor: "white",
     descriptors: [
       "Formulario para encargos personalizados y tallas a medida.",
-      "Base de datos con historial de pedidos.",
-      "Panel de administración para gestionar clientes y entregas.",
-      "Ideal para talleres de costura o moda personalizada."
+      "Historial de pedidos y clientes.",
+      "Panel de administración para gestionar entregas y contactos.",
+      "Ideal para talleres de costura con alcance nacional."
     ]
   }
 ];
+
+
 
 
 function Informations({ informationsRef, triggerInformations, setHasSeenInformations }) {
@@ -474,6 +464,7 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
                               flexDirection: "column",
                               alignItems: "flex-start",
                               mb: 2,
+                              flexGrow: 1,
                             }}
                           >
                             <Typography
@@ -500,51 +491,27 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
                             </Typography>
                           </Box>
 
-
+                          {/* Botón Cotizar */}
                           <Box
+                            component="button"
+                            onClick={() => handleContactClick(promo.title)}
                             sx={{
-                              backgroundColor: "#edf4ff",
-                              borderRadius: "12px",
-                              py: promo.price ? 1.3 : 1.5,
-                              px: 3,
-                              width: "100%",
-                              textAlign: "center",
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              justifyContent: "center",
+                              backgroundColor: "#007de0",
+                              color: "white",
+                              border: "none",
+                              borderRadius: "8px",
+                              width: "80%",
+                              py: 1,
+                              fontWeight: "bold",
+                              fontSize: "0.9rem",
+                              cursor: "pointer",
+                              transition: "background-color 0.3s",
+                              alignSelf: "center",
                               mt: "auto",
+                              "&:hover": { backgroundColor: "#005bb5" }
                             }}
                           >
-                            {promo.price && (
-                              <>
-                                <Typography variant="caption" sx={{ color: "gray", fontSize: "0.7rem", mb: 0.2 }}>
-                                  Precio
-                                </Typography>
-                                <Typography variant="h4" sx={{ fontWeight: "bold", color: "black", fontSize: "2rem", mb: 0.5 }}>
-                                  {promo.price}
-                                </Typography>
-                                <Box
-                                  component="button"
-                                  onClick={() => handleContactClick(promo.title)}
-                                  sx={{
-                                    backgroundColor: "#007de0",
-                                    color: "white",
-                                    border: "none",
-                                    borderRadius: "8px",
-                                    width: "80%",
-                                    py: 1,
-                                    fontWeight: "bold",
-                                    fontSize: "0.9rem",
-                                    cursor: "pointer",
-                                    transition: "background-color 0.3s",
-                                    "&:hover": { backgroundColor: "#005bb5" }
-                                  }}
-                                >
-                                  Cotizar
-                                </Box>
-                              </>
-                            )}
+                            Cotizar
                           </Box>
                         </Box>
                       </Box>
