@@ -254,144 +254,29 @@ const Evidencias = () => {
                                     </motion.span>
                                 ))}
                             </Typography>
+                            <Typography
+                                variant="h4"
+                                gutterBottom
+                                component="div"
+                                sx={{
+                                    fontFamily: '"Poppins", sans-serif',
+                                    fontSize: { xs: "1.2rem", md: "1.5rem" },
+                                    paddingX: { xs: "10px", md: "30px" }, // 👈 mejor usar paddingX para izquierda y derecha
+                                    paddingY: { xs: "10px", md: "20px" }, // 👈 también puedes darle arriba/abajo si quieres más aire
+                                    letterSpacing: "3px",
+                                    my: 0,
+                                    display: "flex",
+                                    flexWrap: "wrap",
+                                    justifyContent: "center", // 👈 ahora el contenido dentro queda al centro
+                                    alignItems: "center",
+                                    backgroundColor: "transparent",
+                                    color: "lightgray",
+                                    textAlign: "center", // 👈 adicional para asegurar texto centrado
+                                }}
+                            >
+                                En desarrollo...
+                            </Typography>
 
-                            <Grid container spacing={3} justifyContent="center">
-                                {[1, 2, 3].map((n, i) => (
-                                    <Grid item xs={12} sm={6} md={4} key={n}>
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 30 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            transition={{ duration: 0.6, delay: i * 0.2 }}
-                                        >
-                                            <Card
-                                                sx={{
-                                                    bgcolor: '#ffffff',
-                                                    borderRadius: 4,
-                                                    overflow: 'hidden',
-                                                    position: 'relative',
-                                                    '&::after': {
-                                                        content: '""',
-                                                        position: 'absolute',
-                                                        bottom: -20,
-                                                        left: '10%',
-                                                        width: '80%',
-                                                        height: '30px',
-                                                        background: 'rgba(0, 0, 0, 0.45)',
-                                                        filter: 'blur(12px)',
-                                                        borderRadius: '50%',
-                                                        zIndex: 0,
-                                                    },
-                                                }}
-                                            >
-                                                <Box
-                                                    sx={{
-                                                        width: '100%',
-                                                        height: 250,
-                                                        backgroundColor: '#000',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        overflow: 'hidden',
-                                                    }}
-                                                >
-                                                    <CardMedia
-                                                        component="video"
-                                                        ref={(el) => (videosRef.current[i] = el)}
-                                                        src={`/evidencia${n}.mp4`}
-                                                        playsInline
-                                                        muted
-                                                        loop
-                                                        preload="auto"
-                                                        controls={false}
-                                                        disablePictureInPicture
-                                                        controlsList="nodownload nofullscreen noremoteplayback"
-                                                        onClick={(e) => {
-                                                            const video = e.target;
-
-                                                            // Intentar pantalla completa en todos los dispositivos
-                                                            if (video.requestFullscreen) {
-                                                                video.requestFullscreen();
-                                                            } else if (video.webkitEnterFullscreen) {
-                                                                video.webkitEnterFullscreen(); // Safari iOS
-                                                            } else if (video.webkitRequestFullscreen) {
-                                                                video.webkitRequestFullscreen(); // Chrome
-                                                            } else if (video.msRequestFullscreen) {
-                                                                video.msRequestFullscreen(); // IE / Edge
-                                                            }
-
-                                                            // Reproducir manualmente si está pausado
-                                                            if (video.paused) video.play();
-                                                        }}
-                                                        sx={{
-                                                            height: '100%',
-                                                            width: i === 1 ? 'auto' : '100%',
-                                                            objectFit: i === 1 ? 'contain' : 'contain',
-                                                            cursor: 'pointer',
-                                                            zIndex: 1,
-                                                        }}
-                                                    />
-
-                                                </Box>
-                                            </Card>
-
-                                            {i === 0 && (
-                                                <Typography
-                                                    variant="body2"
-                                                    align="center"
-                                                    component="a"
-                                                    href="https://www.autoges-web.cl"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    sx={{
-                                                        display: 'block',
-                                                        mt: 1,
-                                                        color: '#00bcd4', // celeste tipo cyan claro
-                                                        fontFamily: 'Poppins, sans-serif',
-                                                        textDecoration: 'none',
-                                                        textAlign: 'center',
-                                                        '&:hover': {
-                                                            textDecoration: 'underline',
-                                                            color: '#26c6da', // un tono más claro al pasar el mouse
-                                                        },
-                                                    }}
-                                                >
-                                                    www.autoges-web.cl
-                                                </Typography>
-
-                                            )}
-                                            {/* 👇 Texto "En desarrollo..." solo para evidencia3 */}
-                                            {i === 1 && (
-                                                <Typography
-                                                    variant="body2"
-                                                    align="center"
-                                                    sx={{
-                                                        mt: 1,
-                                                        color: 'gray',
-                                                        fontStyle: 'italic',
-                                                        fontFamily: 'Poppins, sans-serif',
-                                                    }}
-                                                >
-                                                    Resolución Teléfono
-                                                </Typography>
-                                            )}
-                                            {i === 2 && (
-                                                <Typography
-                                                    variant="body2"
-                                                    align="center"
-                                                    sx={{
-                                                        mt: 1,
-                                                        color: 'gray',
-                                                        fontStyle: 'italic',
-                                                        fontFamily: 'Poppins, sans-serif',
-                                                    }}
-                                                >
-                                                    En desarrollo...
-                                                </Typography>
-                                            )}
-                                        </motion.div>
-                                    </Grid>
-                                ))}
-                            </Grid>
 
                         </Box>
                     </Box>

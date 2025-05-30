@@ -2,7 +2,7 @@ import { Container, Grid, Card, CardActionArea, CardMedia, Typography, Box, Butt
 import React, { useState, useEffect } from "react";
 import { styled } from "@mui/system";
 import { motion } from "framer-motion";
-import { FaHubspot } from "react-icons/fa";
+import { FaTshirt } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
 import "./css/Features.css"; // Importamos el CSS
@@ -239,7 +239,7 @@ function Features({ videoReady }) {
                       zIndex: 2,
                     }}
                   >
-                    <FaHubspot style={{ color: "#fff", fontSize: "1.5rem" }} />
+                    <FaTshirt style={{ color: "#fff", fontSize: "1.5rem" }} />
                   </Box>
                 </Box>
                 <Box

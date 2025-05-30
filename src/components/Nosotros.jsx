@@ -88,19 +88,20 @@ const Nosotros = () => {
                       ¿Quiénes Somos?
                     </Typography>
 
-                    <Typography variant="body1" sx={{ color: '#ccc', textAlign: 'justify', mb: 2 }}>
-                      Somos una empresa de soluciones tecnológicas con más de 8 años de experiencia desarrollando proyectos a medida para empresas de distintas industrias.
+                    <Typography variant="body1" sx={{ color: 'white', textAlign: 'justify', mb: 2 }}>
+                      Somos una empresa familiar con amplia experiencia en el rubro de la confección y venta de ropa por mayor, ofreciendo productos de alta calidad para todas las temporadas.
                     </Typography>
 
-                    <Typography variant="body1" sx={{ color: '#ccc', textAlign: 'justify', mb: 2 }}>
-                      Nos especializamos en la creación de páginas web, aplicaciones móviles y sistemas personalizados que se adaptan a las necesidades de cada cliente, sin importar el rubro.
+                    <Typography variant="body1" sx={{ color: 'white', textAlign: 'justify', mb: 2 }}>
+                      Nos especializamos en prendas para dama, caballero y niños, con diseños exclusivos y tejidos de primera categoría, ideales para boutiques, tiendas de ropa y emprendedores.
                     </Typography>
 
-                    <Typography variant="body1" sx={{ color: '#ccc', textAlign: 'justify' }}>
-                      Brindamos soporte evolutivo, mejoras continuas y acompañamiento estratégico para que cada negocio aproveche al máximo su potencial digital.
+                    <Typography variant="body1" sx={{ color: 'white', textAlign: 'justify' }}>
+                      Ofrecemos un catálogo variado y renovado constantemente, con precios competitivos y atención personalizada para ayudar a nuestros clientes a potenciar sus ventas.
                     </Typography>
                   </CardContent>
                 </Card>
+
 
               </motion.div>
             </Box>
@@ -115,7 +116,7 @@ const Nosotros = () => {
             >
               <Box textAlign="center">
                 <img
-                  src="/logo-plataformas-web.png"
+                  src="/logo-ivelpink.png"
                   alt="Logo"
                   style={{ maxWidth: isMobile ? '83%' : '100%', height: 'auto' }}
                 />
@@ -132,7 +133,7 @@ const Nosotros = () => {
           mt: 4,
           mb: 4,
           py: 4,
-          backgroundImage: 'url(/developer-background.jpg)',
+          backgroundImage: 'url(/Informations-2.webp)',
           backgroundSize: 'cover',
           backgroundPosition: isMobile ? `center ${scrollY * 0.3}px` : 'center',
           backgroundAttachment: isMobile ? 'scroll' : 'fixed',
@@ -167,7 +168,7 @@ const Nosotros = () => {
               textAlign: 'right',
             }}
           >
-            Ayudamos a hacer <span style={{ color: '#ffe037' }}>crecer</span> tu negocio
+            Diseñamos y confeccionamos <span style={{ color: '#ffe037' }}>moda</span>
           </Typography>
         </Container>
       </Box>
@@ -220,18 +221,19 @@ const Nosotros = () => {
                     <Typography variant="h4" color="white" gutterBottom>
                       Misión
                     </Typography>
-                    <Typography variant="body1" sx={{ color: '#ccc', textAlign: 'left', mb: 3 }}>
-                      Brindar soluciones tecnológicas innovadoras que impulsen el crecimiento y la eficiencia de nuestros clientes, mediante el desarrollo de software, sistemas personalizados y soporte evolutivo de alto nivel.
+                    <Typography variant="body1" sx={{ color: 'white', textAlign: 'left', mb: 3 }}>
+                      Ofrecer prendas de vestir de excelente calidad y diseño, confeccionadas con dedicación y detalle, para satisfacer las necesidades de nuestros clientes mayoristas y minoristas, proporcionando moda para todas las temporadas.
                     </Typography>
 
                     <Typography variant="h4" color="white" gutterBottom>
                       Visión
                     </Typography>
-                    <Typography variant="body1" sx={{ color: '#ccc', textAlign: 'left' }}>
-                      Ser una empresa referente en el desarrollo e implementación de soluciones informáticas a nivel nacional, reconocida por su capacidad de adaptarse a distintos rubros y por entregar resultados concretos que transforman digitalmente a las organizaciones.
+                    <Typography variant="body1" sx={{ color: 'white', textAlign: 'left' }}>
+                      Ser reconocidos como un referente en la industria textil y de confección, destacando por nuestra innovación en diseño, compromiso con la calidad y excelencia en el servicio, impulsando el crecimiento de nuestros clientes en el mercado nacional e internacional.
                     </Typography>
                   </CardContent>
                 </Card>
+
 
               </motion.div>
             </Box>
