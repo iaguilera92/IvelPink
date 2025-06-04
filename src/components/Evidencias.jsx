@@ -88,7 +88,7 @@ const Evidencias = () => {
             <Box
                 sx={{
                     position: 'relative',
-                    height: isMobile ? '35vh' : '40vh',
+                    height: isMobile ? '30vh' : '40vh',
                     overflow: 'hidden',
                     display: 'flex',
                     alignItems: 'flex-start',
@@ -104,19 +104,9 @@ const Evidencias = () => {
                     backgroundRepeat: 'no-repeat',
                 }}
             >
-                {/* Box para el degradado */}
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        height: '15%', // Aumenté el 10% a 15% para hacerlo más visible
-                        background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent)', // Aumenté la opacidad para hacerlo más notorio
-                    }}
-                />
+
                 {/* Contenedor con el texto en movimiento */}
-                <Box sx={{ width: '100%', overflow: 'hidden', position: 'relative', mt: '-12%' }}>
+                <Box sx={{ width: '100%', overflow: 'hidden', position: 'relative', mt: '-10%' }}>
                     <motion.div
                         initial={{ x: '100%' }}
                         animate={{ x: '-100%' }}
@@ -288,18 +278,6 @@ const Evidencias = () => {
                     Para ver más trabajos contáctanos vía redes sociales.
                 </Alert>
             </Snackbar>
-            <Box
-                sx={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '10%',
-                    background: 'linear-gradient(to bottom, transparent, rgb(0 30 43 / 1))',
-                    zIndex: 2,  // Asegúrate de que este valor esté por encima de la sección decorativa pero debajo de otros elementos.
-                    pointerEvents: 'none',  // Evita que interfiera con la interacción de otros elementos
-                }}
-            />
 
         </Box >
     );

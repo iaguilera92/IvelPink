@@ -122,7 +122,7 @@ const Areas = () => {
         backgroundSize: isMobile ? "100% 100%" : "100% auto",
         backgroundPosition: isMobile ? "center" : "",
         backgroundAttachment: isMobile ? "initial" : "fixed",
-        minHeight: isMobile ? "85vh" : "auto",
+        minHeight: isMobile ? "65vh" : "auto",
         paddingTop: "30px !important",
         padding: { xs: 4, md: 16 },
         paddingBottom: { xs: 14, md: 12 },
@@ -244,76 +244,7 @@ const Areas = () => {
             ))}
           </Grid>
         </Grid>
-
-        <Grid item xs={12} md={6} display="flex" justifyContent="center">
-          <motion.div
-            key={currentImage}
-            initial={{ rotateY: 0 }}
-            animate={{
-              rotateY: [0, 90, 180], // Gira hasta 180° y cambia la imagen en el proceso
-              y: [0, -10, 0], // Flotación de arriba a abajo
-            }}
-            transition={{
-              rotateY: { duration: 1.4, ease: "easeInOut" },
-              y: { duration: 2, repeat: Infinity, ease: "easeInOut" }, // Mantiene la flotación constante
-            }}
-            onAnimationComplete={() => setTimeout(() => { setCurrentImage((prev) => (prev + 1) % images.length); }, 5000)} // Cambia la imagen después de 5 segundos
-            style={{
-              position: "relative",
-              width: isMobile ? 420 : 450,
-              height: isMobile ? 280 : 336,
-              perspective: 1200, // Mantiene el efecto 3D
-              transformStyle: 'preserve-3d', // Necesario para que las imágenes se giren correctamente
-            }}
-          >
-            {/* Imagen visible antes del giro */}
-            <motion.img
-              key={`front-${currentImage}`}
-              src={images[currentImage]}
-              alt="Rotating Image"
-              width={isMobile ? "100%" : "100%"}
-              height={isMobile ? "100%" : "100%"}
-              style={{
-                position: "absolute",
-                backfaceVisibility: "hidden", // Oculta la cara trasera de la imagen
-                transform: 'rotateY(0deg)', // Asegura que la imagen frontal no se voltee
-              }}
-            />
-
-            {/* Imagen visible después del giro */}
-            <motion.img
-              key={`back-${(currentImage + 1) % images.length}`}
-              src={images[(currentImage + 1) % images.length]}
-              alt="Next Rotating Image"
-              width={isMobile ? "100%" : "100%"}
-              height={isMobile ? "100%" : "100%"}
-              initial={{ rotateY: 180, opacity: 1 }}
-              style={{
-                position: "absolute",
-                transform: 'rotateY(180deg)', // Imagen trasera en la posición de 180 grados
-                backfaceVisibility: "hidden", // Oculta la cara trasera de la imagen
-              }}
-            />
-          </motion.div>
-        </Grid>
-
-
       </Grid>
-      {!isMobile && (
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            width: '100%',
-            height: '120px',
-            background: 'linear-gradient(to bottom, transparent, white)',
-            pointerEvents: 'none',
-            zIndex: 10,
-          }}
-        />
-      )}
-
     </Box >
 
   );

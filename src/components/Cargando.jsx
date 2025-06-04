@@ -6,9 +6,13 @@ import "./css/Cargando.css";
 const Cargando = () => {
     const [glow, setGlow] = useState(false);
     const [showElectricEffect, setShowElectricEffect] = useState(false);
-    const [showDots, setShowDots] = useState(false);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const NUM_ROWS = isMobile ? 10 : 16;
+    const [showImage, setShowImage] = useState(false);
+    const [showStrips, setShowStrips] = useState(true);
+    const [showDots, setShowDots] = useState(false);
+
 
     useEffect(() => {
         const timerGlow = setTimeout(() => {
@@ -24,6 +28,36 @@ const Cargando = () => {
         return () => clearTimeout(timerGlow);
     }, []);
 
+
+    useEffect(() => {
+        const timerGlow = setTimeout(() => {
+            setGlow(true);
+            setShowElectricEffect(true);
+
+            setTimeout(() => {
+                setShowElectricEffect(false);
+            }, 1000);
+        }, 2000);
+
+        return () => clearTimeout(timerGlow);
+    }, []);
+
+    //FONDO TIRAS VERTICALES
+    useEffect(() => {
+        const showImageTimer = setTimeout(() => {
+            setShowImage(true);
+
+            const hideStripsTimer = setTimeout(() => {
+                setShowStrips(false);
+            }, 2000); // duración del fadeIn
+
+            return () => clearTimeout(hideStripsTimer);
+        }, 800); // ⏳ duración de las tiras
+
+        return () => clearTimeout(showImageTimer);
+    }, []);
+
+
     return (
         <Box
             sx={{
@@ -34,19 +68,52 @@ const Cargando = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                bgcolor: 'rgba(0, 0, 0, 0.85)',
+                bgcolor: 'white',
                 zIndex: 9999,
             }}
         >
-            <Box
-                sx={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundColor: 'rgb(255, 222, 246)',
-                    zIndex: 0,
-                }}
-            />
-            {/* Fondo */}
+
+            {/* FONDO */}
+            {showStrips && (
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        inset: 0,
+                        display: 'flex',
+                        flexDirection: 'column', // Ahora filas horizontales
+                        zIndex: 1,
+                    }}
+                >
+                    {/* TIRAS HORIZONTALES CON EFECTO DE LLENADO */}
+                    {Array.from({ length: NUM_ROWS }).map((_, index) => (
+                        <motion.div
+                            key={index}
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{
+                                duration: 0.8,
+                                delay: index * 0.05, // Efecto en cascada
+                                ease: 'easeInOut',
+                            }}
+                            style={{
+                                width: '100%',
+                                height: `${100 / NUM_ROWS}%`, // Altura proporcional
+                                backgroundColor: 'rgb(255, 222, 246)',
+                                margin: 0,
+                                padding: 0,
+                                border: 'none',
+                                boxShadow: 'none',
+                                backfaceVisibility: 'hidden',
+                                transform: 'translateZ(0)',
+                                willChange: 'transform',
+                                transformOrigin: index % 2 === 0 ? 'right center' : 'left center', // Alternancia
+                            }}
+                        />
+                    ))}
+                </Box>
+            )}
+
+
             <Box
                 sx={{
                     position: 'absolute',
@@ -56,7 +123,7 @@ const Cargando = () => {
                     backgroundPosition: { xs: 'center 100%', md: 'center 100%' },
                     backgroundRepeat: 'no-repeat',
                     zIndex: 1,
-                    opacity: 0, // Puedes animar esto si quieres aparición progresiva
+                    opacity: showImage ? 1 : 0,
                     animation: 'fadeInBg 2s ease-in forwards', // ejemplo animación
                 }}
             />
@@ -69,7 +136,9 @@ const Cargando = () => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     transform: 'translateY(-40%)',
-                    zIndex: 1,
+                    zIndex: 3,
+                    opacity: showImage ? 1 : 0,
+                    transition: 'opacity 2s ease-in',
                 }}
             >
                 <Box
@@ -173,6 +242,7 @@ const Cargando = () => {
                 </Box>
 
             </Box>
+
         </Box>
     );
 };

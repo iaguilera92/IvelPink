@@ -45,6 +45,14 @@ const Catalogo = () => {
 
       // Ordena por IdProducto alfabéticamente
       datos = datos.sort((a, b) => String(a.IdProducto).localeCompare(String(b.IdProducto)));
+      datos = datos.sort((a, b) => {
+        const stockA = parseInt(a.Stock || 0, 10);
+        const stockB = parseInt(b.Stock || 0, 10);
+
+        if (stockA > 0 && stockB === 0) return -1; // a primero
+        if (stockA === 0 && stockB > 0) return 1;  // b primero
+        return 0; // si ambos tienen o no tienen stock, mantener el orden actual
+      });
 
       if (!cancelado) setProductos(datos);
     };
