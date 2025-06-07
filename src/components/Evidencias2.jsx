@@ -43,29 +43,6 @@ const SeccionDestacada = () => {
         if (video.paused) video.play();
     };
 
-
-    const renderScrollRow = (delay = '0s') => (
-        <Box
-            sx={{
-                width: '200%',
-                display: 'flex',
-                animation: `${scrollLeft} 80s linear infinite`,
-                animationDelay: delay,
-                pl: '60px',
-                gap: '20px',
-            }}
-        >
-            {[1, 2].map((i) => (
-                <Box
-                    key={i}
-                    component="img"
-                    src="/fondo-mongodb.svg"
-                    alt={`fondo-${i}`}
-                    sx={{ width: '100%', objectFit: 'contain' }}
-                />
-            ))}
-        </Box>
-    );
     useEffect(() => {
         if (inView && !hasAnimated) {
             setHasAnimated(true);
@@ -85,47 +62,15 @@ const SeccionDestacada = () => {
                 sx={{
                     position: 'absolute',
                     inset: 0,
-                    bgcolor: 'rgb(0 30 43)',
+                    bgcolor: 'rgb(0 30 43)', // si quieres puedes quitar esto, el fondo lo cubre
                     zIndex: 0,
+                    backgroundImage: "url('/fondo-celeste.avif')",
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundAttachment: 'fixed',
                 }}
             >
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: 13,
-                        left: 0,
-                        height: '60%',
-                        width: '100%',
-                        overflow: 'visible',
-                    }}
-                >
-                    {renderScrollRow('0s')}
-                </Box>
-
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        height: '36%',
-                        width: '100%',
-                        overflow: 'visible',
-                    }}
-                >
-                    {renderScrollRow('-25s')}
-                </Box>
-
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '35%',
-                        background: 'linear-gradient(to bottom, transparent, rgb(0 30 43 / 1))',
-                        zIndex: 1,
-                    }}
-                />
             </Box>
 
             {/* Contenido */}
@@ -176,28 +121,24 @@ const SeccionDestacada = () => {
                             }}
                             style={{ color: 'black' }}
                         >
-
-                            {/* Barra | café al inicio */}
                             <motion.span
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={inView || hasAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                                 transition={{ delay: 0.3 }}
                                 style={{
-                                    color: "#8B4513",           // Café
+                                    color: "#8B4513",
                                     fontWeight: "bold",
-                                    marginRight: "1px",         // 🔸 Más pegado a la 'N'
+                                    marginRight: "1px",
                                     marginTop: "-4px",
-                                    fontSize: "0.9em",          // 🔸 Un poco más bajo que el texto
-                                    lineHeight: 1,              // 🔸 Alineación vertical más precisa
+                                    fontSize: "0.9em",
+                                    lineHeight: 1,
                                     display: "inline-block",
-                                    transform: "translateY(2px)" // 🔸 Ligero ajuste vertical si lo ves muy arriba/abajo
+                                    transform: "translateY(2px)"
                                 }}
                             >
                                 |
                             </motion.span>
 
-
-                            {/* Texto animado letra por letra */}
                             {textoAnimado.split("").map((char, i) => (
                                 <motion.span
                                     key={i}
@@ -214,10 +155,47 @@ const SeccionDestacada = () => {
                                 </motion.span>
                             ))}
                         </Typography>
+
+                        {/* Video que reemplaza "En desarrollo..." */}
+                        <Box
+                            ref={ref}
+                            sx={{
+                                mt: 2,
+                                ml: 7,
+                                alignSelf: 'flex-end', // 👈 lo empuja a la derecha del panel
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                position: 'relative',
+                                overflow: 'hidden',
+                                borderRadius: '12px',
+                                boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+                                width: '100%',
+                                maxWidth: '265px',
+                                aspectRatio: '9 / 16',
+                            }}
+                        >
+                            <motion.video
+                                src="/Evidencias.mp4"
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 1.5, ease: 'easeOut' }}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                    borderRadius: '12px',
+                                }}
+                                onClick={handleVideoClick}
+                            />
+                        </Box>
+
                     </Box>
 
-
-                    En desarrollo...
                 </Box>
 
                 {/* Imagen mongodb.svg al lado derecho */}
@@ -243,7 +221,7 @@ const SeccionDestacada = () => {
                     />
                 </Box>
             </Box>
-        </Box>
+        </Box >
     );
 };
 

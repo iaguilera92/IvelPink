@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 const data = [
   {
-    count: 850,
+    count: 10000,
     text: "Prendas confeccionadas con amor y detalle",
     image: "ProyectoTerminado.mp4",
   },
@@ -206,7 +206,7 @@ const Areas = () => {
                             fontSize: isMobile ? "2.6rem" : "2.2rem", // Aumentado el tamaño
                           }}
                         >
-                          +{delayed ? <CountUp start={0} end={item.count} duration={3.1} /> : "0"}
+                          +{delayed ? <CountUp start={0} end={item.count} duration={3.1} separator="." /> : "0"}
                         </Typography>
                         <Box
                           sx={{

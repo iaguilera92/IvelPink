@@ -13,6 +13,10 @@ const Evidencias = () => {
     const [scrollY, setScrollY] = useState(0);
     const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true, rootMargin: '0px 0px -30% 0px' });
     const [hasAnimated, setHasAnimated] = useState(false);
+    const { ref: videoRef, inView: videoInView } = useInView({
+        threshold: 0.3,
+        triggerOnce: true,
+    });
 
     const letterVariants = {
         hidden: { opacity: 0, x: -20 },
@@ -244,28 +248,44 @@ const Evidencias = () => {
                                     </motion.span>
                                 ))}
                             </Typography>
-                            <Typography
-                                variant="h4"
-                                gutterBottom
-                                component="div"
+                            <Box
+                                ref={videoRef} // 🎯 lo ligamos al observer
                                 sx={{
-                                    fontFamily: '"Poppins", sans-serif',
-                                    fontSize: { xs: "1.2rem", md: "1.5rem" },
-                                    paddingX: { xs: "10px", md: "30px" }, // 👈 mejor usar paddingX para izquierda y derecha
-                                    paddingY: { xs: "10px", md: "20px" }, // 👈 también puedes darle arriba/abajo si quieres más aire
-                                    letterSpacing: "3px",
-                                    my: 0,
-                                    display: "flex",
-                                    flexWrap: "wrap",
-                                    justifyContent: "center", // 👈 ahora el contenido dentro queda al centro
-                                    alignItems: "center",
-                                    backgroundColor: "transparent",
-                                    color: "lightgray",
-                                    textAlign: "center", // 👈 adicional para asegurar texto centrado
+                                    mt: 3,
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    borderRadius: '12px',
+                                    boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
                                 }}
                             >
-                                En desarrollo...
-                            </Typography>
+                                <motion.video
+                                    src="/Evidencias.mp4"
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={videoInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+                                    transition={{
+                                        duration: 1.5, // ⏳ ahora con 1.5 seg como pediste
+                                        ease: 'easeOut',
+                                    }}
+                                    style={{
+                                        width: '100%',
+                                        maxWidth: '800px',
+                                        height: 'auto',
+                                        objectFit: 'cover',
+                                        borderRadius: '12px',
+                                    }}
+                                />
+
+
+
+                            </Box>
+
 
 
                         </Box>
