@@ -19,9 +19,9 @@ function Hero({ informationsRef, setVideoReady }) {
   const [mostrarTransicion, setMostrarTransicion] = useState(false);
 
   const titulos = [
+    { title: "Producción para mayoristas", description: "" },
     { title: "Venta de prendas", description: "" },
     { title: "Confección a la medida", description: "" },
-    { title: "Producción para mayoristas", description: "" },
   ];
 
   useEffect(() => {

@@ -5,8 +5,7 @@ import { FaTshirt } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useInView } from 'react-intersection-observer';
 import { useOutletContext } from "react-router-dom";
-import CheckIcon from '@mui/icons-material/Check';
-import { Checkroom, Storefront, DesignServices, TrendingUp } from "@mui/icons-material";
+import { Checkroom, Storefront, DesignServices, LocalShipping } from "@mui/icons-material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import "./css/Informations.css";
 import "swiper/css";
@@ -14,48 +13,47 @@ import "swiper/css";
 const promotions = [
   {
     title: "Producción para mayoristas",
-    description: "Ofrecemos confección de prendas por volumen para negocios de moda, talleres y marcas emergentes.",
+    description: "Confeccionamos prendas por volumen para boutiques, marcas independientes y negocios de moda.",
     image: "/Informations-1.webp",
     price: "Consulta con nosotros",
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3))",
     textColor: "white",
     descriptors: [
-      "Diseño moderno para mostrar tus prendas.",
-      "Galería de productos con tallas y precios.",
-      "Incluye dominio personalizado y formulario de contacto.",
-      "Ideal para emprendimientos de moda y costura por mayor."
+      "Diseños y tallas ajustados a tus requerimientos.",
+      "Entrega por lotes según pedido.",
+      "Costuras profesionales con materiales de calidad.",
+      "Ideal para ventas al por mayor y revendedores."
     ]
   },
   {
-    title: "Tienda online de ropa",
-    description: "Vende tus prendas directamente desde tu sitio con carrito de compras, catálogo y pagos en línea.",
+    title: "Ropa confeccionada en nuestro taller",
+    description: "Vendemos directamente prendas producidas en nuestro taller, listas para entrega o personalización.",
     image: "/Informations-2.webp",
     price: "Consulta con nosotros",
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2))",
     textColor: "white",
     descriptors: [
-      "Carrito de compras y pago online.",
-      "Gestión de stock y catálogo personalizado.",
-      "Panel para actualizar productos fácilmente.",
-      "Integración con medios de pago como WebPay y transferencia."
+      "Prendas listas para la venta al detalle o por lote.",
+      "Control total de calidad y diseño.",
+      "Opciones personalizadas según temporada o demanda.",
+      "Fabricación local desde nuestro taller."
     ]
   },
   {
     title: "Envíos a todo Chile",
-    description: "Gestiona pedidos personalizados desde tu web y realiza envíos a cualquier región del país.",
+    description: "Despachamos nuestras confecciones a cualquier región, con atención directa y seguimiento.",
     image: "/Informations-3.webp",
     price: "Consulta con nosotros",
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2))",
     textColor: "white",
     descriptors: [
-      "Formulario para encargos personalizados y tallas a medida.",
-      "Historial de pedidos y clientes.",
-      "Panel de administración para gestionar entregas y contactos.",
-      "Ideal para talleres de costura con alcance nacional."
+      "Coordinación directa de pedidos y entregas.",
+      "Despachos a regiones por transporte privado o courier.",
+      "Soporte postventa en cada envío.",
+      "Ideal para clientes recurrentes o nuevos negocios."
     ]
   }
 ];
-
 
 
 
@@ -237,140 +235,141 @@ function Informations({ informationsRef, triggerInformations, setHasSeenInformat
           <Grid item xs={12} md={6}>
             {[
               {
-                icon: <Storefront sx={{ color: "white", fontSize: "2.2rem" }} />,
-                text: "Abre tu vitrina digital.",
-                desc: "Vende tus prendas desde cualquier lugar con una tienda online atractiva.",
+                icon: <Checkroom sx={{ color: "white", fontSize: "2.2rem" }} />,
+                text: "Producción para mayoristas.",
+                desc: "Elabora lotes de prendas personalizadas para clientes a gran escala.",
                 hideLine: false,
               },
               {
-                icon: <Checkroom sx={{ color: "white", fontSize: "2.2rem" }} />,
-                text: "Muestra tu colección personalizada.",
-                desc: "Exhibe tus diseños, tallas y estilos de forma visual y ordenada.",
+                icon: <Storefront sx={{ color: "white", fontSize: "2.2rem" }} />,
+                text: "Venta directa de nuestras confecciones.",
+                desc: "Comercializamos ropa confeccionada en nuestro propio taller, con calidad y estilo.",
+                hideLine: false,
+              },
+              {
+                icon: <LocalShipping sx={{ color: "white", fontSize: "2.2rem" }} />,
+                text: "Envíos a todo Chile.",
+                desc: "Despacha tus productos desde el taller a cualquier parte del país.",
                 hideLine: false,
               },
               {
                 icon: <DesignServices sx={{ color: "white", fontSize: "2.2rem" }} />,
-                text: "Promociona tu taller de costura.",
-                desc: "Ofrece arreglos, diseños a medida y personalización con estilo.",
-                hideLine: false,
-              },
-              {
-                icon: <TrendingUp sx={{ color: "white", fontSize: "2.2rem" }} />,
-                text: "Haz crecer tu negocio.",
-                desc: "Aumenta tus ventas con herramientas digitales simples y efectivas.",
+                text: "Servicios de costura y arreglos.",
+                desc: "Ofrece composturas, ajustes y trabajos a medida con acabado profesional.",
                 hideLine: true,
               },
-            ].map((item, index) => {
-              const { ref: itemRef, inView: itemInView } = useInView({
-                threshold: 0.43,
-                triggerOnce: true,
-              });
+            ]
+              .map((item, index) => {
+                const { ref: itemRef, inView: itemInView } = useInView({
+                  threshold: 0.43,
+                  triggerOnce: true,
+                });
 
-              return (
-                <motion.div
-                  key={`animated-${index}-${animationKey}`} // 👈 clave dinámica
-                  ref={itemRef}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={itemInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{
-                    delay: 0.2 * index,
-                    duration: 0.5,
-                  }}
-                >
-                  <ListItem
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      zIndex: 2,
-                      paddingLeft: isMobile ? "0" : "16px",
-                      paddingRight: isMobile ? "0" : "16px",
+                return (
+                  <motion.div
+                    key={`animated-${index}-${animationKey}`} // 👈 clave dinámica
+                    ref={itemRef}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={itemInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{
+                      delay: 0.2 * index,
+                      duration: 0.5,
                     }}
                   >
-                    <ListItemIcon sx={{ zIndex: 2 }}>
-                      <Box
-                        sx={{
-                          position: "relative",
-                          width: 100,
-                          height: 85,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {!item.hideLine && (
-                          <motion.div
-                            initial={{ height: 0 }}
-                            animate={itemInView ? { height: 40 } : { height: 0 }}
-                            transition={{
-                              delay: 0.2 * index,
-                              duration: 1,
-                              ease: "easeInOut",
-                            }}
-                            style={{
-                              position: "absolute",
-                              top: "80%",
-                              left: "50%",
-                              transform: "translateX(-50%)",
-                              width: "2px",
-                              backgroundImage:
-                                "linear-gradient(white 40%, rgba(255,255,255,0) 0%)",
-                              backgroundPosition: "left",
-                              backgroundSize: "2px 6px",
-                              backgroundRepeat: "repeat-y",
-                              zIndex: 1,
-                            }}
-                          />
-                        )}
-
+                    <ListItem
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        zIndex: 2,
+                        paddingLeft: isMobile ? "0" : "16px",
+                        paddingRight: isMobile ? "0" : "16px",
+                      }}
+                    >
+                      <ListItemIcon sx={{ zIndex: 2 }}>
                         <Box
                           sx={{
-                            width: 70,
-                            height: 70,
-                            borderRadius: "50%",
-                            border: "2px solid white",
-                            backgroundColor: "rgb(233 144 181)",
+                            position: "relative",
+                            width: 100,
+                            height: 85,
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            position: "relative",
-                            zIndex: 2,
                           }}
                         >
-                          {item.icon}
-                          <motion.div
-                            style={{
-                              position: "absolute",
-                              top: 0,
-                              left: 0,
-                              width: "100%",
-                              height: "100%",
-                              borderRadius: "50%",
-                              backgroundColor: "rgba(255, 255, 255, 0.2)",
-                              zIndex: 1,
-                              animation: "pulsacion 1s ease-in-out 0.1s infinite",
-                            }}
-                          />
-                        </Box>
-                      </Box>
-                    </ListItemIcon>
+                          {!item.hideLine && (
+                            <motion.div
+                              initial={{ height: 0 }}
+                              animate={itemInView ? { height: 40 } : { height: 0 }}
+                              transition={{
+                                delay: 0.2 * index,
+                                duration: 1,
+                                ease: "easeInOut",
+                              }}
+                              style={{
+                                position: "absolute",
+                                top: "80%",
+                                left: "50%",
+                                transform: "translateX(-50%)",
+                                width: "2px",
+                                backgroundImage:
+                                  "linear-gradient(white 40%, rgba(255,255,255,0) 0%)",
+                                backgroundPosition: "left",
+                                backgroundSize: "2px 6px",
+                                backgroundRepeat: "repeat-y",
+                                zIndex: 1,
+                              }}
+                            />
+                          )}
 
-                    <ListItemText
-                      sx={{
-                        fontFamily: "'Montserrat', Helvetica, Arial, sans-serif !important",
-                        "& .MuiListItemText-primary": {
-                          fontSize: isMobile ? "0.99rem" : "1.2rem",
-                        },
-                        "& .MuiListItemText-secondary": {
-                          color: "white",
-                        },
-                      }}
-                      primary={item.text}
-                      secondary={item.desc}
-                    />
-                  </ListItem>
-                </motion.div>
-              );
-            })}
+                          <Box
+                            sx={{
+                              width: 70,
+                              height: 70,
+                              borderRadius: "50%",
+                              border: "2px solid white",
+                              backgroundColor: "rgb(233 144 181)",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              position: "relative",
+                              zIndex: 2,
+                            }}
+                          >
+                            {item.icon}
+                            <motion.div
+                              style={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                borderRadius: "50%",
+                                backgroundColor: "rgba(255, 255, 255, 0.2)",
+                                zIndex: 1,
+                                animation: "pulsacion 1s ease-in-out 0.1s infinite",
+                              }}
+                            />
+                          </Box>
+                        </Box>
+                      </ListItemIcon>
+
+                      <ListItemText
+                        sx={{
+                          fontFamily: "'Montserrat', Helvetica, Arial, sans-serif !important",
+                          "& .MuiListItemText-primary": {
+                            fontSize: isMobile ? "0.99rem" : "1.2rem",
+                          },
+                          "& .MuiListItemText-secondary": {
+                            color: "white",
+                          },
+                        }}
+                        primary={item.text}
+                        secondary={item.desc}
+                      />
+                    </ListItem>
+                  </motion.div>
+                );
+              })}
           </Grid>
 
 

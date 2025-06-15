@@ -17,6 +17,11 @@ const Evidencias = () => {
         threshold: 0.3,
         triggerOnce: true,
     });
+    const { ref: imagenRef, inView: imagenInView } = useInView({
+        threshold: 0.1,
+        rootMargin: '0px 0px -10% 0px',
+        triggerOnce: false, // para que solo se dispare una vez
+    });
 
     const letterVariants = {
         hidden: { opacity: 0, x: -20 },
@@ -67,16 +72,6 @@ const Evidencias = () => {
         return () => observer.disconnect();
     }, []);
 
-    const handleFullscreen = (video) => {
-        if (video.requestFullscreen) {
-            video.requestFullscreen();
-        } else if (video.webkitRequestFullscreen) {
-            video.webkitRequestFullscreen();
-        } else if (video.msRequestFullscreen) {
-            video.msRequestFullscreen();
-        }
-    };
-
     useEffect(() => {
         if (isMobile) {
             const handleScroll = () => setScrollY(window.scrollY);
@@ -85,37 +80,60 @@ const Evidencias = () => {
         }
     }, [isMobile]);
 
+    useEffect(() => {
+        if (imagenInView && videosRef.current[0]) {
+            videosRef.current[0].play().catch(() => { });
+        }
+    }, [imagenInView]);
 
     return (
         <Box sx={{ width: '100%', position: 'relative', mt: '-80px' }}>
             {/* Sección 1 */}
+
+            {/* Contenedor con el texto en movimiento */}
             <Box
                 sx={{
                     position: 'relative',
-                    height: isMobile ? '30vh' : '40vh',
-                    overflow: 'hidden',
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    justifyContent: 'center',
-                    pt: { xs: 11, sm: 10 },
-                    backgroundImage: `url('fondo-areas1.avif')`, // Imagen de fondo
+                    height: isMobile ? '60vh' : '40vh',
+                    pt: { xs: 8, sm: 10 },
+                    backgroundImage: `url('fondo-areas1.avif')`,
                     backgroundSize: 'cover',
-                    // Efecto Parallax con scroll
-                    backgroundPosition: isMobile
-                        ? 'center'
-                        : `center ${scrollY * 0.3}px`, // Desplaza la imagen al hacer scroll
-                    backgroundAttachment: 'scroll', // No fijar el fondo, simular el parallax con el scroll
+                    backgroundPosition: 'center',
+                    backgroundAttachment: 'scroll',
                     backgroundRepeat: 'no-repeat',
+                    zIndex: 1, // importante para layering
                 }}
             >
-
-                {/* Contenedor con el texto en movimiento */}
-                <Box sx={{ width: '100%', overflow: 'hidden', position: 'relative', mt: '-10%' }}>
+                {/* Box para el degradado */}
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        height: '2%',
+                        background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent)',
+                    }}
+                />
+                <Box
+                    sx={{
+                        width: '100%',
+                        overflow: 'hidden',
+                        position: 'absolute',
+                        top: '10px',
+                        left: 0,
+                        right: 0,
+                        zIndex: 2,
+                    }}
+                >
                     <motion.div
-                        initial={{ x: '100%' }}
+                        initial={{ x: '100vw' }}
                         animate={{ x: '-100%' }}
-                        transition={{ repeat: Infinity, duration: 7, ease: 'linear' }}
-                        style={{ whiteSpace: 'nowrap', display: 'inline-block', transform: 'translateY(50%)' }}
+                        transition={{ repeat: Infinity, duration: 4, ease: 'linear' }}
+                        style={{
+                            display: 'inline-block',
+                            whiteSpace: 'nowrap',
+                        }}
                     >
                         <Typography
                             sx={{
@@ -123,16 +141,76 @@ const Evidencias = () => {
                                 fontWeight: 600,
                                 color: 'white',
                                 fontFamily: `'Montserrat', 'Segoe UI', sans-serif`,
-                                textShadow: '1px 1px 4px rgba(0,0,0,0.4)',
+                                textShadow: '1px 1px 4px rgba(0,0,0,0.2)',
                                 px: 4,
                             }}
                         >
-                            Descubre cómo ayudamos a marcas de moda a <span style={{ color: '#99D7F2' }}>destacar.</span>
+                            Tu marca, tan única como un {' '}<span style={{ color: '#FFB6C1' }}>tulipán entre rosas.</span>
 
                         </Typography>
                     </motion.div>
                 </Box>
+                {/* Imagen + video */}
+                <Box
+                    ref={imagenRef}
+                    sx={{
+                        position: 'absolute', // 🚀 clave!
+                        bottom: '5%', // 🚀 hace que sobresalga un 10% en Sección 2
+                        left: '27%',
+                        transform: 'translateX(0%)',
+                        width: '100%',
+                        maxWidth: '250px',
+                        aspectRatio: '572 / 788',
+                        zIndex: 3,
+                        pointerEvents: 'none', // para que no bloquee clics
+                    }}
+                >
+                    {/* Video detrás */}
+                    <motion.video
+                        src="/video-mano-celular.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        ref={(el) => (videosRef.current[0] = el)}
+                        initial={{ x: 300, opacity: 0 }}
+                        animate={imagenInView ? { x: '0%', opacity: 1 } : { x: 300, opacity: 0 }}
+                        transition={{ duration: 1, ease: 'easeOut' }}
+                        style={{
+                            position: 'absolute',
+                            top: '5%',
+                            left: '12%',
+                            width: '54.4%',
+                            height: '81.7%',
+                            objectFit: 'cover',
+                            borderRadius: '10px',
+                            zIndex: 0,
+                            backgroundColor: 'black',
+                        }}
+                    />
+
+                    {/* Imagen PNG encima */}
+                    <motion.img
+                        src="/mano-celular.png"
+                        alt="Decorativo"
+                        initial={{ x: 300, opacity: 0 }}
+                        animate={imagenInView ? { x: '0%', opacity: 1 } : { x: 300, opacity: 0 }}
+                        transition={{ duration: 1, ease: 'easeOut' }}
+                        style={{
+                            width: '100%',
+                            height: 'auto',
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            zIndex: 1,
+                            pointerEvents: 'none',
+                        }}
+                    />
+                </Box>
+
+
             </Box>
+
 
             {/* Sección 2 */}
             <Box
@@ -146,7 +224,7 @@ const Evidencias = () => {
                     pb: 4,
                     px: { xs: 2, sm: 4 },
                     zIndex: 2,
-                    mt: -8,
+                    mt: 0,
                     boxShadow: '0px -4px 20px rgba(0,0,0,0.05)',
                     borderTop: '1px solid #e0e0e0',
                 }}
@@ -166,7 +244,7 @@ const Evidencias = () => {
                             : "polygon(0 0, 50% 70%, 100% 0, 100% 100%, 0 100%)",
                         backgroundImage: `url('/fondo-blanco2.png')`,
                         backgroundSize: 'cover',
-                        backgroundPosition: 'top center',
+                        backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat',
                         pointerEvents: 'none',
                     }}

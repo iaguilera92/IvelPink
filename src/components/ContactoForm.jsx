@@ -73,7 +73,7 @@ const ContactoForm = ({ setSnackbar }) => {
             .then(() => {
                 setSnackbar({
                     open: true,
-                    message: "¡Mensaje enviado con éxito a IvelPink! 📬",
+                    message: "¡Mensaje enviado con éxito a ivelpink.cl! 📬",
                     type: "success"
                 });
                 setName("");

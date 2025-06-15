@@ -9,14 +9,14 @@ import "./css/Features.css"; // Importamos el CSS
 
 // DATOS
 const features = [
+  { imageSrc: '/producto4.webp', label: 'Pijamas' },
   { imageSrc: 'https://m.media-amazon.com/images/I/71d9aL875PL._AC_UY580_.jpg', label: 'Invierno' },
   { imageSrc: 'https://img.ltwebstatic.com/images3_pi/2023/07/21/16899049705cd10efc724e3b9c5d715c6f1a20faa8_thumbnail_405x.webp', label: 'Verano' },
-  { imageSrc: '/producto4.webp', label: 'Pijamas' },
   { imageSrc: 'https://img.ltwebstatic.com/images3_pi/2024/12/21/45/173476402702f144f0c5cba6439964db6031d6b08b_thumbnail_405x.webp', label: 'Jeans' },
   { imageSrc: 'https://img.ltwebstatic.com/images3_pi/2025/03/20/3a/17424556395aa953a27574ca9beac76a8ca40d94ba_thumbnail_405x.webp', label: 'Shorts' },
-
 ];
 
+const disabledLabels = ['Verano', 'Jeans', 'Shorts'];
 
 
 // EFECTOS
@@ -114,61 +114,102 @@ function Features({ videoReady }) {
       <Container sx={{ py: 0, maxWidth: "1500px !important", overflow: 'hidden' }}>
         <Box ref={ref} sx={{ mt: 0 }}>
           <Grid container spacing={2} justifyContent="center">
-            {features.map((feature, index) => (
-              <Grid item xs={4} sm={3} md={1.2} key={index}>
-                <motion.div
-                  initial="hidden"
-                  animate={hasAnimated ? "visible" : "hidden"}
-                  variants={cardAnimation}
-                  custom={index}
-                >
-                  <Box
-                    onClick={() => { navigate('/catalogo'); }}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                      cursor: "pointer"
-                    }}
+            {features.map((feature, index) => {
+              const isDisabled = disabledLabels.includes(feature.label);
+
+              return (
+                <Grid item xs={4} sm={3} md={1.2} key={index}>
+                  <motion.div
+                    initial="hidden"
+                    animate={hasAnimated ? "visible" : "hidden"}
+                    variants={cardAnimation}
+                    custom={index}
                   >
                     <Box
+                      onClick={() => {
+                        if (!isDisabled) navigate('/catalogo');
+                      }}
                       sx={{
-                        width: 100,
-                        height: 100,
-                        borderRadius: '50%',
-                        overflow: 'hidden',
-                        backgroundColor: '#fff',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                        mb: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        cursor: isDisabled ? "not-allowed" : "pointer",
+                        opacity: isDisabled ? 0.5 : 1,
+                        pointerEvents: isDisabled ? "none" : "auto",
                       }}
                     >
-                      <img
-                        src={feature.imageSrc}
-                        alt={feature.label}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
+                      <Box
+                        sx={{
+                          width: 100,
+                          height: 100,
+                          borderRadius: '50%',
+                          overflow: 'hidden',
+                          backgroundColor: '#fff',
+                          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                          mb: 1,
+                          filter: isDisabled ? 'grayscale(100%) brightness(0.9)' : 'none',
                         }}
-                      />
-                    </Box>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        fontWeight: 500,
-                        color: '#fff',
-                        fontFamily: '"Poppins", sans-serif;',
-                        letterSpacing: '0.3px',
-                      }}
-                    >
-                      {feature.label}
-                    </Typography>
+                      >
+                        <Box
+                          sx={{
+                            width: 100,
+                            height: 100,
+                            borderRadius: '50%',
+                            overflow: 'hidden',
+                            backgroundColor: '#fff',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                            mb: 1,
+                            position: 'relative',
+                            filter: isDisabled ? 'grayscale(100%) brightness(0.9)' : 'none',
+                          }}
+                        >
+                          <img
+                            src={feature.imageSrc}
+                            alt={feature.label}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                            }}
+                          />
 
-                  </Box>
-                </motion.div>
-              </Grid>
-            ))}
+                          {isDisabled && (
+                            <Box
+                              sx={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '-20%',
+                                width: '140%',
+                                height: '3px',
+                                backgroundColor: 'rgba(255, 0, 0, 0.6)', // rojo traslúcido o usa blanco si prefieres
+                                transform: 'rotate(-45deg) translateY(-50%)',
+                                transformOrigin: 'center',
+                                zIndex: 2,
+                              }}
+                            />
+                          )}
+                        </Box>
+
+
+                      </Box>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontWeight: 500,
+                          color: isDisabled ? '#aaa' : '#fff',
+                          fontFamily: '"Poppins", sans-serif',
+                          letterSpacing: '0.3px',
+                        }}
+                      >
+                        {feature.label}
+                      </Typography>
+                    </Box>
+                  </motion.div>
+                </Grid>
+              );
+            })}
+
 
           </Grid>
 

@@ -7,22 +7,22 @@ import { motion } from "framer-motion";
 
 const data = [
   {
-    count: 10000,
+    count: 50000,
     text: "Prendas confeccionadas con amor y detalle",
     image: "ProyectoTerminado.mp4",
   },
   {
-    count: 80,
+    count: 120,
     text: "Clientes felices con diseños personalizados",
     image: "costura-hilo.mp4",
   },
   {
-    count: 12,
+    count: 15,
     text: "Años de experiencia en costura profesional",
     image: "Experience.mp4",
   },
   {
-    count: 50,
+    count: 30,
     text: "Hilos usados por día en creaciones 🎀",
     image: "hilos.mp4",
   },
