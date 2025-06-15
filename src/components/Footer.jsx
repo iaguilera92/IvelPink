@@ -93,17 +93,17 @@ const Footer = () => {
 
               <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <img src="telefono-icon.png" alt="Teléfono" width={16} style={{ filter: 'invert(66%) sepia(39%) saturate(746%) hue-rotate(285deg) brightness(104%) contrast(101%)' }} />
-                <Link href="tel:+56999999999" color="rgb(245 96 206)">+56 987654321</Link>
+                <Link href="tel:+56987654321" color="rgb(245 96 206)">+56 987654321</Link>
               </Typography>
 
               <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <img src="mail-icon.png" alt="Correo" width={16} style={{ filter: 'invert(66%) sepia(39%) saturate(746%) hue-rotate(285deg) brightness(104%) contrast(101%)' }} />
-                <Link href="mailto:aguileraignacio1992@gmail.com" color="rgb(245 96 206)">mherrera@gmail.com</Link>
+                <Link href="mailto:Maivelyns@gmail.com" color="rgb(245 96 206)">Maivelyns@gmail.com</Link>
               </Typography>
 
               <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }} color="rgb(245 96 206)">
                 <img src="location-icon.png" alt="Ubicación" width={16} style={{ filter: 'invert(66%) sepia(39%) saturate(746%) hue-rotate(285deg) brightness(104%) contrast(101%)' }} />
-                Dardignac #38, Santiago.
+                Juan Martinez de Rozas #3888, Santiago.
               </Typography>
             </Box>
 
@@ -213,6 +213,9 @@ const Footer = () => {
 
         <Typography variant="body2" align="center" mt={2} sx={{ marginTop: "5vh" }}>
           @IvelPink 2025 {version && `- v${version}`}
+        </Typography>
+        <Typography variant="body2" align="center" mt={2} sx={{ marginTop: "1vh", cursor: "pointer" }} onClick={() => window.open("http://plataformas-web.cl", "_blank")}>
+          Diseñado por www.plataformas-web.cl
         </Typography>
       </Container>
     </Box >
