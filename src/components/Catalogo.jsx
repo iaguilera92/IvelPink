@@ -21,12 +21,13 @@ const Catalogo = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const FormatearPesos = (valor) => `$${valor.toLocaleString('es-CL')}`;
   const CalcularValorOld = (valor) => FormatearPesos(valor + 10000);
-  const [productoActivo, setProductoActivo] = useState(null);
+  const [productoActivo, setProductoActivo] = useState({});
   const [showArrow, setShowArrow] = useState(true);
   const [videoFullScreenProducto, setVideoFullScreenProducto] = useState(null);
   const [mostrarControlesVideo, setMostrarControlesVideo] = useState(false);
   const [animarFlecha, setAnimarFlecha] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
+
   const fechaActual = new Date().toLocaleDateString('es-CL', {
     day: '2-digit',
     month: '2-digit',
@@ -160,9 +161,17 @@ const Catalogo = () => {
   const grupos = chunkProductos(productos, 5);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    setProductoActivo({ 0: 0 }); // ← activa claramente el primer producto (grupo 0, índice 0)
+    const timeout = setTimeout(() => {
+      setProductoActivo((prev) => ({
+        ...prev,
+        0: prev?.[0] === 0 ? null : 0, // gira si no está girado
+      }));
+    }, 3000); // 3 segundos
+
+    return () => clearTimeout(timeout);
   }, []);
+
+
 
   useEffect(() => {
     if (videoFullScreenProducto) {

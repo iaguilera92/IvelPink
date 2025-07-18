@@ -106,7 +106,7 @@ function App() {
       if (!requiereVideo || videoReady) {
         setShowApp(true);
       }
-    }, 2100); // mínimo visible
+    }, 2500); // mínimo visible
 
     const maxTimeout = setTimeout(() => {
       setShowApp(true); // fuerza mostrar app

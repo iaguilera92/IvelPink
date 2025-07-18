@@ -145,35 +145,6 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
           position: 'relative'
         }}
       >
-        {/* Stock badge */}
-        <Box
-          sx={{
-            position: 'absolute',
-            top: -12,
-            right: -11,
-            zIndex: 99,
-            width: 28,
-            height: 28,
-            borderRadius: '50%',
-            bgcolor:
-              producto.Stock >= 10
-                ? '#4CAF50'
-                : producto.Stock > 0
-                  ? '#FFA000'
-                  : '#F44336',
-            color: 'white',
-            fontWeight: 'bold',
-            fontSize: 12,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: '2px solid white',
-            boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.4)',
-            pointerEvents: 'none',
-          }}
-        >
-          {producto.Stock}
-        </Box>
 
         <motion.div
           animate={{ rotateY: girado ? 180 : 0 }}
@@ -203,6 +174,34 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
             }}
           >
             <Card sx={{ width: '100%', height: '100%', position: 'relative' }}>
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 3,
+                  right: 3,
+                  zIndex: 2,
+                  width: 25,
+                  height: 25,
+                  borderRadius: '50%',
+                  bgcolor:
+                    producto.Stock >= 10
+                      ? '#4CAF50'
+                      : producto.Stock > 0
+                        ? '#FFA000'
+                        : '#F44336',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  fontSize: 12,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '2px solid white',
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
+                  pointerEvents: 'none',
+                }}
+              >
+                {producto.Stock}
+              </Box>
               <Box
                 component="img"
                 decode="async"
@@ -268,7 +267,7 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
                   pointerEvents: girado ? 'none' : 'auto'
                 }}
               >
-                <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
+                <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={0.5}>
 
                   {/* Botón Visualizar (izquierda) */}
                   <Button
