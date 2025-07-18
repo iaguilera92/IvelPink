@@ -56,7 +56,7 @@ const ContactoForm = ({ setSnackbar }) => {
             nombre: name,
             telefono: phone,
             mensaje: message,
-            email: "Maivelyns@gmail.com",
+            email: "ivelpink.cl@gmail.com",
         };
 
         if (enviarCopia && emailCopia.trim()) {

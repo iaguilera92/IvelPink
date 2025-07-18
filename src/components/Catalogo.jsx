@@ -43,18 +43,17 @@ const Catalogo = () => {
 
       let datos = await cargarProductos(urlConCacheBust);
 
-      // Ordena por IdProducto alfabéticamente
-      datos = datos.sort((a, b) => String(a.IdProducto).localeCompare(String(b.IdProducto)));
-      datos = datos.sort((a, b) => {
-        const stockA = parseInt(a.Stock || 0, 10);
-        const stockB = parseInt(b.Stock || 0, 10);
+      // 🔹 Separar productos con stock y sin stock
+      const conStock = datos.filter(p => Number(p.Stock) > 0);
+      const sinStock = datos.filter(p => Number(p.Stock) === 0);
 
-        if (stockA > 0 && stockB === 0) return -1; // a primero
-        if (stockA === 0 && stockB > 0) return 1;  // b primero
-        return 0; // si ambos tienen o no tienen stock, mantener el orden actual
-      });
+      // 🔹 Ordenar solo los productos con stock por 'Orden' ascendente
+      conStock.sort((a, b) => (a.Orden || 9999) - (b.Orden || 9999));
 
-      if (!cancelado) setProductos(datos);
+      // 🔹 Juntar nuevamente: primero con stock (ordenados), luego sin stock
+      const productosOrdenados = [...conStock, ...sinStock];
+
+      if (!cancelado) setProductos(productosOrdenados);
     };
 
     cargarDatos();
@@ -63,6 +62,7 @@ const Catalogo = () => {
       cancelado = true;
     };
   }, []);
+
 
 
 

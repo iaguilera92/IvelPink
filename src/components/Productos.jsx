@@ -127,9 +127,10 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
       className="productos-card"
       sx={{
         width: '100%',
-        height: { xs: 300, sm: 260 }, // Ajustado
+        height: { xs: 300, sm: 260 },
         mx: 'auto',
         position: 'relative',
+        overflow: 'visible',
       }}
     >
       <Box
@@ -166,8 +167,9 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            border: '2px solid white',
             boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.4)',
-            border: '2px solid white'
+            pointerEvents: 'none',
           }}
         >
           {producto.Stock}

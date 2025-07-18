@@ -11,6 +11,7 @@ function transformarProductos(data) {
     ImageUrl: row["ImageUrl"] || "",
     ConDescuento: String(row["ConDescuento"]).toLowerCase() === "true",
     VideoUrl: row["VideoUrl"] || "",
+    Orden: Number(row["Orden"]) || 9999,
   }));
 }
 

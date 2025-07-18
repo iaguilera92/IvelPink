@@ -98,7 +98,7 @@ const Footer = () => {
 
               <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <img src="mail-icon.png" alt="Correo" width={16} style={{ filter: 'invert(66%) sepia(39%) saturate(746%) hue-rotate(285deg) brightness(104%) contrast(101%)' }} />
-                <Link href="mailto:Maivelyns@gmail.com" color="rgb(245 96 206)">Maivelyns@gmail.com</Link>
+                <Link href="mailto:ivelpink.cl@gmail.com" color="rgb(245 96 206)">ivelpink.cl@gmail.com</Link>
               </Typography>
 
               <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }} color="rgb(245 96 206)">
