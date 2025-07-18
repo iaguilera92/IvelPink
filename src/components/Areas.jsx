@@ -9,7 +9,7 @@ const data = [
   {
     count: 50000,
     text: "Prendas confeccionadas con amor y detalle",
-    image: "ProyectoTerminado.mp4",
+    image: "prendas.webp",
   },
   {
     count: 120,
@@ -222,21 +222,38 @@ const Areas = () => {
                     </Box>
 
                     {/* Cara delantera: Imagen */}
-                    <video
-                      ref={(el) => (videosRef.current[index] = el)}
-                      src={item.image}
-                      muted
-                      playsInline
-                      style={{
-                        position: "absolute",
-                        backfaceVisibility: "hidden",
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        borderRadius: 8,
-                        boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
-                      }}
-                    />
+                    {item.image.endsWith(".mp4") ? (
+                      <video
+                        ref={(el) => (videosRef.current[index] = el)}
+                        src={item.image}
+                        muted
+                        playsInline
+                        style={{
+                          position: "absolute",
+                          backfaceVisibility: "hidden",
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          borderRadius: 8,
+                          boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
+                        }}
+                      />
+                    ) : (
+                      <img
+                        src={item.image}
+                        alt="imagen"
+                        style={{
+                          position: "absolute",
+                          backfaceVisibility: "hidden",
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          borderRadius: 8,
+                          boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
+                        }}
+                      />
+                    )}
+
 
                   </Box>
                 </Box>

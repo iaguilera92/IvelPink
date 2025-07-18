@@ -120,7 +120,7 @@ const Evidencias = () => {
                         width: '100%',
                         overflow: 'hidden',
                         position: 'absolute',
-                        top: '10px',
+                        top: '30px',
                         left: 0,
                         right: 0,
                         zIndex: 2,
@@ -145,7 +145,7 @@ const Evidencias = () => {
                                 px: 4,
                             }}
                         >
-                            Tu marca, tan única como un {' '}<span style={{ color: '#FFB6C1' }}>tulipán entre rosas.</span>
+                            Tu marca, tan única como un {' '}<span style={{ color: '#99D7F2' }}>tulipán entre rosas.</span>
 
                         </Typography>
                     </motion.div>
