@@ -95,6 +95,10 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
   const location = useLocation();
   const mostrarAnimacion = videoReady || (location.pathname !== '/' && location.pathname !== '');
   const [animacionMostrada, setAnimacionMostrada] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const maxScroll = 80; // hasta dónde se desvanece
+  const opacity = Math.max(0, 1 - scrollY / maxScroll);
+  const translateY = Math.min(scrollY, maxScroll);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -132,8 +136,76 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
 
   const LogoInicio = () => (navigate("/"), scrollToTop());
 
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
+      <motion.div
+        style={{
+          transform: `translateY(-${translateY}px)`,
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          zIndex: 1200,
+        }}
+      >
+        <Box
+          sx={{
+            backgroundColor: "#c62828",
+            height: { xs: 30, sm: 32 },
+            px: 2,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+            boxShadow: scrollY < maxScroll ? "0px 2px 8px rgba(0,0,0,0.2)" : "none",
+            transition: "box-shadow 0.3s ease"
+          }}
+        >
+          <AnimatePresence mode="wait">
+            {(mostrarAnimacion || animacionMostrada) && (
+              <motion.div
+                key={mostrarAnimacion ? "contenido-banner-envio" : "contenido-forzado"}
+                initial={{ x: 200, opacity: 0 }}
+                animate={{ x: 0, opacity }}
+                exit={{ opacity: 0 }}
+                transition={{
+                  duration: 1,
+                  delay: mostrarAnimacion ? 0.5 : 0,
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  color: "white",
+                  fontWeight: 600,
+                  fontFamily: "Poppins, sans-serif",
+                  fontSize: "0.8rem",
+                }}
+              >
+                📦 Envíos a todo Chile
+                <motion.img
+                  src="icon-chile.png"
+                  alt="Bandera de Chile"
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: mostrarAnimacion ? 1.2 : 0.7, type: "spring", stiffness: 300 }}
+                  style={{ width: 16, height: "auto" }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Box>
+      </motion.div>
+
+
+
+
       <Box
         sx={{
           position: "fixed",
@@ -143,7 +215,9 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
           zIndex: 1100,
           borderRadius: "50px",
           overflow: "hidden",
-          marginTop: "15px",
+          transition: 'margin-top 0.2s ease',
+          marginTop: `${Math.max(40 - translateY, 15)}px`,
+
         }}
       >
         <AppBar
@@ -185,11 +259,21 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
                         src="/logo-ivelpink.png"
                         alt="Logo"
                         onClick={LogoInicio}
-                        initial={{ scale: 1 }}
-                        animate={{ scale: isScrolled ? 0.8 : 1 }}
-                        transition={{ duration: 0.3, ease: "easeOut" }}
-                        style={{ height: "55px", marginTop: "10px", cursor: "pointer" }}
+                        initial={{ opacity: 0, x: -200 }}
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                          scale: scrollY > 50 ? 0.7 : 1,
+                          y: scrollY > 50 ? -4 : 0,
+                        }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
+                        style={{
+                          height: "55px",
+                          marginTop: "10px",
+                          cursor: "pointer"
+                        }}
                       />
+
                     </motion.div>
                   )}
                 </AnimatePresence>
