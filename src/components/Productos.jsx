@@ -340,7 +340,7 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
                           textAlign: 'center',
                         }}
                       >
-                        {FormatearPesos(producto.Valor + 10000)}
+                        {FormatearPesos(producto.Valor + 3000)}
                       </Typography>
                     )}
                   </Box>
