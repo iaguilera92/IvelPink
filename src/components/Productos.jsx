@@ -129,12 +129,23 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
         width: '100%',
         height: { xs: 300, sm: 260 },
         mx: 'auto',
-        position: 'relative', // necesario para el badge
+        position: 'relative',
         overflow: 'visible',
       }}
     >
-      {/* Badge de stock: FUERA del contexto 3D */}
-      {producto.Stock > 0 && (
+      <Box
+        onClick={() => {
+          if (producto.Stock > 0) onGirar();
+        }}
+        sx={{
+          width: '100%',
+          height: '100%',
+          perspective: 1200,
+          cursor: 'pointer',
+          position: 'relative'
+        }}
+      >
+        {/* Stock badge */}
         <Box
           sx={{
             position: 'absolute',
@@ -163,20 +174,7 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
         >
           {producto.Stock}
         </Box>
-      )}
 
-      <Box
-        onClick={() => {
-          if (producto.Stock > 0) onGirar();
-        }}
-        sx={{
-          width: '100%',
-          height: '100%',
-          perspective: 1200,
-          cursor: 'pointer',
-          position: 'relative'
-        }}
-      >
         <motion.div
           animate={{ rotateY: girado ? 180 : 0 }}
           transition={{ duration: 0.8, ease: 'easeInOut' }}
@@ -195,8 +193,8 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
               width: '100%',
               height: '100%',
               backfaceVisibility: 'hidden',
-              WebkitBackfaceVisibility: 'hidden',
-              zIndex: 2,
+              WebkitBackfaceVisibility: 'hidden', // Safari fix
+              zIndex: 2, // Asegura que esté sobre la trasera cuando se ve
               transform: 'rotateY(0deg)',
               borderRadius: 3,
               overflow: 'hidden',

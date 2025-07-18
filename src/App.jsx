@@ -106,7 +106,7 @@ function App() {
       if (!requiereVideo || videoReady) {
         setShowApp(true);
       }
-    }, 1800); // mínimo visible
+    }, 2100); // mínimo visible
 
     const maxTimeout = setTimeout(() => {
       setShowApp(true); // fuerza mostrar app
@@ -259,7 +259,6 @@ function App() {
                 <Informations
                   informationsRef={informationsRef}
                   triggerInformations={triggerInformations}
-                  setHasSeenInformations={setHasSeenInformations}
                 />
               </div>
             </Suspense>

@@ -53,7 +53,39 @@ const Catalogo = () => {
       // 🔹 Juntar nuevamente: primero con stock (ordenados), luego sin stock
       const productosOrdenados = [...conStock, ...sinStock];
 
-      if (!cancelado) setProductos(productosOrdenados);
+      if (!cancelado) {
+        setProductos(productosOrdenados);
+
+        // 🔄 Precargar imágenes
+        const precargarImagenes = async () => {
+          const imagenes = productosOrdenados.map((p) => p.ImageUrl);
+          let cargadas = 0;
+
+          const verificarCarga = () => {
+            cargadas++;
+            if (cargadas === imagenes.length) {
+              setTimeout(() => {
+                setIsLoaded(true); // ✅ activa vista principal
+              }, 1200); // opcional: efecto más suave
+            }
+          };
+
+          if (imagenes.length === 0) {
+            setIsLoaded(true);
+            return;
+          }
+
+          imagenes.forEach((src) => {
+            const img = new Image();
+            img.onload = verificarCarga;
+            img.onerror = verificarCarga;
+            img.src = src;
+          });
+        };
+
+        precargarImagenes();
+      }
+
     };
 
     cargarDatos();

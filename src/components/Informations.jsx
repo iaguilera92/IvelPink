@@ -57,7 +57,7 @@ const promotions = [
 
 
 
-function Informations({ informationsRef, triggerInformations, setHasSeenInformations }) {
+function Informations({ informationsRef, triggerInformations }) {
 
   // Controla la vista del componente
   const [isGrabbing, setIsGrabbing] = useState(false);
