@@ -19,8 +19,6 @@ import "./components/css/App.css";
 import { initGoogleAnalytics, trackPageView } from "./helpers/HelperAnalytics.js"; //GOOGLE ANALYTICS
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [showContacto, setShowContacto] = useState(false);
   const [showArrow, setShowArrow] = useState(false);
   const [openBubble, setOpenBubble] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
@@ -29,13 +27,9 @@ function App() {
   const informationsRef = useRef(null);
   const location = useLocation();
   const [videoReady, setVideoReady] = useState(false);
-  const isHome = ["/", "/inicio", ""].includes(location.pathname);
   const [showApp, setShowApp] = useState(false);
   const [snackbarVersion, setSnackbarVersion] = useState({ open: false, version: "", });
-
-  const [shouldAnimateInformations, setShouldAnimateInformations] = useState(false);
   const triggerInformations = (value) => setShouldAnimateInformations(value);
-  const [hasSeenInformations, setHasSeenInformations] = useState(false);
 
   //GOOGLE ANALYTICS
   useEffect(() => {
@@ -112,7 +106,7 @@ function App() {
       if (!requiereVideo || videoReady) {
         setShowApp(true);
       }
-    }, 1500); // mínimo visible
+    }, 1800); // mínimo visible
 
     const maxTimeout = setTimeout(() => {
       setShowApp(true); // fuerza mostrar app

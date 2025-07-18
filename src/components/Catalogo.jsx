@@ -296,7 +296,7 @@ const Catalogo = () => {
 
 
                   <Swiper
-                    modules={[Virtual]} // ✅ Solo usa los módulos que realmente ocupas
+                    modules={[Virtual]}
                     lazy={true}
                     watchSlidesProgress
                     spaceBetween={12}
@@ -304,7 +304,11 @@ const Catalogo = () => {
                     centeredSlides={false}
                     touchRatio={1.2}
                     threshold={5}
-                    style={{ padding: '16px 10px', paddingRight: '20px' }}
+                    style={{
+                      padding: '16px 10px',
+                      paddingRight: '20px',
+                      overflow: 'visible' // ✅ necesario
+                    }}
                     onSlideChange={(swiper) => {
                       setShowArrow(!swiper.isEnd);
                     }}
@@ -317,9 +321,10 @@ const Catalogo = () => {
                         <SwiperSlide
                           key={producto.IdProducto}
                           style={{
-                            width: '60vw', // 👉 Ocupa dos tercios del ancho
+                            width: '60vw',
                             maxWidth: '320px',
                             scrollSnapAlign: 'start',
+                            overflow: 'visible' // ✅ permite que el badge se muestre
                           }}
                         >
                           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
