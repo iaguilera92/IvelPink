@@ -11,8 +11,8 @@ import "./css/Features.css"; // Importamos el CSS
 const features = [
   { imageSrc: '/producto4.webp', label: 'Pijamas' },
   { imageSrc: 'https://m.media-amazon.com/images/I/71d9aL875PL._AC_UY580_.jpg', label: 'Invierno' },
+  { imageSrc: '/productos/producto-5.webp', label: 'Accesorios' },
   { imageSrc: 'https://img.ltwebstatic.com/images3_pi/2023/07/21/16899049705cd10efc724e3b9c5d715c6f1a20faa8_thumbnail_405x.webp', label: 'Verano' },
-  { imageSrc: 'https://img.ltwebstatic.com/images3_pi/2024/12/21/45/173476402702f144f0c5cba6439964db6031d6b08b_thumbnail_405x.webp', label: 'Jeans' },
   { imageSrc: 'https://img.ltwebstatic.com/images3_pi/2025/03/20/3a/17424556395aa953a27574ca9beac76a8ca40d94ba_thumbnail_405x.webp', label: 'Shorts' },
 ];
 
