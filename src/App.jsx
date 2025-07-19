@@ -30,6 +30,7 @@ function App() {
   const [showApp, setShowApp] = useState(false);
   const [snackbarVersion, setSnackbarVersion] = useState({ open: false, version: "", });
   const triggerInformations = (value) => setShouldAnimateInformations(value);
+  const [showContacto, setShowContacto] = useState(false);
 
   //GOOGLE ANALYTICS
   useEffect(() => {
