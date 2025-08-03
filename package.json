@@ -20,6 +20,7 @@
     "aws-sdk": "^2.1692.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.5.0",
     "framer-motion": "^12.4.7",
     "googleapis": "^148.0.0",

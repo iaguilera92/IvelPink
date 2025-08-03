@@ -1,11 +1,13 @@
-import { Container, Grid, Card, CardActionArea, CardMedia, Typography, Box, Button, useTheme, useMediaQuery, } from "@mui/material";
+import { Container, Grid, Alert, CardActionArea, Snackbar, Typography, Box, Button, useTheme, useMediaQuery, } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { styled } from "@mui/system";
 import { motion } from "framer-motion";
-import { FaTshirt } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
 import "./css/Features.css"; // Importamos el CSS
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+dayjs.extend(duration);
 
 // DATOS
 const features = [
@@ -57,9 +59,6 @@ const Overlay = styled(Box)(({ theme }) => ({
 }));
 
 
-const AdditionalContent = styled(Box)({ opacity: 0, transition: "opacity 0.3s ease" });
-
-
 function Features({ videoReady }) {
 
   const theme = useTheme();
@@ -68,7 +67,10 @@ function Features({ videoReady }) {
   const [hasAnimated, setHasAnimated] = useState(false);
   const navigate = useNavigate();
   const [buttonRef, buttonInView] = useInView({ triggerOnce: true, rootMargin: '0px 0px -20% 0px' });
-
+  const [timeLeft, setTimeLeft] = useState("");
+  const deadline = new Date(); // fecha actual
+  deadline.setDate(deadline.getDate() + 7); // le sumas 7 días (una semana)
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   //EVITAR ANIMACIÓN DUPLICADA
   useEffect(() => {
@@ -97,6 +99,26 @@ function Features({ videoReady }) {
       transition: { duration: 0.8, delay: 1 + index * 0.3, ease: "easeOut" },
     }),
   };
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date();
+      const diff = deadline - now;
+
+      if (diff <= 0) {
+        setTimeLeft("Finalizado");
+        clearInterval(timer);
+      } else {
+        const d = dayjs.duration(diff);
+        const days = Math.floor(d.asDays());
+        const hours = d.hours();
+        const minutes = d.minutes();
+
+        setTimeLeft(`${days}d ${hours}h ${minutes}m`);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <Box
@@ -230,11 +252,10 @@ function Features({ videoReady }) {
                 justifyContent: "center",
               }}
             >
-
               <Button
-                onClick={() => { navigate('/catalogo'); }}
+                onClick={() => setOpenSnackbar(true)}
+
                 variant="contained"
-                target="_self"
                 sx={{
                   textTransform: "none",
                   fontWeight: "bold",
@@ -250,11 +271,11 @@ function Features({ videoReady }) {
                   width: { xs: "100%", sm: "460px" },
                   maxWidth: "460px",
                   height: "50px",
-                  backgroundColor: "rgb(255, 94, 157) ",
+                  backgroundColor: "#00d4ff",
                   transition: "width 0.3s ease",
                   "&:hover": {
                     width: { xs: "100%", sm: "470px" },
-                    backgroundColor: "rgb(255, 94, 157)",
+                    backgroundColor: "#00c4e5",
                   },
                   "&:hover .icon": {
                     opacity: 1,
@@ -265,41 +286,78 @@ function Features({ videoReady }) {
                   },
                 }}
               >
+                {/* Ícono fijo a la izquierda */}
                 <Box sx={{ position: "relative", display: "flex", alignItems: "center" }}>
                   <Box
                     component="span"
-                    className={`icon ${hasAnimated ? "animate" : ""}`} // Activar animación al estar en vista
+                    className={`icon ${hasAnimated ? "animate" : ""}`}
                     sx={{
                       position: "absolute",
                       left: 0,
                       display: "flex",
                       alignItems: "center",
-                      opacity: hasAnimated ? 0 : 1,  // Al hacer scroll, se oculta el icono
-                      transform: hasAnimated ? "translateX(10px)" : "translateX(0)", // Mover el icono a la derecha
-                      transition: "all 1s ease", // Transición suave
+                      opacity: hasAnimated ? 0 : 1,
+                      transform: hasAnimated ? "translateX(10px)" : "translateX(0)",
+                      transition: "all 1s ease",
                       zIndex: 2,
                     }}
                   >
-                    <FaTshirt style={{ color: "#fff", fontSize: "1.5rem" }} />
+                    <span style={{ fontSize: "1.3rem" }}>🎉</span>
                   </Box>
                 </Box>
+
+                {/* Texto: Concurso (Tiempo xx) */}
                 <Box
                   component="span"
-                  fontSize={isMobile ? "11px" : "15px"}
-                  className={`letter ${hasAnimated ? "animate" : ""}`} // Activar animación al estar en vista
+                  className={`letter ${hasAnimated ? "animate" : ""}`}
                   sx={{
-                    ml: 1,
-                    transition: "all 1s ease", // Transición suave
-                    transform: hasAnimated ? "translateX(0)" : "translateX(15px)", // Inicialmente a la derecha (15px)
+                    ml: 1.5,
+                    display: "flex",
+                    alignItems: "center",
+                    fontSize: isMobile ? "11px" : "15px",
+                    fontWeight: 600,
+                    color: "#fff",
+                    transition: "all 1s ease",
+                    transform: hasAnimated ? "translateX(0)" : "translateX(15px)",
+                    whiteSpace: "nowrap",
+                    gap: "1px",
                   }}
                 >
-                  NUESTRAS OFERTAS
+                  <Box component="span" sx={{ fontWeight: 700 }}>Concurso</Box>
+                  <Box
+                    component="span"
+                    sx={{
+                      fontWeight: 400,
+                      fontSize: isMobile ? "10px" : "13px",
+                      color: "#ffd59e"
+
+                    }}
+                  >
+                    (Empieza en {timeLeft})
+                  </Box>
                 </Box>
               </Button>
+
             </motion.div>
           </Box>
         </Box>
       </Container >
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity="info"
+          variant="filled"
+          sx={{ width: '100%', backgroundColor: '#99d7f2', color: '#fff', fontWeight: 600 }}
+        >
+          En construcción 🚧
+        </Alert>
+      </Snackbar>
+
     </Box >
   );
 }
