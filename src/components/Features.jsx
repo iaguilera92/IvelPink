@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import "./css/Features.css"; // Importamos el CSS
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
+import ConcursoRegistrar from "./ConcursoRegistrar";
+
 dayjs.extend(duration);
 
 // DATOS
@@ -71,6 +73,7 @@ function Features({ videoReady }) {
   const deadline = new Date(); // fecha actual
   deadline.setDate(deadline.getDate() + 7); // le sumas 7 días (una semana)
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   //EVITAR ANIMACIÓN DUPLICADA
   useEffect(() => {
@@ -137,7 +140,10 @@ function Features({ videoReady }) {
         <Box ref={ref} sx={{ mt: 0 }}>
           <Grid container spacing={2} justifyContent="center">
             {features.map((feature, index) => {
+              if (isMobile && index >= features.length - 2) return null;
+
               const isDisabled = disabledLabels.includes(feature.label);
+
 
               return (
                 <Grid item xs={4} sm={3} md={1.2} key={index}>
@@ -169,7 +175,7 @@ function Features({ videoReady }) {
                           overflow: 'hidden',
                           backgroundColor: '#fff',
                           boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                          mb: 1,
+                          mb: 0,
                           filter: isDisabled ? 'grayscale(100%) brightness(0.9)' : 'none',
                         }}
                       >
@@ -236,7 +242,7 @@ function Features({ videoReady }) {
           </Grid>
 
           <br />
-          <Box sx={{ display: "flex", justifyContent: "center", my: 1 }}>
+          <Box sx={{ display: "flex", justifyContent: "center", my: 0 }}>
             <motion.div
               ref={buttonRef}
               initial={{ opacity: 0, y: 50 }}
@@ -253,8 +259,7 @@ function Features({ videoReady }) {
               }}
             >
               <Button
-                onClick={() => setOpenSnackbar(true)}
-
+                onClick={() => setDialogOpen(true)}
                 variant="contained"
                 sx={{
                   textTransform: "none",
@@ -271,11 +276,10 @@ function Features({ videoReady }) {
                   width: { xs: "100%", sm: "460px" },
                   maxWidth: "460px",
                   height: "50px",
-                  backgroundColor: "#00d4ff",
-                  transition: "width 0.3s ease",
+                  backgroundColor: "#ffccbc", // rosado intenso
                   "&:hover": {
                     width: { xs: "100%", sm: "470px" },
-                    backgroundColor: "#00c4e5",
+                    backgroundColor: "#ffab91",
                   },
                   "&:hover .icon": {
                     opacity: 1,
@@ -302,7 +306,7 @@ function Features({ videoReady }) {
                       zIndex: 2,
                     }}
                   >
-                    <span style={{ fontSize: "1.3rem" }}>🎉</span>
+                    <span style={{ fontSize: "1.3rem" }}>🌷</span>
                   </Box>
                 </Box>
 
@@ -316,26 +320,35 @@ function Features({ videoReady }) {
                     alignItems: "center",
                     fontSize: isMobile ? "11px" : "15px",
                     fontWeight: 600,
-                    color: "#fff",
                     transition: "all 1s ease",
                     transform: hasAnimated ? "translateX(0)" : "translateX(15px)",
                     whiteSpace: "nowrap",
-                    gap: "1px",
+                    gap: "4px",
                   }}
                 >
-                  <Box component="span" sx={{ fontWeight: 700 }}>Concurso</Box>
+                  <Box
+                    component="span"
+                    sx={{
+                      fontWeight: 700,
+                      color: "#3b0a2a", // vino oscuro, muy legible sobre fondo rosado
+                      textShadow: "0 1px 1px rgba(255,255,255,0.3)",
+                    }}
+                  >
+                    Concurso
+                  </Box>
                   <Box
                     component="span"
                     sx={{
                       fontWeight: 400,
                       fontSize: isMobile ? "10px" : "13px",
-                      color: "#ffd59e"
-
+                      color: "#4a4a4a", // gris oscuro para contraste
+                      fontStyle: "italic",
                     }}
                   >
                     (Empieza en {timeLeft})
                   </Box>
                 </Box>
+
               </Button>
 
             </motion.div>
@@ -357,6 +370,7 @@ function Features({ videoReady }) {
           En construcción 🚧
         </Alert>
       </Snackbar>
+      <ConcursoRegistrar open={dialogOpen} onClose={() => setDialogOpen(false)} />
 
     </Box >
   );
