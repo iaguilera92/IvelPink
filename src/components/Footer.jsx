@@ -128,7 +128,7 @@ const Footer = () => {
                 }}
               >
                 <SocialButton
-                  href="https://www.instagram.com/ivelpink.chile/?hl=es-la"
+                  href="https://www.instagram.com/ivelpink.cl/?hl=es-la"
                   Icon={InstagramIcon}
                   bgColor="linear-gradient(45deg, #cf198c, #f41242)"
                   hoverStyles={{
@@ -192,7 +192,7 @@ const Footer = () => {
 
             {/* Redes Sociales */}
             <Box ref={socialRef} sx={{ display: "flex", gap: 6, mb: 2, animation: socialInView ? `${growElement} 1s forwards` : "none", }}            >
-              <SocialButton href="https://www.instagram.com/ivelpink.chile/?hl=es-la" Icon={InstagramIcon} bgColor="linear-gradient(45deg, #cf198c, #f41242)" isMobile={isMobile} />
+              <SocialButton href="https://www.instagram.com/ivelpink.cl/?hl=es-la" Icon={InstagramIcon} bgColor="linear-gradient(45deg, #cf198c, #f41242)" isMobile={isMobile} />
               <SocialButton href="https://www.facebook.com/people/Ivelpink/61573460535717/#" Icon={FacebookIcon} bgColor="linear-gradient(45deg, #00B5F5, #002A8F)" isMobile={isMobile} />
               <SocialButton href="https://www.linkedin.com/company/mittarentacar/?viewAsMember=true" Icon={LinkedInIcon} bgColor="linear-gradient(45deg, #00B5F5, #0077b7)" isMobile={isMobile} />
             </Box>

@@ -24,43 +24,6 @@ const disabledLabels = ['Verano', 'Jeans', 'Shorts'];
 
 
 // EFECTOS
-const StyledCardActionArea = styled(CardActionArea)({
-  position: "relative",
-  "& .card-media": {
-    filter: "brightness(1.05) saturate(1.2) hue-rotate(-20deg)", // 🎨 efecto rosado base
-    transition: "transform 0.6s ease, filter 0.6s ease",
-  },
-  "&:hover .overlay": {
-    top: 0,
-    height: "100%",
-    backgroundColor: "rgba(191, 64, 128, 0.8)", // 🌸 fondo rosado
-  },
-  "&:hover .additional": {
-    opacity: 1,
-  },
-  "&:hover .card-media": {
-    transform: "scale(1.3)",
-    filter: "brightness(1.2) saturate(1.5) hue-rotate(-30deg)", // 💖 más intensidad al hover
-  },
-});
-
-const Overlay = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  top: "50%",
-  left: 0,
-  right: 0,
-  height: "75%",
-  backgroundColor: "rgba(255, 105, 180, 0.4)", // 💖 rosado translúcido (HotPink)
-  color: theme.palette.common.white,
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "flex-start",
-  padding: theme.spacing(2),
-  transition: "all 0.3s ease",
-}));
-
-
 function Features({ videoReady }) {
 
   const theme = useTheme();
@@ -70,8 +33,8 @@ function Features({ videoReady }) {
   const navigate = useNavigate();
   const [buttonRef, buttonInView] = useInView({ triggerOnce: true, rootMargin: '0px 0px -20% 0px' });
   const [timeLeft, setTimeLeft] = useState("");
-  const deadline = new Date(); // fecha actual
-  deadline.setDate(deadline.getDate() + 7); // le sumas 7 días (una semana)
+  const deadline = dayjs("2025-08-20T19:00:00").toDate();
+
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -87,11 +50,6 @@ function Features({ videoReady }) {
     }
     return () => clearTimeout(timer);
   }, [videoReady, inView, hasAnimated]);
-
-  const handleContactClick = (title) => {
-    const mensaje = `¡Hola! Me interesó ${encodeURIComponent(title)} ¿Me comentas?`;
-    window.open(`https://api.whatsapp.com/send?phone=56979897336&text=${mensaje}`, "_blank");
-  };
 
   //APARICIÓN
   const cardAnimation = {
@@ -244,13 +202,8 @@ function Features({ videoReady }) {
           <br />
           <Box sx={{ display: "flex", justifyContent: "center", my: 0 }}>
             <motion.div
-              ref={buttonRef}
               initial={{ opacity: 0, y: 50 }}
-              animate={
-                isMobile
-                  ? (buttonInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 })
-                  : (hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 })
-              }
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
               style={{
                 minHeight: "60px",
@@ -258,6 +211,7 @@ function Features({ videoReady }) {
                 justifyContent: "center",
               }}
             >
+
               <Button
                 onClick={() => setDialogOpen(true)}
                 variant="contained"
@@ -276,10 +230,10 @@ function Features({ videoReady }) {
                   width: { xs: "100%", sm: "460px" },
                   maxWidth: "460px",
                   height: "50px",
-                  backgroundColor: "#ffccbc", // rosado intenso
+                  background: "linear-gradient(0deg, #81d4fa 0%, #b2ebf2 100%)", // 💧 celeste pastel degradado
                   "&:hover": {
                     width: { xs: "100%", sm: "470px" },
-                    backgroundColor: "#ffab91",
+                    background: "linear-gradient(0deg, #4fc3f7 0%, #b2ebf2 100%)", // Hover más vibrante
                   },
                   "&:hover .icon": {
                     opacity: 1,
@@ -290,6 +244,8 @@ function Features({ videoReady }) {
                   },
                 }}
               >
+
+
                 {/* Ícono fijo a la izquierda */}
                 <Box sx={{ position: "relative", display: "flex", alignItems: "center" }}>
                   <Box

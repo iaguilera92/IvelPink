@@ -32,7 +32,7 @@ import { useLocation } from 'react-router-dom';
 
 
 const socialData = {
-  Instagram: { href: "https://www.instagram.com/ivelpink.chile/?hl=es-la", Icon: InstagramIcon, bgColor: "linear-gradient(45deg, #cf198c, #f41242)", hoverColor: "#cf198c" },
+  Instagram: { href: "https://www.instagram.com/ivelpink.cl/?hl=es-la", Icon: InstagramIcon, bgColor: "linear-gradient(45deg, #cf198c, #f41242)", hoverColor: "#cf198c" },
   Facebook: { href: "https://www.facebook.com/people/Ivelpink/61573460535717/#", Icon: FacebookIcon, bgColor: "linear-gradient(45deg, #00B5F5, #002A8F)", hoverColor: "#0077b7" },
   LinkedIn: { href: "https://www.linkedin.com/company/plataformas-web/", Icon: LinkedInIcon, bgColor: "linear-gradient(45deg, #00B5F5, #0077b7)", hoverColor: "#0077b7" }
 };
