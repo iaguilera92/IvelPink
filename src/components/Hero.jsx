@@ -274,10 +274,8 @@ function Hero({ informationsRef, setVideoReady }) {
                     <button
                       className="btn-3"
                       onClick={() => {
-                        setMostrarTransicion(true);
-                        setTimeout(() => {
-                          navigate("/catalogo");
-                        }, 200); // puedes ajustar el tiempo si lo necesitas más largo
+                        document.body.classList.add('nav-white'); // cubre al instante con blanco
+                        navigate('/catalogo', { replace: true }); // replace evita reusar el state al volver
                       }}
                     >
                       <span>Nuestro Catálogo</span>

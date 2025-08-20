@@ -244,9 +244,11 @@ function App() {
       <Box sx={{ visibility: showApp ? "visible" : "hidden", pointerEvents: showApp ? "auto" : "none", overflowX: 'hidden' }}>
         {/* Navbar solo si no estás en /administracion */}
         {location.pathname !== "/administracion" && (
-          <Suspense fallback={null}>
-            <Navbar contactoRef={contactoRef} informationsRef={informationsRef} videoReady={videoReady} />
-          </Suspense>
+          <div className="app-chrome">
+            <Suspense fallback={null}>
+              <Navbar contactoRef={contactoRef} informationsRef={informationsRef} videoReady={videoReady} />
+            </Suspense>
+          </div>
         )}
 
         {/* Rutas principales con contexto */}
@@ -284,8 +286,11 @@ function App() {
         )}
 
         {/* Footer (excepto en administración) */}
-        {location.pathname !== "/administracion" && location.pathname !== "/dashboard" && location.pathname !== "/configurar-productos" && <Footer />}
-
+        {location.pathname !== "/administracion" && location.pathname !== "/dashboard" && location.pathname !== "/configurar-productos" && (
+          <div className="app-chrome">
+            <Footer />
+          </div>
+        )}
         {/* Botón WhatsApp */}
         {location.pathname !== "/administracion" && location.pathname !== "/dashboard" && location.pathname !== "/configurar-productos" && (
           <Box sx={{ position: "fixed", bottom: "40px", right: "20px", zIndex: 100, transition: "bottom 0.3s ease", }}>

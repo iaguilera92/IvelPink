@@ -115,15 +115,30 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
   const handleOpenPDF = () => isMobile ? window.open("/plataformasweb-pdf.pdf", "_blank") : setOpenPDF(true);
   const handleClosePDF = () => setOpenPDF(false);
 
+  const goToCatalogo = () => {
+    if (location.pathname === "/catalogo") {
+      document.body.classList.remove("nav-white");
+      scrollToTop();
+      return;
+    }
+
+    // muestra blanco inmediato
+    document.body.classList.add("nav-white");
+
+    requestAnimationFrame(() => {
+      navigate("/catalogo", { replace: true });
+    });
+  };
+
   const handleClick = (item) => {
     setOpen(false);
     const actions = {
       Contacto: () => scrollToRef(contactoRef),
-      Inicio: () => location.pathname !== "/" ? navigate("/") : scrollToTop(),
+      Inicio: () => (location.pathname !== "/" ? navigate("/") : scrollToTop()),
       Servicios: () => navigate("/servicios"),
-      Catálogo: () => navigate("/catalogo"),
+      Catálogo: goToCatalogo,
       Nosotros: () => navigate("/nosotros"),
-      Presentación: handleOpenPDF
+      Presentación: handleOpenPDF,
     };
     actions[item.name]?.();
   };

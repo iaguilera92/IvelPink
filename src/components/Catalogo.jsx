@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Container, Snackbar, Box, Alert, useTheme, useMediaQuery, Button } from '@mui/material';
 import './css/Catalogo.css';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Productos from './Productos';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -27,6 +27,10 @@ const Catalogo = () => {
   const [mostrarControlesVideo, setMostrarControlesVideo] = useState(false);
   const [animarFlecha, setAnimarFlecha] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [entered, setEntered] = useState(false);
+  const [showRouteLoader, setShowRouteLoader] = useState(true); // 👈 mantiene el loader visible
+  const [fadeLoader, setFadeLoader] = useState(false);          // 👈 activa el fade del loader
+  const NAV_FADE_MS = 1000;
 
   const fechaActual = new Date().toLocaleDateString('es-CL', {
     day: '2-digit',
@@ -67,7 +71,7 @@ const Catalogo = () => {
             if (cargadas === imagenes.length) {
               setTimeout(() => {
                 setIsLoaded(true); // ✅ activa vista principal
-              }, 1200); // opcional: efecto más suave
+              }, 1800); // opcional: efecto más suave
             }
           };
 
@@ -98,7 +102,6 @@ const Catalogo = () => {
 
 
 
-
   //CARGAR ANTES DE EMPEZAR
   useEffect(() => {
     const esperarCargaRecursos = () => {
@@ -119,7 +122,7 @@ const Catalogo = () => {
         if (cargados === totalRecursos.length) {
           setTimeout(() => {
             setIsLoaded(true);
-          }, 1500); // opcional: para una transición más suave
+          }, 1800); // opcional: para una transición más suave
         }
       };
 
@@ -197,114 +200,173 @@ const Catalogo = () => {
     window.scrollTo(0, 0); // fuerza el inicio al tope
   }, []);
 
+
+  //CAMBIAR DE PAGINA WEB
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    const raf = requestAnimationFrame(() => {
+      // 1) Inicia el fade del overlay blanco
+      if (document.body.classList.contains('nav-white')) {
+        document.body.classList.add('nav-white--fade');
+      }
+
+      // 2) Pequeño retraso para desvanecer el loader
+      const startLoaderFade = setTimeout(() => {
+        setFadeLoader(true);
+      }, 60);
+
+      setEntered(true);
+
+      // 3) Retira clases y desmonta loader cuando termine EL MISMO tiempo del CSS
+      const tOut = setTimeout(() => {
+        document.body.classList.remove('nav-white', 'nav-white--fade', 'no-scroll');
+        setShowRouteLoader(false);
+      }, NAV_FADE_MS + 40); // 1000 + 40 ms
+
+      return () => {
+        clearTimeout(tOut);
+        clearTimeout(startLoaderFade);
+      };
+    });
+
+    return () => cancelAnimationFrame(raf);
+  }, [isLoaded, NAV_FADE_MS]);
+
+
+  useEffect(() => {
+    return () => {
+      document.body.classList.remove('nav-white', 'nav-white--fade', 'no-scroll');
+    };
+  }, []);
+
   return (
     <Box key={isLoaded ? 'loaded' : 'loading'}>
       {isLoaded ? (
-        <Container
-          maxWidth={false}
-          disableGutters
-          sx={{
-            overflowX: 'hidden',
-            minHeight: '100vh',
-            width: '100%', // ✅ CAMBIO AQUÍ
-            py: 14,
-            px: 1.2, // Puedes mantener esto ahora sin problema
-            position: 'relative',
-            overflow: 'hidden',
-            backgroundImage: isMobile
-              ? 'url(fondo-blizz-ivelpink.webp)'
-              : 'url(fondo-blizz-ivelpink.webp)',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: 'fixed',
-            backgroundPosition: 'center',
-          }}
+        <motion.div
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: entered ? 1 : 0, y: 0 }}
+          transition={{ duration: NAV_FADE_MS / 1000, ease: [0.22, 1, 0.36, 1] }} // 0.42s
+          className="route-fade"
+          style={{ minHeight: '100vh' }}
         >
+          <Container
+            maxWidth={false}
+            disableGutters
+            sx={{
+              overflowX: 'hidden',
+              minHeight: '100vh',
+              width: '100%', // ✅ CAMBIO AQUÍ
+              py: 14,
+              px: 1.2, // Puedes mantener esto ahora sin problema
+              position: 'relative',
+              overflow: 'hidden',
+              backgroundImage: isMobile
+                ? 'url(fondo-blizz-ivelpink.webp)'
+                : 'url(fondo-blizz-ivelpink.webp)',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundAttachment: 'fixed',
+              backgroundPosition: 'center',
+            }}
+          >
 
 
-          {
-            isMobile ? (
-              grupos.map((grupo, grupoIndex) => (
-                <Box key={`swiper-container-${grupoIndex}`} sx={{ position: 'relative', py: 0 }}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      px: 0,
-                      mb: 0,
-                      position: 'relative',
-                      zIndex: 20,
-                      height: 40,
-                    }}
-                  >
-                    {/* Título con ícono estilo reels */}
+            {
+              isMobile ? (
+                grupos.map((grupo, grupoIndex) => (
+                  <Box key={`swiper-container-${grupoIndex}`} sx={{ position: 'relative', py: 0 }}>
                     <Box
                       sx={{
                         display: 'flex',
+                        justifyContent: 'space-between',
                         alignItems: 'center',
-                        gap: 1,
-                        ml: 1,
+                        px: 0,
+                        mb: 0,
+                        position: 'relative',
+                        zIndex: 20,
+                        height: 40,
                       }}
                     >
-                      {/* Columna 1: Ícono centrado */}
-                      <Box
-                        component="img"
-                        loading="lazy"
-                        decoding="async"
-                        src="cine.png"
-                        alt="Reels icon"
-                        sx={{
-                          width: 16,
-                          height: 16,
-                          filter: 'invert(1)',
-                          alignSelf: 'center',
-                          mt: 0,
-                        }}
-                      />
-
-                      {/* Columna 2: Título + Fecha */}
+                      {/* Título con ícono estilo reels */}
                       <Box
                         sx={{
                           display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          color: 'white',
-                          fontFamily: '"Segoe UI", sans-serif',
-                          lineHeight: 1.2,
+                          alignItems: 'center',
+                          gap: 1,
+                          ml: 1,
                         }}
                       >
-                        <Box sx={{ fontWeight: 'bold', fontSize: '0.85rem' }}>
-                          {grupoIndex === 0 ? 'Explora el catálogo' : 'Más productos activos..'}
-                        </Box>
-                        {grupoIndex === 0 && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.5, duration: 0.5, ease: 'easeOut' }}
-                          >
-                            <Box sx={{ fontWeight: 400, fontSize: '0.75rem', opacity: 0.9 }}>
-                              Última actualización de stock{' '}
-                              <Box component="span" sx={{ fontWeight: 'bold' }}>
-                                {fechaActual}
+                        {/* Columna 1: Ícono centrado */}
+                        <Box
+                          component="img"
+                          loading="lazy"
+                          decoding="async"
+                          src="cine.png"
+                          alt="Reels icon"
+                          sx={{
+                            width: 16,
+                            height: 16,
+                            filter: 'invert(1)',
+                            alignSelf: 'center',
+                            mt: 0,
+                          }}
+                        />
+
+                        {/* Columna 2: Título + Fecha */}
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            color: 'white',
+                            fontFamily: '"Segoe UI", sans-serif',
+                            lineHeight: 1.2,
+                          }}
+                        >
+                          <Box sx={{ fontWeight: 'bold', fontSize: '0.85rem' }}>
+                            {grupoIndex === 0 ? 'Explora el catálogo' : 'Más productos activos..'}
+                          </Box>
+                          {grupoIndex === 0 && (
+                            <motion.div
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: 1.5, duration: 0.5, ease: 'easeOut' }}
+                            >
+                              <Box sx={{ fontWeight: 400, fontSize: '0.75rem', opacity: 0.9 }}>
+                                Última actualización de stock{' '}
+                                <Box component="span" sx={{ fontWeight: 'bold' }}>
+                                  {fechaActual}
+                                </Box>
                               </Box>
-                            </Box>
 
-                          </motion.div>
-                        )}
+                            </motion.div>
+                          )}
+                        </Box>
                       </Box>
-                    </Box>
 
 
-                    {/* Flecha o espacio */}
-                    <Box sx={{ width: 40, textAlign: 'right' }}>
-                      {showArrow ? (
-                        animarFlecha ? (
-                          <motion.div
-                            animate={{ x: [0, 5, 0] }}
-                            transition={{ duration: 1.5, repeat: 1, ease: "easeInOut" }}
-                          >
+                      {/* Flecha o espacio */}
+                      <Box sx={{ width: 40, textAlign: 'right' }}>
+                        {showArrow ? (
+                          animarFlecha ? (
+                            <motion.div
+                              animate={{ x: [0, 5, 0] }}
+                              transition={{ duration: 1.5, repeat: 1, ease: "easeInOut" }}
+                            >
 
+                              <IconButton
+                                sx={{
+                                  color: "white",
+                                  boxShadow: "none",
+                                  padding: 0.5,
+                                  "&:hover": { backgroundColor: "rgba(0,0,0,0.4)" },
+                                }}
+                              >
+                                <ArrowForwardIcon fontSize="large" sx={{ fontSize: "24px" }} />
+                              </IconButton>
+                            </motion.div>
+                          ) : (
                             <IconButton
                               sx={{
                                 color: "white",
@@ -315,213 +377,208 @@ const Catalogo = () => {
                             >
                               <ArrowForwardIcon fontSize="large" sx={{ fontSize: "24px" }} />
                             </IconButton>
-                          </motion.div>
+                          )
                         ) : (
-                          <IconButton
-                            sx={{
-                              color: "white",
-                              boxShadow: "none",
-                              padding: 0.5,
-                              "&:hover": { backgroundColor: "rgba(0,0,0,0.4)" },
+                          <Box sx={{ width: 40 }} />
+                        )}
+                      </Box>
+
+                    </Box>
+
+
+                    <Swiper
+                      modules={[Virtual]}
+                      lazy={true}
+                      watchSlidesProgress
+                      spaceBetween={12}
+                      slidesPerView={'auto'}
+                      centeredSlides={false}
+                      touchRatio={1.2}
+                      threshold={5}
+                      style={{
+                        padding: '16px 10px',
+                        paddingRight: '20px',
+                        overflow: 'visible' // ✅ necesario
+                      }}
+                      onSlideChange={(swiper) => {
+                        setShowArrow(!swiper.isEnd);
+                      }}
+                    >
+                      {grupo.map((producto, index) => {
+                        const productoIndexGlobal = index + grupoIndex * 5;
+                        const isGirado = productoActivo[grupoIndex] === index;
+
+                        return (
+                          <SwiperSlide
+                            key={producto.IdProducto}
+                            style={{
+                              width: '60vw',
+                              maxWidth: '320px',
+                              scrollSnapAlign: 'start',
+                              overflow: 'visible' // ✅ permite que el badge se muestre
                             }}
                           >
-                            <ArrowForwardIcon fontSize="large" sx={{ fontSize: "24px" }} />
-                          </IconButton>
-                        )
-                      ) : (
-                        <Box sx={{ width: 40 }} />
-                      )}
-                    </Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                              <Productos
+                                index={productoIndexGlobal}
+                                producto={producto}
+                                girado={isGirado}
+                                onGirar={() => {
+                                  setProductoActivo((prevState) => ({
+                                    ...prevState,
+                                    [grupoIndex]: prevState[grupoIndex] === index ? null : index
+                                  }));
+                                }}
+                                FormatearPesos={FormatearPesos}
+                                CalcularValorOld={CalcularValorOld}
+                                onVisualizarMobile={setVideoFullScreenProducto}
+                              />
 
+                            </Box>
+                          </SwiperSlide>
+                        );
+                      })}
+                    </Swiper>
                   </Box>
 
+                ))
+              ) : (
 
-                  <Swiper
-                    modules={[Virtual]}
-                    lazy={true}
-                    watchSlidesProgress
-                    spaceBetween={12}
-                    slidesPerView={'auto'}
-                    centeredSlides={false}
-                    touchRatio={1.2}
-                    threshold={5}
-                    style={{
-                      padding: '16px 10px',
-                      paddingRight: '20px',
-                      overflow: 'visible' // ✅ necesario
-                    }}
-                    onSlideChange={(swiper) => {
-                      setShowArrow(!swiper.isEnd);
-                    }}
-                  >
-                    {grupo.map((producto, index) => {
-                      const productoIndexGlobal = index + grupoIndex * 5;
-                      const isGirado = productoActivo[grupoIndex] === index;
-
-                      return (
-                        <SwiperSlide
-                          key={producto.IdProducto}
-                          style={{
-                            width: '60vw',
-                            maxWidth: '320px',
-                            scrollSnapAlign: 'start',
-                            overflow: 'visible' // ✅ permite que el badge se muestre
-                          }}
-                        >
-                          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                            <Productos
-                              index={productoIndexGlobal}
-                              producto={producto}
-                              girado={isGirado}
-                              onGirar={() => {
-                                setProductoActivo((prevState) => ({
-                                  ...prevState,
-                                  [grupoIndex]: prevState[grupoIndex] === index ? null : index
-                                }));
-                              }}
-                              FormatearPesos={FormatearPesos}
-                              CalcularValorOld={CalcularValorOld}
-                              onVisualizarMobile={setVideoFullScreenProducto}
-                            />
-
-                          </Box>
-                        </SwiperSlide>
-                      );
-                    })}
-                  </Swiper>
-                </Box>
-
-              ))
-            ) : (
-
-              // Vista desktop (Grid exacto con 5 productos por fila)
-              <Grid container spacing={2}>
-                {productos.map((producto, index) => (
-                  <Grid item md={12 / 5} key={producto.IdProducto}>
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                      <Productos
-                        index={index}
-                        producto={producto}
-                        girado={productoActivo === index}
-                        onGirar={() =>
-                          setProductoActivo(productoActivo === index ? null : index)
-                        }
-                        FormatearPesos={FormatearPesos}
-                        CalcularValorOld={CalcularValorOld}
-                      />
-                    </Box>
-                  </Grid>
-                ))}
-              </Grid>
-            )}
+                // Vista desktop (Grid exacto con 5 productos por fila)
+                <Grid container spacing={2}>
+                  {productos.map((producto, index) => (
+                    <Grid item md={12 / 5} key={producto.IdProducto}>
+                      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <Productos
+                          index={index}
+                          producto={producto}
+                          girado={productoActivo === index}
+                          onGirar={() =>
+                            setProductoActivo(productoActivo === index ? null : index)
+                          }
+                          FormatearPesos={FormatearPesos}
+                          CalcularValorOld={CalcularValorOld}
+                        />
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              )}
 
 
 
-          <Snackbar
-            open={snackbar.open}
-            autoHideDuration={4000}
-            onClose={() => setSnackbar({ ...snackbar, open: false })}
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          >
-            <Alert
-              severity={snackbar.type}
+            <Snackbar
+              open={snackbar.open}
+              autoHideDuration={4000}
               onClose={() => setSnackbar({ ...snackbar, open: false })}
-              sx={{ width: '100%', maxWidth: 360 }}
+              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
-              {snackbar.message}
-            </Alert>
-          </Snackbar>
+              <Alert
+                severity={snackbar.type}
+                onClose={() => setSnackbar({ ...snackbar, open: false })}
+                sx={{ width: '100%', maxWidth: 360 }}
+              >
+                {snackbar.message}
+              </Alert>
+            </Snackbar>
 
 
 
-          {videoFullScreenProducto && (
-            <Box
-              component={motion.div}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              sx={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100vw',
-                height: '100vh',
-                bgcolor: 'black',
-                zIndex: 9999,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                overflowY: 'auto',
-                py: 4
-              }}
-            >
-
-              <video
-                key={videoFullScreenProducto?.IdProducto}
-                src={videoFullScreenProducto?.VideoUrl}
-                autoPlay
-                muted
-                playsInline
-                preload="auto"
-                disablePictureInPicture
-                controlsList="nodownload"
-                controls={mostrarControlesVideo} // solo si el usuario toca
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  maxHeight: '70vh',
-                  objectFit: 'contain',
-                  backgroundColor: 'black',
-                }}
-                onClick={() => setMostrarControlesVideo(true)} // tap = muestra controles
-                onCanPlay={(e) => {
-                  const playPromise = e.target.play();
-                  if (playPromise !== undefined) {
-                    playPromise.catch(err => console.warn("AutoPlay Error:", err));
-                  }
-                }}
-              />
-
-              <Button
-                variant="contained"
+            {videoFullScreenProducto && (
+              <Box
+                component={motion.div}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
                 sx={{
-                  mt: 2,
-                  bgcolor: '#25D366',
-                  color: 'white',
-                  textTransform: 'none',
-                  fontSize: '1rem',
-                  px: 4,
-                  py: 1,
-                  borderRadius: '30px',
-                  boxShadow: '0px 4px 12px rgba(0,0,0,0.4)'
-                }}
-                onClick={() => {
-                  const mensaje = `Me interesó el ${videoFullScreenProducto.NombreProducto}, ¿sigue disponible?`;
-                  const telefono = '56979897336';
-                  const urlWhatsapp = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
-                  window.open(urlWhatsapp, '_blank');
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  width: '100vw',
+                  height: '100vh',
+                  bgcolor: 'black',
+                  zIndex: 9999,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  overflowY: 'auto',
+                  py: 4
                 }}
               >
-                Me interesa!
-              </Button>
 
-              <Button
-                onClick={() => setVideoFullScreenProducto(null)}
-                sx={{
-                  mt: 1,
-                  color: 'white',
-                  textTransform: 'none'
-                }}
-              >
-                Cerrar
-              </Button>
-            </Box>
-          )}
-        </Container>
-      ) : (
-        <Cargando />
+                <video
+                  key={videoFullScreenProducto?.IdProducto}
+                  src={videoFullScreenProducto?.VideoUrl}
+                  autoPlay
+                  muted
+                  playsInline
+                  preload="auto"
+                  disablePictureInPicture
+                  controlsList="nodownload"
+                  controls={mostrarControlesVideo} // solo si el usuario toca
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: '70vh',
+                    objectFit: 'contain',
+                    backgroundColor: 'black',
+                  }}
+                  onClick={() => setMostrarControlesVideo(true)} // tap = muestra controles
+                  onCanPlay={(e) => {
+                    const playPromise = e.target.play();
+                    if (playPromise !== undefined) {
+                      playPromise.catch(err => console.warn("AutoPlay Error:", err));
+                    }
+                  }}
+                />
+
+                <Button
+                  variant="contained"
+                  sx={{
+                    mt: 2,
+                    bgcolor: '#25D366',
+                    color: 'white',
+                    textTransform: 'none',
+                    fontSize: '1rem',
+                    px: 4,
+                    py: 1,
+                    borderRadius: '30px',
+                    boxShadow: '0px 4px 12px rgba(0,0,0,0.4)'
+                  }}
+                  onClick={() => {
+                    const mensaje = `Me interesó el ${videoFullScreenProducto.NombreProducto}, ¿sigue disponible?`;
+                    const telefono = '56979897336';
+                    const urlWhatsapp = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+                    window.open(urlWhatsapp, '_blank');
+                  }}
+                >
+                  Me interesa!
+                </Button>
+
+                <Button
+                  onClick={() => setVideoFullScreenProducto(null)}
+                  sx={{
+                    mt: 1,
+                    color: 'white',
+                    textTransform: 'none'
+                  }}
+                >
+                  Cerrar
+                </Button>
+              </Box>
+            )}
+          </Container>
+        </motion.div>
+      ) : null}
+      {/* 👇 el loader se queda hasta que termine el fade */}
+      {showRouteLoader && (
+        <div className={`nav-loader ${fadeLoader ? "nav-loader--fade" : ""}`}>
+          <AnimatePresence>
+            <Cargando />
+          </AnimatePresence>
+        </div>
       )}
     </Box>
   )
