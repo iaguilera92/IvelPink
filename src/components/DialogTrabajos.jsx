@@ -104,8 +104,8 @@ export default function DialogTrabajos({
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [armed, setArmed] = React.useState(false);
 
-  const mayoristas = trabajos.filter(t => t.TipoTrabajo === 1).length;
-  const confeccionesIvelPink = trabajos.filter(t => t.TipoTrabajo === 2).length;
+  const mayoristas = trabajos.filter(t => t.TipoTrabajo === 2).length;
+  const confeccionesIvelPink = trabajos.filter(t => t.TipoTrabajo === 1).length;
   const [showContent, setShowContent] = useState(false);
   const [expanded, setExpanded] = useState(false);
 

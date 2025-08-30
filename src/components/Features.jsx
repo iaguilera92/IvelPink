@@ -102,8 +102,8 @@ function Features({ videoReady }) {
   const trabajosActivos = trabajos.filter(t => Number(t.Estado) === 1);
 
   // Ahora cuentas sobre los activos
-  const mayoristas = trabajosActivos.filter(t => Number(t.TipoTrabajo) === 1).length;
-  const confeccionesIvelPink = trabajosActivos.filter(t => Number(t.TipoTrabajo) === 2).length;
+  const mayoristas = trabajosActivos.filter(t => Number(t.TipoTrabajo) === 2).length;
+  const confeccionesIvelPink = trabajosActivos.filter(t => Number(t.TipoTrabajo) === 1).length;
 
   return (
     <Box
