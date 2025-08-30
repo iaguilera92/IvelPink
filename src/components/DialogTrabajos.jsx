@@ -113,11 +113,11 @@ export default function DialogTrabajos({
   useEffect(() => {
     let timer;
     if (open) {
-      setShowContent(true);   // 👈 habilitamos el contenido
-      setExpanded(false);     // reset de expand
+      setShowContent(true);
+      setExpanded(false);
       timer = setTimeout(() => setExpanded(true), 2000);
     } else {
-      setShowContent(false);  // 👈 ocultamos todo cuando se cierra
+      setShowContent(false);
     }
     return () => clearTimeout(timer);
   }, [open]);
