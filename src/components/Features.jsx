@@ -8,6 +8,10 @@ import "./css/Features.css"; // Importamos el CSS
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import ConcursoRegistrar from "./ConcursoRegistrar";
+import DialogTrabajos from "./DialogTrabajos";
+import { cargarTrabajos } from "../helpers/HelperTrabajos";
+import AccessTimeFilledRoundedIcon from '@mui/icons-material/AccessTimeFilledRounded';
+import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 
 dayjs.extend(duration);
 
@@ -27,16 +31,29 @@ const disabledLabels = ['Verano', 'Jeans', 'Shorts'];
 function Features({ videoReady }) {
 
   const theme = useTheme();
+  const timestamp = Date.now();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.1 });
   const [hasAnimated, setHasAnimated] = useState(false);
   const navigate = useNavigate();
-  const [buttonRef, buttonInView] = useInView({ triggerOnce: true, rootMargin: '0px 0px -20% 0px' });
   const [timeLeft, setTimeLeft] = useState("");
-  const deadline = dayjs("2025-08-20T19:00:00").toDate();
+  const deadline = dayjs("2025-09-20T15:00:00").toDate();
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [trabajos, setTrabajos] = useState([]);
+  const [openTrabajos, setOpenTrabajos] = useState(false);
+
+  // handlers
+  const handleTrabajosClick = () => setOpenTrabajos(true);
+  const handleCloseTrabajos = () => setOpenTrabajos(false);
+
+  //TRABAJOS S3
+  useEffect(() => {
+    cargarTrabajos(`https://ivelpink.s3.us-east-2.amazonaws.com/Trabajos.xlsx?t=${timestamp}`)
+      .then(setTrabajos);
+  }, []);
+
 
   //EVITAR ANIMACIÓN DUPLICADA
   useEffect(() => {
@@ -81,6 +98,13 @@ function Features({ videoReady }) {
     return () => clearInterval(timer);
   }, []);
 
+  // TRABAJOS ACTIVOS
+  const trabajosActivos = trabajos.filter(t => Number(t.Estado) === 1);
+
+  // Ahora cuentas sobre los activos
+  const mayoristas = trabajosActivos.filter(t => Number(t.TipoTrabajo) === 1).length;
+  const confeccionesIvelPink = trabajosActivos.filter(t => Number(t.TipoTrabajo) === 2).length;
+
   return (
     <Box
       sx={{
@@ -88,7 +112,7 @@ function Features({ videoReady }) {
         backgroundSize: 'cover',  // Asegura que la imagen cubra todo el contenedor
         backgroundPosition: 'center',  // Centra la imagen en el fondo
         backgroundAttachment: 'fixed',  // Asegura que la imagen de fondo no se mueva al hacer scroll
-        py: 4,
+        py: 2,
         paddingBottom: "15px",
         color: "white",  // Ajusta el color del texto para que sea visible sobre el fondo
         overflowY: 'visible'
@@ -96,7 +120,352 @@ function Features({ videoReady }) {
     >
       <Container sx={{ py: 0, maxWidth: "1500px !important", overflow: 'hidden' }}>
         <Box ref={ref} sx={{ mt: 0 }}>
-          <Grid container spacing={2} justifyContent="center">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }
+            }
+            transition={{
+              duration: 0.8,
+              ease: "easeOut",
+              delay: isMobile ? 0.8 : 0.3,
+            }}
+            style={{
+              minHeight: "60px",
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "0px",
+              marginBottom: "5px",
+            }}
+          >
+
+            <Button
+              onClick={handleTrabajosClick}
+              variant="contained"
+              sx={{
+                minWidth: { xs: "400px", sm: "360px" },
+                maxWidth: { xs: "100%", md: "520px" },
+                width: { xs: "100%", sm: "520px" },
+                fullWidth: true,
+                height: "50px",
+                textTransform: "none",
+                fontFamily: "Albert Sans, sans-serif",
+                fontWeight: 600,
+                color: "#fff",
+                background:
+                  "linear-gradient(0deg, rgba(135,206,250,1) 0%, rgba(0,191,255,1) 100%)", // celeste claro → aqua
+                position: "relative",
+                overflow: "hidden",
+                justifyContent: "center",
+                gap: 0.6,
+                boxShadow: `
+      0 6px 14px rgba(0,0,0,0.2),
+      0 0 18px rgba(135,206,250,0.6),
+      inset 0 0 6px rgba(255,255,255,0.25)
+    `,
+                border: "1px solid white",
+
+                "&:hover": {
+                  background:
+                    "linear-gradient(0deg, rgba(160,220,255,1) 0%, rgba(30,200,255,1) 100%)",
+                  boxShadow: `
+        0 8px 18px rgba(0,0,0,0.25),
+        0 0 22px rgba(100,200,255,0.7),
+        inset 0 0 8px rgba(255,255,255,0.25)
+      `,
+                },
+
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(120deg, transparent 0%, rgba(255,255,255,.4) 50%, transparent 100%)",
+                  transform: "translateX(-100%)",
+                  animation: "sheen 3s ease-in-out infinite",
+                  pointerEvents: "none",
+                },
+
+                "@keyframes sheen": {
+                  "0%": { transform: "translateX(-120%)" },
+                  "100%": { transform: "translateX(120%)" },
+                },
+              }}
+            >
+              {/* ⏩ Pop al contenido */}
+              <motion.div
+                initial={{ scale: 0.9 }} // parte un poco más chico
+                animate={hasAnimated ? { scale: 1 } : {}}
+                transition={{
+                  duration: 0.5,
+                  ease: "easeOut",
+                  delay: isMobile ? 1.5 : 1, // 🔑 espera 1s después de hasAnimated
+                }}
+                style={{ display: "flex", alignItems: "center", gap: 6 }}
+              >
+                {/* Reloj */}
+                <AccessTimeFilledRoundedIcon
+                  sx={{
+                    fontSize: { xs: 18, sm: 22 },
+                    animation: "clock 12s linear infinite",
+                    transformOrigin: "50% 50%",
+                    filter: "drop-shadow(0 0 4px rgba(255,167,38,.35))",
+                    "@keyframes clock": {
+                      "0%": { transform: "rotate(0deg)" },
+                      "100%": { transform: "rotate(360deg)" },
+                    },
+                  }}
+                />
+
+
+                {/* Texto + chips */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexWrap: "nowrap",
+                    gap: { xs: 0.4, sm: 1 },
+                    overflow: "hidden",
+                    fontSize: { xs: "0.71rem", sm: "0.9rem" },
+                  }}
+                >
+                  <span>En Producción:</span>
+
+                  <Box
+                    sx={{
+                      minWidth: { xs: 90, sm: 120 },
+                      textAlign: "center",
+                      px: { xs: 0.6, sm: 1.2 },
+                      py: 0.4,
+                      borderRadius: "8px",
+                      fontWeight: 700,
+                      background: "linear-gradient(135deg, #4fc3f7, #0288d1)", // celeste → azul medio
+                      color: "#fff",
+                      border: "2px solid rgba(255,255,255,.85)",
+                      boxShadow: `
+      0 0 6px rgba(79,195,247,.6),
+      inset 0 0 6px rgba(255,255,255,0.25)
+    `,
+                      whiteSpace: "nowrap",
+                      position: "relative",
+                      zIndex: 1,
+                      transition: "all .25s ease",
+                      "&:hover": {
+                        borderColor: "#fff",
+                        boxShadow: `
+        0 0 10px rgba(79,195,247,.8),
+        inset 0 0 8px rgba(255,255,255,0.35)
+      `,
+                        background: "linear-gradient(135deg, #81d4fa, #039be5)",
+                      },
+                    }}
+                  >
+                    {mayoristas}{" "}
+                    {mayoristas === 1 ? "Mayorista" : "Mayoristas"}
+                  </Box>
+
+
+                  <Box
+                    sx={{
+                      minWidth: { xs: 90, sm: 120 },
+                      textAlign: "center",
+                      px: { xs: 0.6, sm: 1.2 },
+                      py: 0.4,
+                      borderRadius: "8px",
+                      fontWeight: 700,
+                      background: "linear-gradient(135deg, #4fc3f7, #0288d1)", // celeste → azul medio
+                      color: "#fff",
+                      border: "2px solid rgba(255,255,255,.85)",
+                      boxShadow: `
+      0 0 6px rgba(79,195,247,.6),
+      inset 0 0 6px rgba(255,255,255,0.25)
+    `,
+                      whiteSpace: "nowrap",
+                      position: "relative",
+                      zIndex: 1,
+                      transition: "all .25s ease",
+                      "&:hover": {
+                        borderColor: "#fff",
+                        boxShadow: `
+        0 0 10px rgba(79,195,247,.8),
+        inset 0 0 8px rgba(255,255,255,0.35)
+      `,
+                        background: "linear-gradient(135deg, #81d4fa, #039be5)",
+                      },
+                    }}
+                  >
+                    {confeccionesIvelPink} {confeccionesIvelPink === 1 ? "Confección" : "Confecciones"}
+                  </Box>
+                </Box>
+
+                {/* Flecha */}
+                <motion.div
+                  initial={{ x: 0 }}
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                  whileTap={{ scale: 0.85 }}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <ChevronRightRoundedIcon
+                    sx={{
+                      fontSize: { xs: 18, sm: 22 },
+                      transition: "transform .25s ease",
+                      ".MuiButton-root:hover &": {
+                        transform: "translateX(6px)",
+                      },
+                    }}
+                  />
+                </motion.div>
+              </motion.div>
+            </Button>
+          </motion.div>
+
+          {/* CONCURSO */}
+          <Box sx={{ display: "flex", justifyContent: "center", my: 0 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }
+              }
+              transition={{
+                duration: 0.8,
+                ease: "easeOut",
+                delay: isMobile ? 0.8 : 0.3,
+              }}
+              style={{
+                minHeight: "60px",
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "0px",
+                marginBottom: "5px",
+              }}
+            >
+              <Button
+                onClick={() => setDialogOpen(true)}
+                variant="contained"
+                sx={{
+                  minWidth: { xs: "400px", sm: "360px" },
+                  maxWidth: { xs: "100%", md: "520px" },
+                  width: { xs: "100%", sm: "520px" },
+                  fullWidth: true,
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  letterSpacing: "3.1px",
+                  fontFamily: "albert sans, sans-serif",
+                  border: "1px solid white",
+                  fontSize: { xs: "10px", sm: "1.1rem" },
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  position: "relative",
+                  overflow: "hidden",
+                  height: "50px",
+                  color: "#fff",
+                  background: "linear-gradient(0deg, #ba68c8 0%, #e1bee7 100%)", // 💜 morado claro degradado
+                  boxShadow: `
+      0 6px 14px rgba(0,0,0,0.2),
+      0 0 18px rgba(186,104,200,0.5),
+      inset 0 0 6px rgba(255,255,255,0.2)
+    `,
+                  transition: "all .25s ease",
+
+                  "&:hover": {
+                    background: "linear-gradient(0deg, #ab47bc 0%, #d1c4e9 100%)",
+                    boxShadow: `
+    0 8px 18px rgba(0,0,0,0.25),
+    0 0 22px rgba(171,71,188,0.65),
+    inset 0 0 8px rgba(255,255,255,0.25)
+  `,
+                  },
+                  "&:hover .icon": {
+                    opacity: 1,
+                    transform: "translateX(-10px)",
+                  },
+                  "&:hover .letter": {
+                    transform: "translateX(15px)",
+                  },
+
+                  "&::after": {
+                    content: '""',
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      "linear-gradient(120deg, transparent 0%, rgba(255,255,255,.35) 50%, transparent 100%)",
+                    transform: "translateX(-100%)",
+                    animation: "sheen 3s ease-in-out infinite",
+                    pointerEvents: "none",
+                  },
+
+                  "@keyframes sheen": {
+                    "0%": { transform: "translateX(-120%)" },
+                    "100%": { transform: "translateX(120%)" },
+                  },
+                }}
+              >
+                {/* Ícono fijo a la izquierda */}
+                <Box sx={{ position: "relative", display: "flex", alignItems: "center" }}>
+                  <Box
+                    component="span"
+                    className={`icon ${hasAnimated ? "animate" : ""}`}
+                    sx={{
+                      position: "absolute",
+                      left: 0,
+                      display: "flex",
+                      alignItems: "center",
+                      opacity: hasAnimated ? 0 : 1,
+                      transform: hasAnimated ? "translateX(10px)" : "translateX(0)",
+                      transition: "all 1s ease",
+                      zIndex: 2,
+                    }}
+                  >
+                    <span style={{ fontSize: "1.3rem" }}>🌷</span>
+                  </Box>
+                </Box>
+
+                {/* Texto: Concurso (Tiempo xx) */}
+                <Box
+                  component="span"
+                  className={`letter ${hasAnimated ? "animate" : ""}`}
+                  sx={{
+                    ml: 1.5,
+                    display: "flex",
+                    alignItems: "center",
+                    fontSize: isMobile ? "11px" : "15px",
+                    fontWeight: 600,
+                    transition: "all 1s ease",
+                    transform: hasAnimated ? "translateX(0)" : "translateX(15px)",
+                    whiteSpace: "nowrap",
+                    gap: "4px",
+                  }}
+                >
+                  <Box
+                    component="span"
+                    sx={{
+                      fontWeight: 700,
+                      color: "#3b0a2a", // vino oscuro, muy legible sobre fondo rosado
+                      textShadow: "0 1px 1px rgba(255,255,255,0.3)",
+                    }}
+                  >
+                    Concurso
+                  </Box>
+                  <Box
+                    component="span"
+                    sx={{
+                      fontWeight: 400,
+                      fontSize: isMobile ? "10px" : "13px",
+                      color: "#4a4a4a", // gris oscuro para contraste
+                      fontStyle: "italic",
+                    }}
+                  >
+                    (Empieza en {timeLeft})
+                  </Box>
+                </Box>
+
+              </Button>
+
+            </motion.div>
+          </Box>
+
+          <Grid container spacing={2} justifyContent="center" mt={0.8}>
+
             {features.map((feature, index) => {
               if (isMobile && index >= features.length - 2) return null;
 
@@ -199,116 +568,7 @@ function Features({ videoReady }) {
 
           </Grid>
 
-          <br />
-          <Box sx={{ display: "flex", justifyContent: "center", my: 0 }}>
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              style={{
-                minHeight: "60px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
 
-              <Button
-                onClick={() => setDialogOpen(true)}
-                variant="contained"
-                sx={{
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  letterSpacing: "3.1px",
-                  fontFamily: "albert sans, sans-serif",
-                  border: "1px solid white",
-                  fontSize: { xs: "10px", sm: "1.1rem" },
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  position: "relative",
-                  overflow: "hidden",
-                  width: { xs: "100%", sm: "460px" },
-                  maxWidth: "460px",
-                  height: "50px",
-                  background: "linear-gradient(0deg, #81d4fa 0%, #b2ebf2 100%)", // 💧 celeste pastel degradado
-                  "&:hover": {
-                    width: { xs: "100%", sm: "470px" },
-                    background: "linear-gradient(0deg, #4fc3f7 0%, #b2ebf2 100%)", // Hover más vibrante
-                  },
-                  "&:hover .icon": {
-                    opacity: 1,
-                    transform: "translateX(-10px)",
-                  },
-                  "&:hover .letter": {
-                    transform: "translateX(15px)",
-                  },
-                }}
-              >
-
-
-                {/* Ícono fijo a la izquierda */}
-                <Box sx={{ position: "relative", display: "flex", alignItems: "center" }}>
-                  <Box
-                    component="span"
-                    className={`icon ${hasAnimated ? "animate" : ""}`}
-                    sx={{
-                      position: "absolute",
-                      left: 0,
-                      display: "flex",
-                      alignItems: "center",
-                      opacity: hasAnimated ? 0 : 1,
-                      transform: hasAnimated ? "translateX(10px)" : "translateX(0)",
-                      transition: "all 1s ease",
-                      zIndex: 2,
-                    }}
-                  >
-                    <span style={{ fontSize: "1.3rem" }}>🌷</span>
-                  </Box>
-                </Box>
-
-                {/* Texto: Concurso (Tiempo xx) */}
-                <Box
-                  component="span"
-                  className={`letter ${hasAnimated ? "animate" : ""}`}
-                  sx={{
-                    ml: 1.5,
-                    display: "flex",
-                    alignItems: "center",
-                    fontSize: isMobile ? "11px" : "15px",
-                    fontWeight: 600,
-                    transition: "all 1s ease",
-                    transform: hasAnimated ? "translateX(0)" : "translateX(15px)",
-                    whiteSpace: "nowrap",
-                    gap: "4px",
-                  }}
-                >
-                  <Box
-                    component="span"
-                    sx={{
-                      fontWeight: 700,
-                      color: "#3b0a2a", // vino oscuro, muy legible sobre fondo rosado
-                      textShadow: "0 1px 1px rgba(255,255,255,0.3)",
-                    }}
-                  >
-                    Concurso
-                  </Box>
-                  <Box
-                    component="span"
-                    sx={{
-                      fontWeight: 400,
-                      fontSize: isMobile ? "10px" : "13px",
-                      color: "#4a4a4a", // gris oscuro para contraste
-                      fontStyle: "italic",
-                    }}
-                  >
-                    (Empieza en {timeLeft})
-                  </Box>
-                </Box>
-
-              </Button>
-
-            </motion.div>
-          </Box>
         </Box>
       </Container >
       <Snackbar
@@ -327,7 +587,13 @@ function Features({ videoReady }) {
         </Alert>
       </Snackbar>
       <ConcursoRegistrar open={dialogOpen} onClose={() => setDialogOpen(false)} />
-
+      <DialogTrabajos
+        open={openTrabajos}
+        onClose={handleCloseTrabajos}
+        trabajos={trabajosActivos}
+        primaryLabel="Ver Servicios"
+        onPrimaryClick={() => { handleCloseTrabajos(); navigate("/servicios"); }}
+      />
     </Box >
   );
 }

@@ -12,45 +12,51 @@ import "swiper/css";
 
 const promotions = [
   {
-    title: "Producción para mayoristas",
+    title: "🏭Producción para mayoristas",
     description: "Confeccionamos prendas por volumen para boutiques, marcas independientes y negocios de moda.",
     image: "/Informations-1.webp",
     price: "Consulta con nosotros",
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3))",
     textColor: "white",
     descriptors: [
-      "Diseños y tallas ajustados a tus requerimientos.",
-      "Entrega por lotes según pedido.",
-      "Costuras profesionales con materiales de calidad.",
-      "Ideal para ventas al por mayor y revendedores."
+      "✅ Priorizamos tus pedidos.",
+      "⚡ Producción ágil y confiable.",
+      "🧵 Costuras resistentes.",
+      "📦 Entrega puntual garantizada.",
+      "🤝 Diseños y tallas a medida.",
+      "🚀 Impulsa tu negocio."
     ]
   },
   {
-    title: "Ropa confeccionada en nuestro taller",
+    title: "✂️Confección de nuestro taller",
     description: "Vendemos directamente prendas producidas en nuestro taller, listas para entrega o personalización.",
     image: "/Informations-2.webp",
     price: "Consulta con nosotros",
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2))",
     textColor: "white",
     descriptors: [
-      "Prendas listas para la venta al detalle o por lote.",
-      "Control total de calidad y diseño.",
-      "Opciones personalizadas según temporada o demanda.",
-      "Fabricación local desde nuestro taller."
+      "🧵 Hecho a mano con detalle.",
+      "🎨 Diseños exclusivos propios.",
+      "👕 Calidad en cada prenda.",
+      "🏭 Control total de producción.",
+      "📐 Ajustes y tallas precisas.",
+      "✨ Estilo único garantizado."
     ]
   },
   {
-    title: "Envíos a todo Chile",
-    description: "Despachamos nuestras confecciones a cualquier región, con atención directa y seguimiento.",
+    title: "🚚Envíos a todo Chile",
+    description: "Despachamos nuestras confecciones a cualquier región de Chile, con atención directa y seguimiento.",
     image: "/Informations-3.webp",
     price: "Consulta con nosotros",
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2))",
     textColor: "white",
     descriptors: [
-      "Coordinación directa de pedidos y entregas.",
-      "Despachos a regiones por transporte privado o courier.",
-      "Soporte postventa en cada envío.",
-      "Ideal para clientes recurrentes o nuevos negocios."
+      "📦 Entregas rápidas y seguras.",
+      "🚀 Despachos a todo Chile.",
+      "⏱️ Cumplimos los plazos.",
+      "🏠 Directo a tu puerta.",
+      "🌎 Cobertura nacional completa.",
+      "🤝 Confianza en cada envío."
     ]
   }
 ];
@@ -373,12 +379,47 @@ function Informations({ informationsRef, triggerInformations }) {
           </Grid>
 
 
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} sx={{ mt: -4 }}>
+            <Typography
+              component={motion.h5}
+              initial={{ opacity: 0, y: 20 }}
+              animate={showPopularBadge ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              sx={{
+                fontFamily: "'Poppins', sans-serif",
+                fontWeight: 800,
+                mb: 1,
+                textAlign: isMobile ? "center" : "left",
+                textTransform: "uppercase",
+                letterSpacing: "2px",
+                fontSize: { xs: "1.2rem", md: "1.6rem" },
+                background: "linear-gradient(90deg, #ffffff, #f5f5f5)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                textShadow: "0 2px 10px rgba(0,0,0,0.35)",
+                position: "relative",
+                color: "white",
+                display: "inline-block",
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  bottom: -2,
+                  left: 0,
+                  width: showPopularBadge ? "100%" : "0%", // 👈 cambiamos solo el width dinámico
+                  height: "3px",
+                  borderRadius: "3px",
+                  background: "linear-gradient(90deg, #4facfe, #00f2fe)",
+                  transition: "width 0.6s ease-out",
+                },
+              }}
+            >
+              Nuestros Servicios
+            </Typography>
             <Box ref={swiperRef} sx={{ display: isMobile ? "block" : "block", position: "relative", px: 1, pt: 2, pb: 1, overflow: "hidden" }}>
               <Swiper
                 style={{ overflow: "visible" }}
-                spaceBetween={isMobile ? 15 : 18}
-                slidesPerView={isMobile ? 1.07 : 1.2}
+                spaceBetween={isMobile ? 15 : 15}
+                slidesPerView={isMobile ? 1.07 : 1.5}
                 onSwiper={setSwiperInstance}
                 initialSlide={promotions.length - 1}
                 centeredSlides={false}
@@ -389,91 +430,102 @@ function Informations({ informationsRef, triggerInformations }) {
                   <SwiperSlide key={index}>
                     <Box
                       sx={{
-                        cursor: 'grab',
-                        '&:active': {
-                          cursor: 'grabbing'
-                        },
-                        height: "400px",
+                        cursor: "grab",
+                        "&:active": { cursor: "grabbing" },
+                        height: "420px",
                         position: "relative",
                         width: "100%",
                         display: "flex",
                         flexDirection: "column",
-                        alignItems: "flex-start"
+                        alignItems: "flex-start",
                       }}
                     >
-
-                      {promo.title === "Catálogo digital" && (
+                      {/* Badge Popular */}
+                      {promo.title === "🏭Producción para mayoristas" && (
                         <motion.div
-                          initial={{ opacity: 0, y: 50 }}
-                          animate={showPopularBadge ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                          transition={{ duration: 0.8, ease: "easeOut" }}
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={showPopularBadge ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
+                          transition={{ duration: 0.6, ease: "easeOut" }}
                           style={{
                             position: "absolute",
-                            top: "-16px",
-                            left: 8,
-                            background: "linear-gradient(#f14c2e, #d8452e)",
+                            top: "-14px",
+                            left: 12,
+                            background: "linear-gradient(90deg, #FF512F, #DD2476)", // degradado moderno
                             color: "white",
-                            borderTopLeftRadius: "8px",
-                            borderTopRightRadius: "8px",
-                            borderBottomLeftRadius: 0,
-                            borderBottomRightRadius: 0,
-                            padding: "6px 16px",
-                            fontSize: "0.75rem",
-                            fontWeight: 600,
-                            height: "35px",
-                            minWidth: "120px",
-                            textAlign: "center",
-                            zIndex: 1
+                            borderRadius: "6px 6px 0 0",
+                            padding: "6px 46px",
+                            fontSize: "0.8rem",
+                            fontWeight: 700,
+                            letterSpacing: "0.5px",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "4px",
+                            boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
+                            zIndex: 2,
                           }}
                         >
                           Popular
                         </motion.div>
                       )}
 
+                      {/* Card Principal */}
+                      <Box
+                        sx={{
+                          width: "100%",
+                          height: "100%",
+                          mt: 2,
+                          borderRadius: "16px",
+                          overflow: "hidden",
+                          boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+                          position: "relative",
+                          bgcolor: "white",
+                          zIndex: 1,
+                        }}
+                      >
+                        {/* Imagen de fondo con overlay */}
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            inset: 0,
+                            backgroundImage: `url(${promo.image})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            "&::after": {
+                              content: '""',
+                              position: "absolute",
+                              inset: 0,
+                              background:
+                                promo.bgColor ||
+                                "linear-gradient(180deg, rgba(0,0,0,0.75), rgba(0,0,0,0.3))",
+                            },
+                            zIndex: 0,
+                          }}
+                        />
 
-                      <Box sx={{
-                        width: "100%", height: "435px", mt: 1.4, display: "flex",
-                        flexDirection: "column", borderRadius: "16px", overflow: "hidden",
-                        boxShadow: "0 8px 30px rgba(0,0,0,0.2)", position: "relative",
-                        bgcolor: "white", zIndex: 2
-                      }}>
-                        <Box sx={{
-                          position: "absolute", inset: 0, backgroundImage: `url(${promo.image})`,
-                          backgroundSize: "cover", backgroundPosition: "center",
-                          "&::after": { content: '""', position: "absolute", inset: 0, background: promo.bgColor || "linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3))" }, zIndex: 0
-                        }} />
-
+                        {/* Contenido */}
                         <Box
                           sx={{
                             position: "relative",
                             zIndex: 2,
-                            p: 2,
-                            pt: 3,
+                            p: 3,
                             display: "flex",
                             flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "flex-start",
-                            flexGrow: 1,
+                            height: "100%",
+
                           }}
                         >
-                          <Box
-                            sx={{
-                              width: isMobile ? "100%" : "80%",
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "flex-start",
-                              mb: 2,
-                              flexGrow: 1,
-                            }}
-                          >
+                          {/* Título y descripción */}
+                          <Box sx={{ mb: 1 }}>
                             <Typography
                               variant="h6"
                               sx={{
-                                fontWeight: "bold",
-                                fontSize: "1.2rem",
+                                fontFamily: "'Poppins', sans-serif",
+                                fontWeight: 800,
+                                fontSize: isMobile ? "1.05rem" : "1.15rem",
                                 textAlign: "left",
                                 color: promo.textColor || "white",
-                                mb: 1,
+                                mb: 2,
+                                textShadow: "0 2px 6px rgba(0,0,0,0.5)",
                               }}
                             >
                               {promo.title}
@@ -483,57 +535,94 @@ function Informations({ informationsRef, triggerInformations }) {
                               sx={{
                                 textAlign: "left",
                                 fontSize: "0.9rem",
-                                color: "#ddd",
+                                color: "#f5f5f5",
+                                background: "rgba(0,0,0,0.4)",
+                                borderRadius: "6px",
+                                p: 1,
+                                lineHeight: 1.4,
                               }}
                             >
                               {promo.description}
                             </Typography>
                           </Box>
-
-                          {/* Botón Cotizar */}
-                          <Box
-                            component="button"
+                          {/* Lista de descriptores */}
+                          <Box component="ul" sx={{ pl: 2, mb: 5 }}>
+                            {promo.descriptors?.map((desc, i) => (
+                              <Typography
+                                key={i}
+                                component="li"
+                                variant="body2"
+                                sx={{
+                                  color: "#eee",
+                                  fontSize: "0.85rem",
+                                  lineHeight: 1.5,
+                                  mb: 0.5,
+                                  listStyle: "none",
+                                  display: "flex",
+                                  alignItems: "flex-start",
+                                  gap: "8px",
+                                }}
+                              >
+                                {desc}
+                              </Typography>
+                            ))}
+                          </Box>
+                          {/* Botón Cotizar (queda abajo gracias a mt:auto) */}
+                          <motion.button
                             onClick={() => handleContactClick(promo.title)}
-                            sx={{
-                              backgroundColor: "#007de0",
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.97 }}
+                            style={{
+                              background: "linear-gradient(90deg, #FF9800, #F57C00)",
                               color: "white",
                               border: "none",
                               borderRadius: "8px",
-                              width: "80%",
-                              py: 1,
-                              fontWeight: "bold",
-                              fontSize: "0.9rem",
-                              cursor: "pointer",
-                              transition: "background-color 0.3s",
-                              alignSelf: "center",
+                              width: "90%",
+                              padding: "10px 20px",
                               mt: "auto",
-                              "&:hover": { backgroundColor: "#005bb5" }
+                              fontWeight: 700,
+                              fontSize: "0.95rem",
+                              cursor: "pointer",
+                              boxShadow: "0 6px 18px rgba(0,0,0,0.3)",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              gap: "8px",
                             }}
                           >
-                            Cotizar
-                          </Box>
+                            ✨ Cotizar
+                          </motion.button>
                         </Box>
                       </Box>
                     </Box>
                   </SwiperSlide>
                 ))}
+
               </Swiper>
 
-              {showArrow && (
-                <motion.div
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                  style={{ position: "absolute", top: -4, right: 10, zIndex: 10 }}
-                >
-                  <IconButton sx={{
-                    color: "white", transition: "opacity 0.3s ease-in-out",
-                    backgroundColor: "transparent", boxShadow: "none", padding: 0,
-                    "&:hover": { backgroundColor: "transparent" }
-                  }}>
-                    <ArrowForwardIcon fontSize="large" sx={{ fontSize: "23px" }} />
-                  </IconButton>
-                </motion.div>
-              )}
+              {
+                showArrow && swiperInstance && (
+                  <motion.div
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    style={{ position: "absolute", top: -4, right: 10, zIndex: 10 }}
+                  >
+                    <IconButton
+                      onClick={() => swiperInstance.slideNext()}
+                      sx={{
+                        color: "white",
+                        transition: "opacity 0.3s ease-in-out",
+                        backgroundColor: "transparent",
+                        boxShadow: "none",
+                        padding: 0,
+                        "&:hover": { backgroundColor: "transparent" },
+                      }}
+                    >
+                      <ArrowForwardIcon fontSize="large" sx={{ fontSize: "23px" }} />
+                    </IconButton>
+                  </motion.div>
+                )
+              }
             </Box>
           </Grid>
 

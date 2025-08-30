@@ -9,22 +9,22 @@ const data = [
   {
     count: 50000,
     text: "Prendas confeccionadas con amor y detalle",
-    image: "prendas.webp",
+    image: "Area-1.webp",
   },
   {
     count: 120,
     text: "Clientes felices con diseños personalizados",
-    image: "costura-hilo.mp4",
+    image: "Area-2.webp",
   },
   {
     count: 15,
     text: "Años de experiencia en costura profesional",
-    image: "Experience.mp4",
+    image: "Area-3.webp",
   },
   {
     count: 30,
     text: "Hilos usados por día en creaciones 🎀",
-    image: "hilos.mp4",
+    image: "Area-4.avif",
   },
 ];
 
@@ -104,7 +104,6 @@ const Areas = () => {
 
 
   const videosRef = useRef([]);
-  const inViewStates = data.map(() => useInView({ threshold: 0.3, triggerOnce: true }));
   useEffect(() => {
     data.forEach((_, index) => {
       if (inView && videosRef.current[index]) {

@@ -170,7 +170,7 @@ const Footer = () => {
             {/* 🔹 Columna 3: Proveedores */}
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0.5 }}>
 
-              <img src="area-clientes.png" width={120} alt="Área Clientes" style={{ filter: 'invert(66%) sepia(39%) saturate(746%) hue-rotate(285deg) brightness(104%) contrast(101%)', marginTop: -35, marginBottom: "10px" }} />
+              <img src="area-clientes.png" onClick={handleClick} width={120} alt="Área Clientes" style={{ filter: 'invert(66%) sepia(39%) saturate(746%) hue-rotate(285deg) brightness(104%) contrast(101%)', marginTop: -35, marginBottom: "10px" }} />
 
               <Typography sx={{ display: "flex", alignItems: "center", gap: 0.5 }} color="rgb(245 96 206)">
                 <AdminPanelSettingsIcon fontSize="small" />
@@ -199,7 +199,7 @@ const Footer = () => {
 
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "left", gap: 0.5 }}
             >
-              <img src="area-clientes.png" width={120} alt="Área Clientes" style={{ marginTop: 10, marginRight: 30, marginBottom: "0px" }} />
+              <img src="area-clientes.png" onClick={handleClick} width={120} alt="Área Clientes" style={{ marginTop: 10, marginRight: 30, marginBottom: "0px" }} />
 
               <Typography ml={"10px"} sx={{ display: "flex", alignItems: "center", gap: 0 }} color="rgb(245 96 206)">
                 <AdminPanelSettingsIcon fontSize="small" />

@@ -5,6 +5,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import "@fontsource/poppins";
 const Areas = lazy(() => import("./components/Areas"));
 const Informations = lazy(() => import("./components/Informations"));
+const InformationsMobile = lazy(() => import("./components/InformationsMobile"));
+
 const Contacto = lazy(() => import("./components/Contacto"));
 const Evidencias = lazy(() => import("./components/Evidencias"));
 const Evidencias2 = lazy(() => import("./components/Evidencias2"));
@@ -259,10 +261,17 @@ function App() {
           <>
             <Suspense fallback={null}>
               <div ref={informationsRef}>
-                <Informations
-                  informationsRef={informationsRef}
-                  triggerInformations={triggerInformations}
-                />
+                {isMobile ?
+                  < InformationsMobile
+                    informationsRef={informationsRef}
+                    triggerInformations={triggerInformations}
+                  />
+                  :
+                  <Informations
+                    informationsRef={informationsRef}
+                    triggerInformations={triggerInformations}
+                  />
+                }
               </div>
             </Suspense>
 

@@ -99,7 +99,7 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
   const maxScroll = 80; // hasta dónde se desvanece
   const opacity = Math.max(0, 1 - scrollY / maxScroll);
   const translateY = Math.min(scrollY, maxScroll);
-
+  const [mostrarAdmin, setMostrarAdmin] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => {
       if (!mostrarAnimacion && !animacionMostrada) {
@@ -155,6 +155,13 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const flag = sessionStorage.getItem("mostrarAdmin");
+    if (flag === "1") {
+      setMostrarAdmin(true);
+    }
   }, []);
 
   return (
@@ -550,6 +557,57 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
 
             )}
           </AnimatePresence>
+          {/* Administración */}
+          {open && mostrarAdmin && (
+            <motion.div
+              variants={bienvenidaVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <Box
+                onClick={() => navigate("/administracion")}
+                sx={{
+                  background: `
+          radial-gradient(circle at top left, rgba(144,202,249,0.1), transparent 70%),
+          linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))
+        `,
+                  borderRadius: 3,
+                  px: 2,
+                  py: 2,
+                  mx: 2,
+                  mt: 1,
+                  color: "#ffffff",
+                  backdropFilter: "blur(8px)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  boxShadow: "0 0 12px rgba(255,255,255,0.05)",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  maxHeight: 45,
+                  "&:hover": {
+                    backgroundColor: "rgba(255,255,255,0.05)",
+                    boxShadow: "0 0 16px rgba(144,202,249,0.2)",
+                  },
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontFamily: 'Poppins, sans-serif',
+                    fontWeight: 600,
+                    fontSize: "1rem",
+                    letterSpacing: 0.5,
+                    textAlign: "center",
+                  }}
+                >
+                  ⚙️ Administración
+                </Typography>
+              </Box>
+            </motion.div>
+          )}
 
           {/* Redes sociales al final del menú móvil */}
           <AnimatePresence mode="wait">

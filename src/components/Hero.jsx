@@ -241,7 +241,7 @@ function Hero({ informationsRef, setVideoReady }) {
             disablePictureInPicture
             controlsList="nodownload nofullscreen noremoteplayback"
           >
-            <source src="video-inicio.mp4" type="video/mp4" />
+            <source src="video-inicio-1.mp4" type="video/mp4" />
           </video>
         </Box>
 
