@@ -13,7 +13,7 @@ import { CircularProgress } from "@mui/material";
 import emailjs from "emailjs-com";
 
 const ActionButton = ({ title, color, onClick, icon }) => (
-  <motion.div whileHover={{ scale: 1.15 }} whileTap={{ scale: 0.9 }}>
+  <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
     <Tooltip title={title}>
       <IconButton
         size="small"
@@ -21,7 +21,7 @@ const ActionButton = ({ title, color, onClick, icon }) => (
         onClick={onClick}
         sx={{
           "& svg": { fontSize: 28 },    // más grandes
-          p: 0.6,                       // menos padding interno
+          p: 0.2,                        // menos padding interno
         }}
       >
         {icon}
@@ -55,20 +55,20 @@ const ConfigurarTrabajos = () => {
 
   const [dialog, setDialog] = useState({
     open: false,
-    sitioWeb: "",
+    Trabajo: "",
     trabajo: null,
   });
 
   const abrirDialog = (trabajo) => {
     setDialog({
       open: true,
-      sitioWeb: trabajo.SitioWeb,
+      Trabajo: trabajo.Trabajo,
       trabajo,
     });
   };
 
   const cerrarDialog = () => {
-    setDialog({ open: false, sitioWeb: "", trabajo: null });
+    setDialog({ open: false, Trabajo: "", trabajo: null });
   };
 
   const handleEliminar = async () => {
@@ -83,7 +83,7 @@ const ConfigurarTrabajos = () => {
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ SitioWeb: dialog.sitioWeb }),
+        body: JSON.stringify({ Trabajo: dialog.Trabajo }),
       });
 
       const data = await response.json();
@@ -112,7 +112,7 @@ const ConfigurarTrabajos = () => {
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ SitioWeb: dialog.sitioWeb, nuevoEstado: 0 }), // 👈 corregido
+        body: JSON.stringify({ Trabajo: dialog.Trabajo, nuevoEstado: 0 }), // 👈 corregido
       });
 
       const data = await response.json();
@@ -150,7 +150,7 @@ const ConfigurarTrabajos = () => {
     try {
       // 👇 siempre un timestamp nuevo para evitar caché
       const resp = await fetch(
-        `https://plataformas-web-buckets.s3.us-east-2.amazonaws.com/Trabajos.xlsx?t=${Date.now()}`
+        `https://ivelpink.s3.us-east-2.amazonaws.com/Trabajos.xlsx?t=${Date.now()}`
       );
       const buffer = await resp.arrayBuffer();
       const XLSX = await import("xlsx");
@@ -171,7 +171,9 @@ const ConfigurarTrabajos = () => {
 
   //BOTÓN GUARDAR
   const handleGuardarClick = (trabajo) => {
-    if (trabajo.Porcentaje === 100) {
+    const porcentaje = (Number(trabajo.StockActual) / Number(trabajo.StockSolicitado)) * 100;
+
+    if (porcentaje >= 100) {
       setDialogFinalizar({ open: true, trabajo });
     } else {
       guardarCambios(trabajo);
@@ -183,9 +185,10 @@ const ConfigurarTrabajos = () => {
       setLoadingSaveAll(true);
 
       const payload = {
-        SitioWeb: trabajo.SitioWeb,
-        nuevoPorcentaje: Number(trabajo.Porcentaje), // 👈 usar nombre esperado
-        nuevoEstado: Number(trabajo.Estado),         // 👈 usar nombre esperado
+        Trabajo: trabajo.Trabajo,
+        nuevoStockActual: Number(trabajo.StockActual),
+        nuevoStockSolicitado: Number(trabajo.StockSolicitado),
+        nuevoEstado: Number(trabajo.Estado),
       };
 
       const url = `${window.location.hostname === "localhost"
@@ -239,7 +242,7 @@ const ConfigurarTrabajos = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          SitioWeb: trabajo.SitioWeb, // identificador en Excel
+          Trabajo: trabajo.Trabajo, // identificador en Excel
           nuevoEstado: 1,             // 👈 corregido
         }),
       });
@@ -267,11 +270,8 @@ const ConfigurarTrabajos = () => {
       const fecha = `${String(hoy.getDate()).padStart(2, "0")}-${String(hoy.getMonth() + 1).padStart(2, "0")}-${hoy.getFullYear()}`;
 
       const params = {
-        sitioWeb: dialogFinalizar.trabajo?.SitioWeb || "plataformas-web.cl",
+        Trabajo: dialogFinalizar.trabajo?.Trabajo || "plataformas-web.cl",
         nombre: dialogFinalizar.trabajo?.NombreCliente || "Ignacio",
-        logoCliente:
-          dialogFinalizar.trabajo?.LogoCliente ||
-          "https://plataformas-web.cl/logo-plataformas-web-correo.png",
         email:
           dialogFinalizar.trabajo?.EmailCliente ||
           "plataformas.web.cl@gmail.com",
@@ -301,7 +301,7 @@ const ConfigurarTrabajos = () => {
         width: "100vw",
         overflowX: "hidden",
         py: 1,
-        backgroundImage: "url(fondo-blizz.avif)",
+        backgroundImage: "url(fondo-blizz-ivelpink.webp)",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
@@ -376,6 +376,7 @@ const ConfigurarTrabajos = () => {
               stickyHeader
               size="small"
               sx={{
+                tableLayout: "fixed",
                 minWidth: isMobile ? 400 : "auto",
                 "& .MuiTableCell-root": {
                   fontFamily: "Poppins, sans-serif",
@@ -403,22 +404,22 @@ const ConfigurarTrabajos = () => {
                 <TableRow>
                   <TableCell
                     sx={{
-                      width: "70%",
+                      width: "30%", // 👈 antes 70%, ahora más chico
                       fontSize: { xs: "0.75rem", sm: "0.875rem" },
                       py: { xs: 0.5, sm: 1 },
-                      border: "none",   // 🚫 sin bordes
+                      border: "none",
                     }}
                   >
-                    Sitios Web
+                    Trabajo
                   </TableCell>
 
                   <TableCell
                     sx={{
-                      width: "20%",
+                      width: "27%", // 👈 le damos más espacio al progreso
                       pr: 0,
                       fontSize: { xs: "0.75rem", sm: "0.875rem" },
                       py: { xs: 0.5, sm: 1 },
-                      border: "none",   // 🚫 sin bordes
+                      border: "none",
                     }}
                   >
                     Progreso
@@ -427,11 +428,12 @@ const ConfigurarTrabajos = () => {
                   <TableCell
                     align="center"
                     sx={{
-                      width: "10%",
+                      width: "18%", // 👈 reservamos fijo para botones
                       pl: 0,
+                      pr: 0,
                       fontSize: { xs: "0.75rem", sm: "0.875rem" },
                       py: { xs: 0.5, sm: 1 },
-                      border: "none",   // 🚫 sin bordes
+                      border: "none",
                     }}
                   />
                 </TableRow>
@@ -442,19 +444,27 @@ const ConfigurarTrabajos = () => {
               <TableBody>
                 {trabajos.map((trabajo, index) => (
                   <TableRow
-                    key={trabajo.SitioWeb}
+                    key={trabajo.Trabajo}
                     component={motion.tr}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}
                     sx={{
-                      bgcolor: trabajo.Porcentaje === 100 ? "#e8f5e9" : "#ffffff",
+                      bgcolor:
+                        trabajo.StockActual >= trabajo.StockSolicitado
+                          ? "#e8f5e9" // ✅ verde pastel
+                          : "#ffffff",
                       "&:nth-of-type(odd)": {
-                        bgcolor: trabajo.Porcentaje === 100 ? "#e8f5e9" : "#f9f9f9",
+                        bgcolor:
+                          trabajo.StockActual >= trabajo.StockSolicitado
+                            ? "#e8f5e9"
+                            : "#f9f9f9",
                       },
                       "&:hover": {
                         bgcolor:
-                          trabajo.Porcentaje === 100 ? "#c8e6c9" : "#f1f7ff",
+                          trabajo.StockActual >= trabajo.StockSolicitado
+                            ? "#c8e6c9" // verde un poco más fuerte
+                            : "#f1f7ff",
                       },
                       "& td, & th": {
                         py: { xs: 0.5, sm: 0.75 },
@@ -462,23 +472,25 @@ const ConfigurarTrabajos = () => {
                         fontSize: { xs: "0.75rem", sm: "0.85rem" },
                         color: "#1b263b",
                         fontFamily: "Poppins, sans-serif",
-                        borderTop: "1px solid rgba(0,0,0,0.1)",     // ✅ solo arriba
-                        borderBottom: "1px solid rgba(0,0,0,0.1)",  // ✅ solo abajo
-                        borderLeft: "none",                        // 🚫 quitamos lados
+                        borderTop: "1px solid rgba(0,0,0,0.1)",
+                        borderBottom: "1px solid rgba(0,0,0,0.1)",
+                        borderLeft: "none",
                         borderRight: "none",
                       },
                     }}
                   >
-
-                    {/* Sitio Web */}
+                    {/* NOMBRE TRABAJO */}
                     <TableCell
                       sx={{
+                        width: "30%",            // 👈 mismo que en head
                         fontWeight: 500,
-                        fontSize: { xs: "0.75rem", sm: "0.875rem" }, // 👈 más chico en móvil
-                        whiteSpace: "nowrap", // evita cortes feos
+                        fontSize: { xs: "0.65rem", sm: "0.75rem" },
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
                       }}
                     >
-                      {trabajo.SitioWeb}
+                      {trabajo.Trabajo}
                     </TableCell>
 
 
@@ -487,115 +499,110 @@ const ConfigurarTrabajos = () => {
                       <Box
                         sx={{
                           display: "flex",
-                          flexDirection: isMobile ? "column" : "row", // 📱 columna / 🖥️ fila
+                          flexDirection: isMobile ? "column" : "row",
                           alignItems: "center",
-                          gap: isMobile ? 0.5 : 1, // 👈 más pegado en mobile
+                          gap: isMobile ? 0.5 : 1,
                           width: "100%",
                         }}
                       >
-                        {/* Barra de progreso */}
+                        {/* Inputs para editar stock */}
                         <Box
                           sx={{
                             display: "flex",
-                            alignItems: "center",
-                            gap: 0,
-                            flex: 1,
-                            width: isMobile ? "100%" : "100%", // 📱 compacto / 🖥️ full
+                            gap: 1,
+                            mt: isMobile ? 0.5 : 0,
+                            width: "100%",
+                            justifyContent: "flex-end",
                           }}
                         >
-                          <LinearProgress
-                            variant="determinate"
-                            value={trabajo.Porcentaje}
+                          <TextField
+                            type="number"
+                            label="Actual"
+                            value={trabajo.StockActual}
+                            onChange={(e) => {
+                              let value = Number(e.target.value);
+                              // 👇 Si StockActual supera StockSolicitado, lo limitamos
+                              if (value > trabajo.StockSolicitado) {
+                                value = trabajo.StockSolicitado;
+                              }
+                              handleChange(index, "StockActual", value);
+                            }}
+                            inputProps={{ min: 0 }}
+                            size="small"
                             sx={{
-                              flex: 1,
-                              height: 8,
-                              borderRadius: 2,
-                              "& .MuiLinearProgress-bar": {
-                                backgroundImage: getGradient(trabajo.Porcentaje), // 🎨 gradiente dinámico
-                                transition: "transform 0.6s ease-in-out",
+                              width: 65,
+                              "& input": {
+                                textAlign: "right",
                               },
                             }}
                           />
 
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              minWidth: 32,
-                              textAlign: "right",
-                              fontWeight: 600,
-                            }}
-                          >
-                            {trabajo.Porcentaje}%
-                          </Typography>
-                        </Box>
-
-                        {/* Input de porcentaje */}
-                        <TextField
-                          type="number"
-                          value={trabajo.Porcentaje}
-                          onChange={(e) => {
-                            let val = e.target.value;
-
-                            // evitar 0 iniciales innecesarios
-                            if (/^0\d+/.test(val)) {
-                              val = val.replace(/^0+/, "");
+                          <TextField
+                            type="number"
+                            label="Stock"
+                            value={trabajo.StockSolicitado}
+                            onChange={(e) =>
+                              handleChange(index, "StockSolicitado", Number(e.target.value))
                             }
-
-                            // limitar entre 0 y 100
-                            let num = Math.min(100, Math.max(0, Number(val || 0)));
-
-                            // actualiza el estado con el número ya corregido
-                            handleChange(index, "Porcentaje", num);
-                          }}
-                          inputProps={{
-                            min: 0,
-                            max: 100,
-                            style: { textAlign: "right" },
-                          }}
-                          size="small"
-                          sx={{
-                            width: 90,
-                            alignSelf: isMobile ? "flex-start" : "center",
-                            mt: isMobile ? 0.25 : 0,
-                          }}
-                        />
-
-
-
+                            InputProps={{
+                              sx: { textAlign: "right" },
+                            }}
+                            size="small"
+                            sx={{
+                              width: 65,
+                              "& input": {
+                                textAlign: "right",
+                              },
+                            }}
+                          />
+                        </Box>
                       </Box>
                     </TableCell>
 
 
                     {/* Botones de acción */}
-                    <TableCell align="center">
-                      <Box sx={{ display: "inline-flex", gap: 0.3 }}>
+                    <TableCell
+                      align="left"
+                      sx={{ pl: 0, pr: 0 }}   // 👈 cero padding
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          gap: 0.2,            // 👈 mini espacio entre íconos
+                          justifyContent: "flex-start",
+                        }}
+                      >
                         <ActionButton
                           title="Guardar cambios"
                           color="primary"
-                          disabled={loadingSave === trabajo.SitioWeb}
-                          onClick={() => handleGuardarClick(trabajo)}   // 👈 usamos el nuevo handler
+                          disabled={loadingSave === trabajo.Trabajo}
+                          onClick={() => handleGuardarClick(trabajo)}
                           icon={
-                            loadingSave === trabajo.SitioWeb ? (
-                              <CircularProgress size={20} color="inherit" />
+                            loadingSave === trabajo.Trabajo ? (
+                              <CircularProgress size={16} color="inherit" />
                             ) : (
-                              <SaveIcon />
+                              <SaveIcon sx={{ fontSize: 18 }} />
                             )
                           }
                         />
                         <ActionButton
                           title={trabajo.Estado === 1 ? "Eliminar" : "Restaurar"}
                           color={trabajo.Estado === 1 ? "error" : "success"}
-                          onClick={() => {
-                            if (trabajo.Estado === 1) {
-                              abrirDialog(trabajo); // eliminar con confirmación
-                            } else {
-                              restaurarTrabajo(trabajo); // restaurar directo
-                            }
-                          }}
-                          icon={trabajo.Estado === 1 ? <DeleteIcon /> : <RestoreIcon />}
+                          onClick={() =>
+                            trabajo.Estado === 1 ? abrirDialog(trabajo) : restaurarTrabajo(trabajo)
+                          }
+                          icon={
+                            trabajo.Estado === 1 ? (
+                              <DeleteIcon sx={{ fontSize: 18 }} />
+                            ) : (
+                              <RestoreIcon sx={{ fontSize: 18 }} />
+                            )
+                          }
                         />
                       </Box>
                     </TableCell>
+
+
                   </TableRow>
                 ))}
               </TableBody>
@@ -639,13 +646,13 @@ const ConfigurarTrabajos = () => {
           onSave={handleSaveTrabajo}
         />
         {/*DIALOG: ELIMINAR*/}
-        <Dialog open={dialog.open} onClose={cerrarDialog} sx={{ background: "linear-gradient(180deg, #FFF8EC, #FFEFD5)", }}>
+        <Dialog open={dialog.open} onClose={cerrarDialog}>
           <DialogTitle sx={{ fontWeight: "bold", color: "#e65100", background: "linear-gradient(180deg, #FFF8EC, #FFEFD5)", }}>
             Confirmar acción
           </DialogTitle>
           <DialogContent sx={{ background: "linear-gradient(180deg, #FFF8EC, #FFEFD5)", }}>
             <Typography>
-              ¿Desea eliminar el trabajo <b>{dialog.sitioWeb}</b>?
+              ¿Desea eliminar el trabajo <b>{dialog.Trabajo}</b>?
             </Typography>
           </DialogContent>
           <DialogActions sx={{ background: "linear-gradient(180deg, #FFF8EC, #FFEFD5)", }}>

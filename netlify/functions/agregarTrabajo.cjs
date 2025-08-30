@@ -1,3 +1,4 @@
+// archivo: agregarTrabajo.cjs
 const AWS = require("aws-sdk");
 const XLSX = require("xlsx");
 require("dotenv").config();
@@ -37,27 +38,30 @@ exports.handler = async (event) => {
         console.log("📦 event.body recibido:", event.body);
 
         const body = JSON.parse(event.body || "{}");
-        const { nombre, tipo, progreso } = body;
+        const { nombre, tipo, stockActual, stockSolicitado } = body;
 
         if (!nombre || !tipo) {
             return {
                 statusCode: 400,
                 headers: corsHeaders,
-                body: JSON.stringify({ message: "Faltan campos requeridos (nombre, tipo)" }),
+                body: JSON.stringify({
+                    message: "Faltan campos requeridos (nombre, tipo)",
+                }),
             };
         }
 
-        // Leer Excel desde S3
+        // 📥 Leer Excel desde S3
         const s3Data = await s3.getObject({ Bucket: BUCKET_NAME, Key: FILE_KEY }).promise();
         const workbook = XLSX.read(s3Data.Body, { type: "buffer" });
         const hoja = workbook.Sheets[workbook.SheetNames[0]];
         const datos = XLSX.utils.sheet_to_json(hoja, { defval: "" });
 
-        // Crear nueva fila
+        // 🆕 Crear nueva fila
         const nuevoTrabajo = {
-            SitioWeb: nombre,
-            TipoApp: parseInt(tipo, 10),
-            Porcentaje: progreso ?? 0,
+            Trabajo: nombre,
+            TipoTrabajo: parseInt(tipo, 10),
+            StockActual: stockActual ?? 0,
+            StockSolicitado: stockSolicitado ?? 0,
             Estado: 1, // activo
             FechaCreacion: new Date().toISOString(),
         };
@@ -66,18 +70,21 @@ exports.handler = async (event) => {
 
         console.log("🆕 Trabajo agregado:", nuevoTrabajo);
 
-        // Subir a S3
+        // 📤 Subir actualizado a S3
         const nuevaHoja = XLSX.utils.json_to_sheet(datos);
         workbook.Sheets[workbook.SheetNames[0]] = nuevaHoja;
         const buffer = XLSX.write(workbook, { type: "buffer", bookType: "xlsx" });
 
         console.log("⏫ Subiendo archivo a S3...");
-        await s3.putObject({
-            Bucket: BUCKET_NAME,
-            Key: FILE_KEY,
-            Body: buffer,
-            ContentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        }).promise();
+        await s3
+            .putObject({
+                Bucket: BUCKET_NAME,
+                Key: FILE_KEY,
+                Body: buffer,
+                ContentType:
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            })
+            .promise();
         console.log("✅ Subida completada");
 
         return {
@@ -93,7 +100,7 @@ exports.handler = async (event) => {
         return {
             statusCode: 500,
             headers: corsHeaders,
-            body: JSON.stringify({ message: "Error interno del servidor" }),
+            body: JSON.stringify({ message: "Error interno del servidor", error: error.message }),
         };
     }
 };

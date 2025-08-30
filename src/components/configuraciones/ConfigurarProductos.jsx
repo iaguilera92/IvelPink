@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Container, Typography, Button, Card, CardContent, Snackbar, Alert,
-  Box, Grid, TextField, IconButton, Collapse, FormControlLabel, Checkbox
+  Box, Grid, TextField, IconButton, Collapse, FormControlLabel, Checkbox, useMediaQuery, useTheme
 } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import EditIcon from '@mui/icons-material/Edit';
@@ -13,6 +13,7 @@ import RestoreIcon from '@mui/icons-material/Restore';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import { cargarProductos } from '../../helpers/HelperProductos';
 import { DialogEliminarProducto, DialogRestaurarProductos } from './DialogosProductos';
+import MenuInferior from '../configuraciones/MenuInferior';
 
 const ConfigurarProductos = () => {
   const [productos, setProductos] = useState([]);
@@ -34,6 +35,10 @@ const ConfigurarProductos = () => {
     VideoUrl: '',
     ConDescuento: false
   });
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const cardSize = isMobile ? "300px" : "340px";
 
   useEffect(() => {
     recargarProductos();
@@ -287,7 +292,7 @@ const ConfigurarProductos = () => {
 
         <DialogEliminarProducto open={productoAEliminar !== null} producto={productos[productoAEliminar]} eliminando={eliminando} onClose={() => !eliminando && setProductoAEliminar(null)} onConfirm={confirmarEliminar} />
         <DialogRestaurarProductos open={restaurarOpen} restaurando={restaurando} onClose={() => !restaurando && setRestaurarOpen(false)} onConfirm={confirmarRestaurar} />
-
+        <MenuInferior cardSize={cardSize} modo="configurar-productos" />
         <Snackbar open={snackbar.open} autoHideDuration={3000} onClose={() => setSnackbar({ ...snackbar, open: false })} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
           <Alert severity="success" sx={{ width: '100%' }}>{snackbar.message}</Alert>
         </Snackbar>

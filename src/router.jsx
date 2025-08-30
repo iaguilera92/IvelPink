@@ -21,10 +21,10 @@ const withSuspense = (Component) => (
 
 // ✅ Función para proteger rutas con autenticación
 const isAuthenticated = () => {
-    const creds = localStorage.getItem("credenciales");
-    return creds !== null;
+    const credsLocal = localStorage.getItem("credenciales");
+    const credsSession = sessionStorage.getItem("credenciales");
+    return credsLocal !== null || credsSession !== null;
 };
-
 const ProtectedRoute = ({ children }) => {
     return isAuthenticated() ? children : <Navigate to="/administracion" replace />;
 };

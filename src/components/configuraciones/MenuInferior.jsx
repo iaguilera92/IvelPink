@@ -4,11 +4,12 @@ import { motion } from 'framer-motion';
 import BarChartIcon from "@mui/icons-material/BarChart";
 import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const MenuInferior = ({ cardSize }) => {
     const location = useLocation();
     const pathname = location.pathname;
+    const navigate = useNavigate();
 
     const goWithCleanCache = async (rutaDestino) => {
         try {
@@ -20,10 +21,10 @@ const MenuInferior = ({ cardSize }) => {
                     await registration.unregister();
                 }
             }
-            window.location.href = rutaDestino;
+            navigate(rutaDestino); // 👈 navegación SPA, no reload completo
         } catch (err) {
             console.warn("⚠️ Error al limpiar cache:", err);
-            window.location.href = rutaDestino;
+            navigate(rutaDestino);
         }
     };
 

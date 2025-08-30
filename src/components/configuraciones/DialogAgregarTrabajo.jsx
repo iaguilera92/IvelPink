@@ -133,8 +133,8 @@ export default function DialogAgregarTrabajo({ open, onClose, onSave }) {
             left: 0,
             width: "100%",
             height: "100%",
-            backgroundImage: "url('/servicio1.webp')",
-            backgroundPosition: "center",
+            backgroundImage: "url('/Area-1.webp')",
+            backgroundPosition: "center top 40%",
             backgroundRepeat: "no-repeat",
             zIndex: 0,
 
@@ -318,11 +318,30 @@ export default function DialogAgregarTrabajo({ open, onClose, onSave }) {
                       fullWidth
                       required
                       variant="outlined"
+                      size="small"
+                      InputProps={{
+                        startAdornment: <span style={{ marginRight: 6 }}>🛠️</span>, // 👈 emoji ícono
+                      }}
                       sx={{
+                        backgroundColor: "#fff", // 👈 fondo blanco fijo
+                        borderRadius: 2.5,
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: 2,
-                          "&:hover fieldset": { borderColor: "#FB8C00" },
-                          "&.Mui-focused fieldset": { borderColor: "#F57C00", borderWidth: 2 },
+                          backgroundColor: "#fff", // 👈 asegura fondo blanco también en input
+                          borderRadius: 2.5,
+                          transition: "all 0.25s ease",
+                          "&:hover fieldset": {
+                            borderColor: "#FB8C00",
+                            boxShadow: "0 0 0 2px rgba(251,140,0,0.15)",
+                          },
+                          "&.Mui-focused fieldset": {
+                            borderColor: "#F57C00",
+                            borderWidth: 2,
+                            boxShadow: "0 0 0 2px rgba(245,124,0,0.25)",
+                          },
+                        },
+                        "& .MuiInputLabel-root": {
+                          fontSize: "0.85rem",
+                          fontWeight: 600,
                         },
                         "& .MuiInputLabel-root.Mui-focused": {
                           color: "#F57C00",
@@ -330,35 +349,38 @@ export default function DialogAgregarTrabajo({ open, onClose, onSave }) {
                       }}
                     />
 
-
                     <FormControl required>
                       <FormLabel
                         component="legend"
-                        sx={{ fontWeight: 600, color: "#E65100", mb: 1 }}
+                        sx={{ fontWeight: 600, color: "#E65100", mb: 1, fontSize: "0.9rem" }}
                       >
-                        Tipo de Aplicación
+                        Tipo de Trabajo
                       </FormLabel>
                       <RadioGroup
                         row
                         name="tipo"
-                        value={form.tipo}     // 👈 esto se enlaza al estado
+                        value={form.tipo}
                         onChange={handleChange}
                       >
-                        <FormControlLabel
-                          value="1"
-                          control={<Radio color="warning" />}
-                          label={
-                            <Typography sx={{ fontWeight: 600, color: "#333" }}>
-                              Sitio Web
-                            </Typography>
-                          }
-                        />
                         <FormControlLabel
                           value="2"
                           control={<Radio color="warning" />}
                           label={
-                            <Typography sx={{ fontWeight: 600, color: "#333" }}>
-                              Sistema
+                            <Typography
+                              sx={{ fontWeight: 600, color: "#333", fontSize: { xs: "0.8rem", sm: "0.9rem" } }}
+                            >
+                              Mayorista
+                            </Typography>
+                          }
+                        />
+                        <FormControlLabel
+                          value="1"
+                          control={<Radio color="warning" />}
+                          label={
+                            <Typography
+                              sx={{ fontWeight: 600, color: "#333", fontSize: { xs: "0.8rem", sm: "0.9rem" } }}
+                            >
+                              Confección IvelPink
                             </Typography>
                           }
                         />
@@ -366,53 +388,88 @@ export default function DialogAgregarTrabajo({ open, onClose, onSave }) {
                     </FormControl>
 
 
-                    <Box>
-                      <Typography
-                        gutterBottom
-                        sx={{ fontWeight: 600, color: "#E65100", mb: 1 }}
-                      >
-                        Progreso *
-                      </Typography>
-                      <Slider
-                        value={form.progreso}
-                        onChange={(e, newValue) =>
-                          handleChange({ target: { name: "progreso", value: newValue } })
-                        }
-                        valueLabelDisplay="on"
-                        step={5}
-                        marks
-                        min={0}
-                        max={100}
-                        sx={{
-                          "& .MuiSlider-track": {
-                            backgroundImage: getGradient(form.progreso),
-                            border: "none",
-                          },
-                          "& .MuiSlider-rail": {
-                            opacity: 0.3,
-                            backgroundColor: "#ccc",
-                          },
-                          "& .MuiSlider-valueLabel": {
-                            position: "absolute",
-                            top: "40px",
-                            left: "50%",
-                            transform: "translateX(-50%) !important",
-                            "& *": { transform: "none" },
-                            backgroundImage: getGradient(form.progreso),
-                            borderRadius: "50%",
-                            fontWeight: 700,
-                            color: "#fff",
-                            padding: "4px 8px",
-                            boxShadow: "0 2px 6px rgba(0,0,0,0.25)",
-
-                            // 🔥 quita el diamante
-                            "&:before": {
-                              display: "none",
+                    {/* 🔥 BLOQUE MODERNO: STOCKS con emoji */}
+                    <Box
+                      display="flex"
+                      gap={2}
+                      sx={{
+                        flexDirection: { xs: "column", sm: "row" },
+                        "& .MuiTextField-root": {
+                          flex: 1,
+                          "& .MuiOutlinedInput-root": {
+                            borderRadius: 2,
+                            backgroundColor: "#fff",
+                            transition: "all 0.25s ease",
+                            "& input": {
+                              textAlign: "right", // 👈 alinear números a la derecha
+                              fontWeight: 600,
+                              fontSize: "0.9rem",
+                            },
+                            "&:hover fieldset": {
+                              borderColor: "#FB8C00",
+                              boxShadow: "0 0 0 2px rgba(251,140,0,0.15)",
+                            },
+                            "&.Mui-focused fieldset": {
+                              borderColor: "#F57C00",
+                              borderWidth: 2,
                             },
                           },
+                          "& .MuiInputLabel-root": {
+                            fontSize: "0.8rem",
+                            fontWeight: 600,
+                          },
+                          "& .MuiInputLabel-root.Mui-focused": {
+                            color: "#F57C00",
+                          },
+                        },
+                      }}
+                    >
+                      <TextField
+                        type="number"
+                        label="Stock Actual"
+                        name="stockActual"
+                        value={form.stockActual || ""}
+                        onChange={handleChange}
+                        required
+                        size="small"
+                        InputProps={{
+                          endAdornment: <span style={{ marginLeft: 6 }}>✅</span>,
+                          inputProps: {
+                            min: 0,
+                            maxLength: 4,
+                            inputMode: "numeric",
+                            pattern: "[0-9]*",
+                          },
+                        }}
+                        onInput={(e) => {
+                          e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4); // solo números, máx 4 dígitos
                         }}
                       />
+
+                      <TextField
+                        type="number"
+                        label="Stock Solicitado"
+                        name="stockSolicitado"
+                        value={form.stockSolicitado || ""}
+                        onChange={handleChange}
+                        required
+                        size="small"
+                        InputProps={{
+                          endAdornment: <span style={{ marginLeft: 6 }}>📦</span>,
+                          inputProps: {
+                            min: 1,
+                            maxLength: 4,
+                            inputMode: "numeric",
+                            pattern: "[0-9]*",
+                          },
+                        }}
+                        onInput={(e) => {
+                          e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4);
+                        }}
+                      />
+
                     </Box>
+
                   </Box>
                 )}
               </AnimatePresence>

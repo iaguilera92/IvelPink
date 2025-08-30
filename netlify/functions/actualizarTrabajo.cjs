@@ -1,3 +1,4 @@
+// archivo: actualizarTrabajo.cjs
 const AWS = require("aws-sdk");
 const XLSX = require("xlsx");
 require("dotenv").config();
@@ -34,38 +35,35 @@ exports.handler = async (event) => {
     }
 
     try {
-        console.log("📦 event.body recibido:", event.body);
-
         const body = JSON.parse(event.body || "{}");
-        const { SitioWeb, nuevoPorcentaje, nuevoEstado } = body;
+        const { Trabajo, nuevoStockActual, nuevoStockSolicitado, nuevoEstado } = body;
 
-        if (!SitioWeb) {
+        if (!Trabajo) {
             return {
                 statusCode: 400,
                 headers: corsHeaders,
-                body: JSON.stringify({ message: "Falta el campo SitioWeb" }),
+                body: JSON.stringify({ message: "Falta el campo Trabajo" }),
             };
         }
 
-        // Leer Excel desde S3
+        // 📥 Leer Excel desde S3
         const s3Data = await s3.getObject({ Bucket: BUCKET_NAME, Key: FILE_KEY }).promise();
         const workbook = XLSX.read(s3Data.Body, { type: "buffer" });
         const hoja = workbook.Sheets[workbook.SheetNames[0]];
         const datos = XLSX.utils.sheet_to_json(hoja, { defval: "" });
 
-        console.log("📋 Lista de sitios:", datos.map(d => d.SitioWeb));
-
-        // Buscar y modificar
+        // 🔍 Buscar y modificar
         let modificado = false;
         let trabajoFinal = null;
+
         const nuevosDatos = datos.map((row) => {
-            if (String(row.SitioWeb).trim() === String(SitioWeb).trim()) {
+            if (String(row.Trabajo).trim().toLowerCase() === String(Trabajo).trim().toLowerCase()) {
                 modificado = true;
-                console.log("🧪 Coincidencia encontrada:", row.SitioWeb);
                 trabajoFinal = {
                     ...row,
-                    Porcentaje: typeof nuevoPorcentaje === "number" ? nuevoPorcentaje : row.Porcentaje,
-                    Estado: typeof nuevoEstado === "number" ? nuevoEstado : row.Estado,
+                    StockActual: typeof nuevoStockActual === "number" ? nuevoStockActual : row.StockActual,
+                    StockSolicitado: typeof nuevoStockSolicitado === "number" ? nuevoStockSolicitado : row.StockSolicitado,
+                    Estado: nuevoEstado !== undefined ? nuevoEstado : row.Estado,
                 };
                 return trabajoFinal;
             }
@@ -73,33 +71,30 @@ exports.handler = async (event) => {
         });
 
         if (!modificado) {
-            console.warn("⚠️ Sitio no encontrado:", SitioWeb);
             return {
                 statusCode: 404,
                 headers: corsHeaders,
-                body: JSON.stringify({ message: "Sitio no encontrado" }),
+                body: JSON.stringify({ message: "Trabajo no encontrado" }),
             };
         }
 
-        // Subir a S3
+        // 📤 Guardar de nuevo en Excel y subir a S3
         const nuevaHoja = XLSX.utils.json_to_sheet(nuevosDatos);
         workbook.Sheets[workbook.SheetNames[0]] = nuevaHoja;
         const buffer = XLSX.write(workbook, { type: "buffer", bookType: "xlsx" });
 
-        console.log("⏫ Subiendo archivo a S3...");
         await s3.putObject({
             Bucket: BUCKET_NAME,
             Key: FILE_KEY,
             Body: buffer,
             ContentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         }).promise();
-        console.log("✅ Subida completada");
 
         return {
             statusCode: 200,
             headers: corsHeaders,
             body: JSON.stringify({
-                message: `Trabajo actualizado correctamente`,
+                message: "Trabajo actualizado correctamente",
                 trabajo: trabajoFinal,
             }),
         };
@@ -108,7 +103,7 @@ exports.handler = async (event) => {
         return {
             statusCode: 500,
             headers: corsHeaders,
-            body: JSON.stringify({ message: "Error interno del servidor" }),
+            body: JSON.stringify({ message: "Error interno del servidor", error: error.message }),
         };
     }
 };

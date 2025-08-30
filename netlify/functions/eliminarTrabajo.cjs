@@ -1,3 +1,4 @@
+// archivo: eliminarTrabajo.cjs
 const AWS = require("aws-sdk");
 const XLSX = require("xlsx");
 require("dotenv").config();
@@ -36,27 +37,29 @@ exports.handler = async (event) => {
     try {
         console.log("📦 event.body recibido:", event.body);
         const body = JSON.parse(event.body || "{}");
-        const { SitioWeb } = body;
+        const { Trabajo } = body;
 
-        if (!SitioWeb) {
+        if (!Trabajo) {
             return {
                 statusCode: 400,
                 headers: corsHeaders,
-                body: JSON.stringify({ message: "Falta el campo SitioWeb" }),
+                body: JSON.stringify({ message: "Falta el campo Trabajo" }),
             };
         }
 
-        // Leer Excel desde S3
+        // 📥 Leer Excel desde S3
         const s3Data = await s3.getObject({ Bucket: BUCKET_NAME, Key: FILE_KEY }).promise();
         const workbook = XLSX.read(s3Data.Body, { type: "buffer" });
         const hoja = workbook.Sheets[workbook.SheetNames[0]];
         const datos = XLSX.utils.sheet_to_json(hoja, { defval: "" });
 
-        // Filtrar quitando el trabajo a eliminar
-        const datosFiltrados = datos.filter(row => String(row.SitioWeb).trim() !== String(SitioWeb).trim());
+        // ❌ Filtrar quitando el trabajo a eliminar
+        const datosFiltrados = datos.filter(
+            (row) => String(row.Trabajo).trim().toLowerCase() !== String(Trabajo).trim().toLowerCase()
+        );
 
         if (datosFiltrados.length === datos.length) {
-            console.warn("⚠️ No se encontró el trabajo:", SitioWeb);
+            console.warn("⚠️ No se encontró el trabajo:", Trabajo);
             return {
                 statusCode: 404,
                 headers: corsHeaders,
@@ -64,20 +67,23 @@ exports.handler = async (event) => {
             };
         }
 
-        console.log("🗑️ Trabajo eliminado:", SitioWeb);
+        console.log("🗑️ Trabajo eliminado:", Trabajo);
 
-        // Subir Excel actualizado
+        // 📤 Subir Excel actualizado
         const nuevaHoja = XLSX.utils.json_to_sheet(datosFiltrados);
         workbook.Sheets[workbook.SheetNames[0]] = nuevaHoja;
         const buffer = XLSX.write(workbook, { type: "buffer", bookType: "xlsx" });
 
         console.log("⏫ Subiendo archivo a S3...");
-        await s3.putObject({
-            Bucket: BUCKET_NAME,
-            Key: FILE_KEY,
-            Body: buffer,
-            ContentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        }).promise();
+        await s3
+            .putObject({
+                Bucket: BUCKET_NAME,
+                Key: FILE_KEY,
+                Body: buffer,
+                ContentType:
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            })
+            .promise();
         console.log("✅ Subida completada");
 
         return {
@@ -85,7 +91,7 @@ exports.handler = async (event) => {
             headers: corsHeaders,
             body: JSON.stringify({
                 message: "Trabajo eliminado correctamente",
-                eliminado: SitioWeb,
+                eliminado: Trabajo,
             }),
         };
     } catch (error) {
@@ -93,7 +99,7 @@ exports.handler = async (event) => {
         return {
             statusCode: 500,
             headers: corsHeaders,
-            body: JSON.stringify({ message: "Error interno del servidor" }),
+            body: JSON.stringify({ message: "Error interno del servidor", error: error.message }),
         };
     }
 };
