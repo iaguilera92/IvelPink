@@ -248,7 +248,7 @@ export default function DialogAgregarTrabajo({ open, onClose, onSave }) {
               dividers
               sx={{
                 py: 3,
-                pb: 6,
+                pb: 2,
                 bgcolor: success ? "#e6f4ea" : "#FFF8EC",
                 position: "relative",
                 overflow: "visible",
@@ -398,10 +398,13 @@ export default function DialogAgregarTrabajo({ open, onClose, onSave }) {
                         }}
                       />
                     </Box>
-                    <FormControl required>
+                    <FormControl required sx={{
+                      m: 0, p: 0,
+                      "& .MuiFormGroup-root": { m: 0 },
+                    }}>
                       <FormLabel
                         component="legend"
-                        sx={{ fontWeight: 600, color: "#E65100", mb: 1, fontSize: "0.9rem" }}
+                        sx={{ fontWeight: 600, color: "#E65100", mb: 0, fontSize: "0.9rem" }}
                       >
                         Tipo de Trabajo
                       </FormLabel>
@@ -410,6 +413,7 @@ export default function DialogAgregarTrabajo({ open, onClose, onSave }) {
                         name="tipoTrabajo"
                         value={form.tipoTrabajo}
                         onChange={handleChange}
+                        sx={{ m: 0, p: 0 }}
                       >
                         <FormControlLabel
                           value="2"
@@ -442,6 +446,7 @@ export default function DialogAgregarTrabajo({ open, onClose, onSave }) {
                       display="flex"
                       gap={2}
                       sx={{
+                        mt: -2.2,
                         flexDirection: { xs: "column", sm: "row" },
                         "& .MuiTextField-root": {
                           flex: 1,
