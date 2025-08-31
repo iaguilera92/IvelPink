@@ -403,7 +403,9 @@ export default function DialogTrabajoTerminado({
             </Button>
 
             <Button
-              onClick={() => handleAccion(onConfirmarConCorreo, "confirmarConCorreo")}
+              onClick={() =>
+                handleAccion(() => onConfirmarConCorreo(trabajo), "confirmarConCorreo")
+              }
               variant="contained"
               disabled={loading}
               sx={{

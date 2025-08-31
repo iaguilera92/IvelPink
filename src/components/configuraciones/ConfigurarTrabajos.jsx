@@ -266,27 +266,23 @@ const ConfigurarTrabajos = () => {
   // CONFIRMACIÓN + CORREO
   const handleEnviarCorreo = async () => {
     try {
-      const hoy = new Date();
-      const fecha = `${String(hoy.getDate()).padStart(2, "0")}-${String(hoy.getMonth() + 1).padStart(2, "0")}-${hoy.getFullYear()}`;
-
       const params = {
-        Trabajo: dialogFinalizar.trabajo?.Trabajo || "plataformas-web.cl",
-        nombre: dialogFinalizar.trabajo?.NombreCliente || "Ignacio",
-        email:
-          dialogFinalizar.trabajo?.EmailCliente ||
-          "plataformas.web.cl@gmail.com",
-        fechaEntrega: fecha,
-        cc: "plataformas.web.cl@gmail.com", // 👈 campo CC
+        trabajo: dialogFinalizar.trabajo.Trabajo || "Pedido mayorista",
+        nombre: dialogFinalizar.trabajo.NombreCliente || "Cliente",
+        stockSolicitado: dialogFinalizar.trabajo.StockSolicitado || 0,
+        fechaEntrega: new Date().toLocaleDateString("es-CL"),
+        email: dialogFinalizar.trabajo.EmailCliente || "plataformas.web.cl@gmail.com",
+        cc: "plataformas.web.cl@gmail.com",
       };
 
       await emailjs.send(
-        "service_kz3yaug",      // Service ID
-        "template_yowj1al",     // Template ID
+        "service_7juf97z",
+        "template_uzpbwfm",
         params,
-        "lwCAuhptLOofypnhx"     // Public Key
+        "bS7zSJU_j1SlHtu_D"
       );
 
-      console.log("✅ Correo enviado correctamente a:", params.email, "(CC:", params.cc, ")");
+      console.log("✅ Correo enviado correctamente:", params);
     } catch (error) {
       console.error("❌ Error al enviar correo:", error);
     }
@@ -703,10 +699,9 @@ const ConfigurarTrabajos = () => {
           onConfirmarConCorreo={async () => {
             await guardarCambios(dialogFinalizar.trabajo);
             await handleEnviarCorreo();
+
           }}
         />
-
-
 
         <MenuInferior cardSize={cardSize} modo="trabajos" />
       </Box>

@@ -38,14 +38,23 @@ exports.handler = async (event) => {
         console.log("📦 event.body recibido:", event.body);
 
         const body = JSON.parse(event.body || "{}");
-        const { nombre, tipo, stockActual, stockSolicitado } = body;
+        const {
+            trabajo,
+            tipoTrabajo,
+            stockActual,
+            stockSolicitado,
+            nombreCliente,
+            emailCliente,
+            telefonoCliente,
+            fechaCreacion,
+        } = body;
 
-        if (!nombre || !tipo) {
+        if (!trabajo || !tipoTrabajo) {
             return {
                 statusCode: 400,
                 headers: corsHeaders,
                 body: JSON.stringify({
-                    message: "Faltan campos requeridos (nombre, tipo)",
+                    message: "Faltan campos requeridos (trabajo, tipoTrabajo)",
                 }),
             };
         }
@@ -58,12 +67,15 @@ exports.handler = async (event) => {
 
         // 🆕 Crear nueva fila
         const nuevoTrabajo = {
-            Trabajo: nombre,
-            TipoTrabajo: parseInt(tipo, 10),
+            Trabajo: trabajo,
+            TipoTrabajo: parseInt(tipoTrabajo, 10),
             StockActual: stockActual ?? 0,
             StockSolicitado: stockSolicitado ?? 0,
+            NombreCliente: nombreCliente || "",
+            EmailCliente: emailCliente || "",
+            TelefonoCliente: telefonoCliente || "",
             Estado: 1, // activo
-            FechaCreacion: new Date().toISOString(),
+            FechaCreacion: fechaCreacion || new Date().toISOString(),
         };
 
         datos.push(nuevoTrabajo);
@@ -100,7 +112,10 @@ exports.handler = async (event) => {
         return {
             statusCode: 500,
             headers: corsHeaders,
-            body: JSON.stringify({ message: "Error interno del servidor", error: error.message }),
+            body: JSON.stringify({
+                message: "Error interno del servidor",
+                error: error.message,
+            }),
         };
     }
 };
