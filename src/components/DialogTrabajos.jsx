@@ -243,6 +243,7 @@ export default function DialogTrabajos({
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
+            mt: 3,
             gap: { xs: 0.8, sm: 1.2 }, // más compacto en mobile
             px: { xs: 1.2, sm: 2 },
             py: { xs: 0.5, sm: 0.8 },
@@ -273,7 +274,7 @@ export default function DialogTrabajos({
         {trabajos.length > 0 ? (
           <Box
             sx={{
-              mt: 3,
+              mt: 1,
               display: "flex",
               justifyContent: "center",
               gap: 2,
@@ -328,7 +329,7 @@ export default function DialogTrabajos({
                 sx={{
                   fontWeight: 600,
                   whiteSpace: "nowrap",
-                  fontSize: { xs: "0.7rem", sm: "0.875rem" },
+                  fontSize: { xs: "0.59rem", sm: "0.875rem" },
                 }}
               >
                 Mayoristas en producción
@@ -382,7 +383,7 @@ export default function DialogTrabajos({
                 sx={{
                   fontWeight: 600,
                   whiteSpace: "nowrap",
-                  fontSize: { xs: "0.7rem", sm: "0.875rem" },
+                  fontSize: { xs: "0.59rem", sm: "0.875rem" },
                 }}
               >
                 Confecciones IvelPink
@@ -422,7 +423,7 @@ export default function DialogTrabajos({
             <DialogContent
               sx={{
                 background: "linear-gradient(180deg, #E3F2FD 0%, #E1F5FE 100%)",
-                py: isMobile ? 1 : 2.5,
+                py: isMobile ? 0 : 2.5,
                 mb: 0
               }}
             >
@@ -435,12 +436,25 @@ export default function DialogTrabajos({
               )}
 
               <Box sx={{ mt: { xs: 1.5, sm: 2.5 } }}>
-                {trabajos.map((t) => (
-                  <Trabajos key={`${t.SitioWeb}-${t.Id}`} trabajo={t} />
-                ))}
-              </Box>
+                {trabajos
+                  .slice() // 👈 evita mutar el state original
+                  .sort((a, b) => {
+                    // 1) Priorizar TipoTrabajo=2
+                    if (a.TipoTrabajo === 2 && b.TipoTrabajo !== 2) return -1;
+                    if (a.TipoTrabajo !== 2 && b.TipoTrabajo === 2) return 1;
 
+                    // 2) Ordenar por % de avance
+                    const ratioA = a.StockSolicitado > 0 ? a.StockActual / a.StockSolicitado : 0;
+                    const ratioB = b.StockSolicitado > 0 ? b.StockActual / b.StockSolicitado : 0;
+
+                    return ratioA - ratioB; // menor avance primero
+                  })
+                  .map((t) => (
+                    <Trabajos key={`${t.Trabajo}-${t.Id}`} trabajo={t} />
+                  ))}
+              </Box>
             </DialogContent>
+
           </motion.div>
         )}
       </AnimatePresence>
@@ -450,7 +464,7 @@ export default function DialogTrabajos({
       <DialogActions
         sx={{
           px: 2,
-          py: 1.5,
+          py: 0.8,
           background: "linear-gradient(90deg,#BBDEFB,#90CAF9)", // 💧 celeste más fuerte
           borderTop: "1px solid rgba(33,150,243,.35)", // azul un poco más marcado
         }}

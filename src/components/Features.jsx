@@ -28,7 +28,7 @@ const disabledLabels = ['Verano', 'Jeans', 'Shorts'];
 
 
 // EFECTOS
-function Features({ videoReady }) {
+function Features({ videoReady, informationsRef }) {
 
   const theme = useTheme();
   const timestamp = Date.now();
@@ -43,6 +43,7 @@ function Features({ videoReady }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [trabajos, setTrabajos] = useState([]);
   const [openTrabajos, setOpenTrabajos] = useState(false);
+  const scrollToRef = (ref, offset = -80) => ref?.current && window.scrollTo({ top: ref.current.getBoundingClientRect().top + window.scrollY + offset, behavior: 'smooth' });
 
   // handlers
   const handleTrabajosClick = () => setOpenTrabajos(true);
@@ -140,12 +141,9 @@ function Features({ videoReady }) {
 
             <Button
               onClick={handleTrabajosClick}
-              variant="contained"
               sx={{
-                minWidth: { xs: "400px", sm: "360px" },
-                maxWidth: { xs: "100%", md: "520px" },
-                width: { xs: "100%", sm: "520px" },
-                fullWidth: true,
+                width: isMobile ? "360px" : "520px",
+                minWidth: "360px !important",
                 height: "50px",
                 textTransform: "none",
                 fontFamily: "Albert Sans, sans-serif",
@@ -156,7 +154,7 @@ function Features({ videoReady }) {
                 position: "relative",
                 overflow: "hidden",
                 justifyContent: "center",
-                gap: 0.6,
+                gap: 0,
                 boxShadow: `
       0 6px 14px rgba(0,0,0,0.2),
       0 0 18px rgba(135,206,250,0.6),
@@ -200,7 +198,7 @@ function Features({ videoReady }) {
                   ease: "easeOut",
                   delay: isMobile ? 1.5 : 1, // 🔑 espera 1s después de hasAnimated
                 }}
-                style={{ display: "flex", alignItems: "center", gap: 6 }}
+                style={{ display: "flex", alignItems: "center", gap: 0 }}
               >
                 {/* Reloj */}
                 <AccessTimeFilledRoundedIcon
@@ -223,9 +221,9 @@ function Features({ videoReady }) {
                     display: "flex",
                     alignItems: "center",
                     flexWrap: "nowrap",
-                    gap: { xs: 0.4, sm: 1 },
+                    gap: { xs: 1, sm: 1 },
                     overflow: "hidden",
-                    fontSize: { xs: "0.71rem", sm: "0.9rem" },
+                    fontSize: { xs: "0.65rem", sm: "0.9rem" },
                   }}
                 >
                   <span>En Producción:</span>
@@ -342,10 +340,7 @@ function Features({ videoReady }) {
                 onClick={() => setDialogOpen(true)}
                 variant="contained"
                 sx={{
-                  minWidth: { xs: "400px", sm: "360px" },
-                  maxWidth: { xs: "100%", md: "520px" },
-                  width: { xs: "100%", sm: "520px" },
-                  fullWidth: true,
+                  width: isMobile ? "360px" : "520px",
                   textTransform: "none",
                   fontWeight: "bold",
                   letterSpacing: "3.1px",
@@ -592,7 +587,7 @@ function Features({ videoReady }) {
         onClose={handleCloseTrabajos}
         trabajos={trabajosActivos}
         primaryLabel="Ver Servicios"
-        onPrimaryClick={() => { handleCloseTrabajos(); navigate("/servicios"); }}
+        onPrimaryClick={() => { handleCloseTrabajos(); scrollToRef(informationsRef); }}
       />
     </Box >
   );

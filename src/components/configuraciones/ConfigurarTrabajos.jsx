@@ -692,6 +692,7 @@ const ConfigurarTrabajos = () => {
           </DialogActions>
         </Dialog>
 
+        {/* TRABAJO TERMINADO */}
         <DialogTrabajoTerminado
           open={dialogFinalizar.open}
           trabajo={dialogFinalizar.trabajo}

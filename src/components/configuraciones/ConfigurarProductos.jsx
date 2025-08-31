@@ -145,12 +145,12 @@ const ConfigurarProductos = () => {
   };
 
   return (
-    <Container maxWidth={false} disableGutters sx={{ minHeight: '100vh', width: '100vw', overflowX: 'hidden', py: 1, px: 0, pb: 3.5, backgroundImage: 'url(fondo-blizz-ivelpink.webp)', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed', backgroundPosition: 'center' }}>
-      <Box sx={{ pt: 10, px: { xs: 2, md: 4 } }}>
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+    <Container maxWidth={false} disableGutters sx={{ minHeight: '100vh', width: '100vw', overflowX: 'hidden', py: 1, px: 0, pb: 2, backgroundImage: 'url(fondo-blizz-ivelpink.webp)', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed', backgroundPosition: 'center' }}>
+      <Box sx={{ pt: 14, px: { xs: 2, md: 4 } }}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Box display="flex" alignItems="center" gap={1}>
             <SettingsSuggestIcon sx={{ color: 'white', fontSize: 22 }} />
-            <Typography variant="h6" sx={{ color: 'white', fontWeight: 700, fontFamily: 'Roboto, Arial, sans-serif', fontSize: { xs: '1rem', sm: '1.25rem' } }}>
+            <Typography variant="h6" sx={{ color: 'white', fontWeight: 700, fontFamily: 'Roboto, Arial, sans-serif', fontSize: { xs: '0.8rem', sm: '1.25rem' } }}>
               {"Productos actuales".split("").map((char, i) => (
                 <motion.span key={i} custom={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + i * 0.05 }} style={{ display: 'inline-block' }}>
                   {char === " " ? "\u00A0" : char}
@@ -158,7 +158,7 @@ const ConfigurarProductos = () => {
               ))}
             </Typography>
           </Box>
-          <Button variant="outlined" color="inherit" onClick={() => setRestaurarOpen(true)} startIcon={<UpdateIcon />} sx={{ color: 'white', borderColor: 'white', '&:hover': { backgroundColor: '#ffffff22', borderColor: '#ffffffcc' } }}>Restaurar productos</Button>
+          <Button variant="outlined" color="inherit" onClick={() => setRestaurarOpen(true)} startIcon={<UpdateIcon />} sx={{ fontSize: { xs: '0.5rem', sm: '1.25rem' }, color: 'white', borderColor: 'white', '&:hover': { backgroundColor: '#ffffff22', borderColor: '#ffffffcc' } }}>Restaurar productos</Button>
         </Box>
 
         <AnimatePresence>
@@ -170,7 +170,7 @@ const ConfigurarProductos = () => {
               exit={{ opacity: 0, y: -60 }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
             >
-              <Card sx={{ mb: 2, overflow: 'hidden', background: 'rgb(60, 35, 50)', color: 'white', transition: 'all 0.4s ease' }}>
+              <Card sx={{ mb: 1.5, overflow: 'hidden', background: 'rgb(60, 35, 50)', color: 'white', transition: 'all 0.4s ease' }}>
                 <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <Box>
                     <Typography variant="subtitle1" fontWeight={600}>{producto.NombreProducto}</Typography>

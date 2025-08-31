@@ -100,15 +100,14 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
   const opacity = Math.max(0, 1 - scrollY / maxScroll);
   const translateY = Math.min(scrollY, maxScroll);
   const [mostrarAdmin, setMostrarAdmin] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!mostrarAnimacion && !animacionMostrada) {
-        setAnimacionMostrada(true); // Forzar SIEMPRE a los 5s
-      }
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, []);
+  const [titulo, setTitulo] = useState("📦 Envíos a todo Chile");
 
+
+  useEffect(() => {
+    // ✅ cada vez que cambia la ruta, forzamos a mostrar el banner y el logo
+    setAnimacionMostrada(true);
+    setTitulo("📦 Envíos a todo Chile");
+  }, [location.pathname]);
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
   const scrollToRef = (ref, offset = -80) => ref?.current && window.scrollTo({ top: ref.current.getBoundingClientRect().top + window.scrollY + offset, behavior: 'smooth' });
@@ -190,16 +189,13 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
           }}
         >
           <AnimatePresence mode="wait">
-            {(mostrarAnimacion || animacionMostrada) && (
+            {animacionMostrada && (
               <motion.div
-                key={mostrarAnimacion ? "contenido-banner-envio" : "contenido-forzado"}
+                key={`banner-${location.pathname}`}  // 👈 clave única para que re-renderice en cada ruta
                 initial={{ x: 200, opacity: 0 }}
                 animate={{ x: 0, opacity }}
                 exit={{ opacity: 0 }}
-                transition={{
-                  duration: 1,
-                  delay: mostrarAnimacion ? 0.5 : 0,
-                }}
+                transition={{ duration: 1 }}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -210,13 +206,13 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
                   fontSize: "0.8rem",
                 }}
               >
-                📦 Envíos a todo Chile
+                {titulo}
                 <motion.img
                   src="icon-chile.png"
                   alt="Bandera de Chile"
                   initial={{ scale: 0.8 }}
                   animate={{ scale: 1 }}
-                  transition={{ delay: mostrarAnimacion ? 1.2 : 0.7, type: "spring", stiffness: 300 }}
+                  transition={{ delay: 0.7, type: "spring", stiffness: 300 }}
                   style={{ width: 16, height: "auto" }}
                 />
               </motion.div>

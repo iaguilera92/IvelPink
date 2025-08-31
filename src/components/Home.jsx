@@ -11,7 +11,7 @@ function Home({ informationsRef, setVideoReady }) {
         <Box>
             <Hero informationsRef={informationsRef} setVideoReady={setVideoReady} />
             <Box>
-                <Features videoReady={showApp} />
+                <Features videoReady={showApp} informationsRef={informationsRef} />
             </Box>
         </Box>
     );

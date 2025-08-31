@@ -46,7 +46,7 @@ export default function DialogTrabajoTerminado({
         if (accionEnCurso === "confirmar" || accionEnCurso === "confirmarConCorreo") {
           if (trabajo?.TelefonoCliente) {
             const phone = String(trabajo.TelefonoCliente).replace(/\D/g, "");
-            const message = `¡Buenas noticias! 🚀 Su sitio web *www.${trabajo.SitioWeb}* ha finalizado y ya está disponible en *producción*. 🎉`;
+            const message = `¡Buenas noticias! 🚀 Su pedido *${trabajo.Trabajo}* ha finalizado y ya está disponible para retirar. 📦`;
             const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
             // 👇 Abrimos WhatsApp ANTES de cerrar el diálogo
@@ -302,8 +302,9 @@ export default function DialogTrabajoTerminado({
                 ) : (
                   <>
                     <Typography>
-                      🎉 ¡El trabajo <b>{trabajo?.SitioWeb}</b> alcanzó el <b>100%</b>!
+                      🎉 ¡La producción de <b>{trabajo?.Trabajo || "—"}</b> alcanzó el <b>100%</b>!
                     </Typography>
+
                     <Typography sx={{ mt: 1 }}>
                       ¿Quieres marcarlo como finalizado?
                     </Typography>
