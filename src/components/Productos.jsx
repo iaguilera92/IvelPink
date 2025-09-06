@@ -127,7 +127,7 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
       className="productos-card"
       sx={{
         width: '100%',
-        height: { xs: 300, sm: 260 },
+        height: { xs: 220, sm: 260 },
         mx: 'auto',
         position: 'relative',
         overflow: 'visible',
@@ -253,7 +253,6 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
               )}
 
 
-              {/* Botones claramente visibles aquí abajo */}
               <Box
                 sx={{
                   position: 'absolute',
@@ -261,82 +260,73 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
                   left: 0,
                   right: 0,
                   zIndex: 2,
-                  p: 1.5,
+                  p: { xs: 1, sm: 1.5 },
                   background: 'rgba(0,0,0,0.6)',
                   color: 'white',
-                  pointerEvents: girado ? 'none' : 'auto'
+                  pointerEvents: girado ? 'none' : 'auto',
                 }}
               >
-                <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={0.5}>
-
-                  {/* Botón Visualizar (izquierda) */}
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={0.5}
+                  sx={{ width: '100%' }}
+                >
+                  {/* Botón Visualizar - más chico */}
                   <Button
                     variant="outlined"
                     sx={{
-                      borderColor: '#FFFFFF',
-                      color: '#FFFFFF',
+                      flex: 0.7, // 🔹 más angosto aún
+                      minWidth: 0,
+                      fontSize: { xs: '0.6rem', sm: '0.7rem' }, // 🔹 más pequeño
+                      borderRadius: '8px',
+                      py: { xs: 0.25, sm: 0.4 },
+                      borderColor: '#FFF',
+                      color: '#FFF',
                       textTransform: 'none',
-                      '&:hover': {
-                        bgcolor: 'rgba(255,255,255,0.1)',
-                        borderColor: '#FFFFFF'
-                      },
-                      fontSize: '0.75rem',
-                      borderRadius: '10px',
-                      py: 0.5,
-                      flex: '1'
                     }}
                     onClick={(e) => {
                       e.stopPropagation();
                       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
                       if (isMobile) {
-                        onVisualizarMobile(producto); // <- asegúrate que se ejecuta
+                        onVisualizarMobile(producto);
                       } else {
                         handleFullScreen();
                       }
                     }}
                   >
-                    Visualizar
+                    Ver
                   </Button>
 
-
-                  {/* Precio (con o sin descuento) */}
+                  {/* Precio */}
                   <Box
                     sx={{
-                      flex: 1,
+                      flex: 1.2,
+                      minWidth: 70,
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
                       lineHeight: 1,
-                      minHeight: '32px',
-                      overflow: 'hidden',
-                      minWidth: '80px', // 💡 nuevo: mejora visibilidad
                     }}
                   >
                     <Typography
                       fontWeight="bold"
                       sx={{
                         fontFamily: '"RC Type Cond", Arial, sans-serif',
-                        fontSize: { xs: '1.2rem', sm: '1rem' },
-                        color: producto.Stock === 0 ? '#FF5252' : (producto.ConDescuento ? '#00e676' : '#FFFFFF'),
-                        textShadow: '0 1px 2px rgba(0, 0, 0, 20)',
-                        letterSpacing: 0.5,
-                        lineHeight: 1.2,
+                        fontSize: { xs: '0.95rem', sm: '1rem' },
+                        color: producto.Stock === 0 ? '#FF5252' : producto.ConDescuento ? '#00e676' : '#FFFFFF',
                         textAlign: 'center',
                       }}
                     >
                       {producto.Stock === 0 ? 'Agotado' : FormatearPesos(producto.Valor)}
                     </Typography>
-
                     {producto.ConDescuento && (
                       <Typography
                         sx={{
-                          fontSize: '0.65rem',
+                          fontSize: { xs: '0.6rem', sm: '0.65rem' },
                           color: '#ccc',
                           textDecoration: 'line-through',
-                          lineHeight: 1,
-                          mt: 0,
-                          textAlign: 'center',
                         }}
                       >
                         {FormatearPesos(producto.Valor + 3000)}
@@ -344,25 +334,24 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
                     )}
                   </Box>
 
-
-
-                  {/* Botón Solicitar (derecha) */}
+                  {/* Botón Solicitar - más ancho */}
                   <Button
                     variant="contained"
                     disabled={producto.Stock === 0}
                     sx={{
-                      bgcolor: '#FFFFFF',
-                      color: '#222222',
+                      flex: 1.5, // 🔹 más ancho que todos
+                      minWidth: 0,
+                      fontSize: { xs: '0.65rem', sm: '0.7rem' }, // 🔹 tipografía más pequeña
+                      borderRadius: '8px',
+                      py: { xs: 0.25, sm: 0.4 },
+                      bgcolor: '#FFF',
+                      color: '#222',
                       textTransform: 'none',
                       opacity: producto.Stock === 0 ? 0.4 : 1,
                       cursor: producto.Stock === 0 ? 'not-allowed' : 'pointer',
                       '&:hover': {
-                        bgcolor: producto.Stock === 0 ? '#FFFFFF' : '#f0f0f0'
+                        bgcolor: producto.Stock === 0 ? '#FFF' : '#f0f0f0',
                       },
-                      fontSize: '0.75rem',
-                      borderRadius: '10px',
-                      py: 0.5,
-                      flex: '1'
                     }}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -376,11 +365,8 @@ const Productos = ({ producto, girado, onGirar, FormatearPesos, onVisualizarMobi
                     Solicitar
                   </Button>
                 </Stack>
-
-
-
-
               </Box>
+
             </Card>
           </Box>
 

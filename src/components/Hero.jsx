@@ -274,8 +274,7 @@ function Hero({ informationsRef, setVideoReady }) {
                     <button
                       className="btn-3"
                       onClick={() => {
-                        document.body.classList.add('nav-white'); // cubre al instante con blanco
-                        navigate('/catalogo', { replace: true }); // replace evita reusar el state al volver
+                        navigate('/catalogo');
                       }}
                     >
                       <span>Nuestro Catálogo</span>

@@ -32,7 +32,14 @@ function App() {
   const [showApp, setShowApp] = useState(false);
   const [snackbarVersion, setSnackbarVersion] = useState({ open: false, version: "", });
   const triggerInformations = (value) => setShouldAnimateInformations(value);
-  const [showContacto, setShowContacto] = useState(false);
+  const [isFading, setIsFading] = useState(false);
+
+  //EFECTO CAMBIAR DE RUTA
+  useEffect(() => {
+    setIsFading(true);
+    const timer = setTimeout(() => setIsFading(false), 400);
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
 
   //GOOGLE ANALYTICS
   useEffect(() => {
@@ -253,9 +260,24 @@ function App() {
           </div>
         )}
 
-        {/* Rutas principales con contexto */}
-        <Outlet context={{ showApp, informationsRef }} />
-
+        {/* Transición entre páginas */}
+        <Box sx={{ position: "relative" }}>
+          <Outlet context={{ showApp, informationsRef }} />
+          {isFading && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              style={{
+                position: "fixed",
+                inset: 0,
+                background: "white",
+                zIndex: 2000
+              }}
+            />
+          )}
+        </Box>
         {/* Secciones visibles solo en la página de inicio */}
         {["/", ""].includes(location.pathname) && (
           <>

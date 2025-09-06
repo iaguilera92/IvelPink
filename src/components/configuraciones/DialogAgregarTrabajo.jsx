@@ -352,7 +352,13 @@ export default function DialogAgregarTrabajo({ open, onClose, onSave }) {
                         label="Nombre Cliente"
                         name="nombreCliente"
                         value={form.nombreCliente}
-                        onChange={handleChange}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          // 👇 Solo letras (mayúsculas/minúsculas), espacios y acentos
+                          if (/^[a-zA-ZÀ-ÿ\s]*$/.test(value)) {
+                            handleChange(e); // solo actualiza si pasa la validación
+                          }
+                        }}
                         required
                         size="small"
                         sx={{
@@ -370,6 +376,7 @@ export default function DialogAgregarTrabajo({ open, onClose, onSave }) {
                         }}
                       />
 
+
                       <TextField
                         label="Email Cliente"
                         name="emailCliente"
@@ -378,20 +385,42 @@ export default function DialogAgregarTrabajo({ open, onClose, onSave }) {
                         onChange={handleChange}
                         required
                         size="small"
+                        error={
+                          form.emailCliente !== "" &&
+                          !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.emailCliente) // 👈 validador simple de email
+                        }
+                        helperText={
+                          form.emailCliente !== "" &&
+                            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.emailCliente)
+                            ? "Ingresa un correo válido (ej: cliente@gmail.com)"
+                            : ""
+                        }
                         sx={{ backgroundColor: "#fff", borderRadius: 2 }}
                         InputProps={{
                           startAdornment: <span style={{ marginRight: 6 }}>📧</span>,
                         }}
                       />
 
+
                       <TextField
                         label="Teléfono Cliente"
                         name="telefonoCliente"
                         type="tel"
                         value={form.telefonoCliente}
-                        onChange={handleChange}
+                        onChange={(e) => {
+                          const onlyNums = e.target.value.replace(/\D/g, "");
+                          setForm((prev) => ({
+                            ...prev,
+                            telefonoCliente: onlyNums.slice(0, 12),
+                          }));
+                        }}
                         required
                         size="small"
+                        inputProps={{
+                          inputMode: "numeric",
+                          pattern: "[0-9]*",
+                          maxLength: 12,
+                        }}
                         sx={{ backgroundColor: "#fff", borderRadius: 2 }}
                         InputProps={{
                           startAdornment: <span style={{ marginRight: 6 }}>📱</span>,

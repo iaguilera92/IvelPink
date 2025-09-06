@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Container, Snackbar, Box, Alert, useTheme, useMediaQuery, Button } from '@mui/material';
 import './css/Catalogo.css';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Productos from './Productos';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -10,8 +10,8 @@ import { Grid } from '@mui/material';
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { IconButton } from '@mui/material';
 import { Virtual } from 'swiper/modules';
-import Cargando from './Cargando';
 import { cargarProductos } from '../helpers/HelperProductos';
+import Cargando from './Cargando';
 
 const Catalogo = () => {
   const [productos, setProductos] = useState([]);
@@ -22,16 +22,15 @@ const Catalogo = () => {
   const FormatearPesos = (valor) => `$${valor.toLocaleString('es-CL')}`;
   const CalcularValorOld = (valor) => FormatearPesos(valor + 10000);
   const [productoActivo, setProductoActivo] = useState({});
-  const [showArrow, setShowArrow] = useState(true);
+  const [showArrow, setShowArrow] = useState({});
+
   const [videoFullScreenProducto, setVideoFullScreenProducto] = useState(null);
   const [mostrarControlesVideo, setMostrarControlesVideo] = useState(false);
   const [animarFlecha, setAnimarFlecha] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const [entered, setEntered] = useState(false);
-  const [showRouteLoader, setShowRouteLoader] = useState(true); // 👈 mantiene el loader visible
-  const [fadeLoader, setFadeLoader] = useState(false);          // 👈 activa el fade del loader
   const NAV_FADE_MS = 1000;
-
+  const swiperRefs = useRef({});
   const fechaActual = new Date().toLocaleDateString('es-CL', {
     day: '2-digit',
     month: '2-digit',
@@ -40,7 +39,6 @@ const Catalogo = () => {
 
   useEffect(() => {
     let cancelado = false;
-
     const cargarDatos = async () => {
       if (cancelado) return;
       const timestamp = new Date().getTime();
@@ -48,102 +46,43 @@ const Catalogo = () => {
 
       let datos = await cargarProductos(urlConCacheBust);
 
-      // 🔹 Separar productos con stock y sin stock
       const conStock = datos.filter(p => Number(p.Stock) > 0);
       const sinStock = datos.filter(p => Number(p.Stock) === 0);
-
-      // 🔹 Ordenar solo los productos con stock por 'Orden' ascendente
       conStock.sort((a, b) => (a.Orden || 9999) - (b.Orden || 9999));
 
-      // 🔹 Juntar nuevamente: primero con stock (ordenados), luego sin stock
       const productosOrdenados = [...conStock, ...sinStock];
 
       if (!cancelado) {
         setProductos(productosOrdenados);
 
-        // 🔄 Precargar imágenes
-        const precargarImagenes = async () => {
-          const imagenes = productosOrdenados.map((p) => p.ImageUrl);
-          let cargadas = 0;
+        const imagenes = productosOrdenados.map((p) => p.ImageUrl);
+        let cargadas = 0;
 
-          const verificarCarga = () => {
-            cargadas++;
-            if (cargadas === imagenes.length) {
-              setTimeout(() => {
-                setIsLoaded(true); // ✅ activa vista principal
-              }, 1800); // opcional: efecto más suave
-            }
-          };
+        if (imagenes.length === 0) {
+          setTimeout(() => setIsLoaded(true), 1000); // 👈 mínimo 1s
+          return;
+        }
 
-          if (imagenes.length === 0) {
-            setIsLoaded(true);
-            return;
+        const verificarCarga = () => {
+          cargadas++;
+          if (cargadas === imagenes.length) {
+            setTimeout(() => setIsLoaded(true), 1500); // 👈 mínimo 1s
           }
-
-          imagenes.forEach((src) => {
-            const img = new Image();
-            img.onload = verificarCarga;
-            img.onerror = verificarCarga;
-            img.src = src;
-          });
         };
 
-        precargarImagenes();
+        imagenes.forEach((src) => {
+          const img = new Image();
+          img.onload = verificarCarga;
+          img.onerror = verificarCarga;
+          img.src = src;
+        });
       }
-
     };
 
     cargarDatos();
-
-    return () => {
-      cancelado = true;
-    };
+    return () => { cancelado = true; };
   }, []);
 
-
-
-  //CARGAR ANTES DE EMPEZAR
-  useEffect(() => {
-    const esperarCargaRecursos = () => {
-      const images = Array.from(document.images);
-      const videos = Array.from(document.querySelectorAll('video'));
-
-      const totalRecursos = [...images, ...videos];
-      let cargados = 0;
-
-      if (totalRecursos.length === 0) {
-        // Si no hay recursos, pasamos altiro
-        setIsLoaded(true);
-        return;
-      }
-
-      const verificarCarga = () => {
-        cargados++;
-        if (cargados === totalRecursos.length) {
-          setTimeout(() => {
-            setIsLoaded(true);
-          }, 1800); // opcional: para una transición más suave
-        }
-      };
-
-      totalRecursos.forEach((recurso) => {
-        if (recurso.complete || recurso.readyState >= 3) {
-          verificarCarga();
-        } else {
-          recurso.addEventListener('load', verificarCarga);
-          recurso.addEventListener('error', verificarCarga);
-        }
-      });
-    };
-
-    if (document.readyState === 'complete') {
-      esperarCargaRecursos();
-    } else {
-      window.addEventListener('load', esperarCargaRecursos);
-    }
-
-    return () => window.removeEventListener('load', esperarCargaRecursos);
-  }, []);
 
 
   useEffect(() => {
@@ -200,45 +139,11 @@ const Catalogo = () => {
     window.scrollTo(0, 0); // fuerza el inicio al tope
   }, []);
 
-
-  //CAMBIAR DE PAGINA WEB
   useEffect(() => {
-    if (!isLoaded) return;
-
-    const raf = requestAnimationFrame(() => {
-      // 1) Inicia el fade del overlay blanco
-      if (document.body.classList.contains('nav-white')) {
-        document.body.classList.add('nav-white--fade');
-      }
-
-      // 2) Pequeño retraso para desvanecer el loader
-      const startLoaderFade = setTimeout(() => {
-        setFadeLoader(true);
-      }, 60);
-
+    if (isLoaded) {
       setEntered(true);
-
-      // 3) Retira clases y desmonta loader cuando termine EL MISMO tiempo del CSS
-      const tOut = setTimeout(() => {
-        document.body.classList.remove('nav-white', 'nav-white--fade', 'no-scroll');
-        setShowRouteLoader(false);
-      }, NAV_FADE_MS + 40); // 1000 + 40 ms
-
-      return () => {
-        clearTimeout(tOut);
-        clearTimeout(startLoaderFade);
-      };
-    });
-
-    return () => cancelAnimationFrame(raf);
-  }, [isLoaded, NAV_FADE_MS]);
-
-
-  useEffect(() => {
-    return () => {
-      document.body.classList.remove('nav-white', 'nav-white--fade', 'no-scroll');
-    };
-  }, []);
+    }
+  }, [isLoaded]);
 
   return (
     <Box key={isLoaded ? 'loaded' : 'loading'}>
@@ -285,7 +190,7 @@ const Catalogo = () => {
                         mb: 0,
                         position: 'relative',
                         zIndex: 20,
-                        height: 40,
+                        height: 30,
                       }}
                     >
                       {/* Título con ícono estilo reels */}
@@ -348,14 +253,17 @@ const Catalogo = () => {
 
                       {/* Flecha o espacio */}
                       <Box sx={{ width: 40, textAlign: 'right' }}>
-                        {showArrow ? (
+                        {showArrow[grupoIndex] !== false ? (   // 👈 muestra solo si no es el último slide
                           animarFlecha ? (
                             <motion.div
                               animate={{ x: [0, 5, 0] }}
                               transition={{ duration: 1.5, repeat: 1, ease: "easeInOut" }}
                             >
-
                               <IconButton
+                                onClick={() => {
+                                  const swiper = swiperRefs.current[grupoIndex];
+                                  if (swiper) swiper.slideNext();
+                                }}
                                 sx={{
                                   color: "white",
                                   boxShadow: "none",
@@ -368,6 +276,10 @@ const Catalogo = () => {
                             </motion.div>
                           ) : (
                             <IconButton
+                              onClick={() => {
+                                const swiper = swiperRefs.current[grupoIndex];
+                                if (swiper) swiper.slideNext();
+                              }}
                               sx={{
                                 color: "white",
                                 boxShadow: "none",
@@ -388,8 +300,8 @@ const Catalogo = () => {
 
                     <Swiper
                       modules={[Virtual]}
-                      lazy={true}
                       watchSlidesProgress
+                      onSwiper={(swiper) => (swiperRefs.current[grupoIndex] = swiper)}
                       spaceBetween={12}
                       slidesPerView={'auto'}
                       centeredSlides={false}
@@ -398,11 +310,11 @@ const Catalogo = () => {
                       style={{
                         padding: '16px 10px',
                         paddingRight: '20px',
-                        overflow: 'visible' // ✅ necesario
+                        overflow: 'visible'
                       }}
-                      onSlideChange={(swiper) => {
-                        setShowArrow(!swiper.isEnd);
-                      }}
+                      onSlideChange={(swiper) =>
+                        setShowArrow((prev) => ({ ...prev, [grupoIndex]: !swiper.isEnd }))
+                      }
                     >
                       {grupo.map((producto, index) => {
                         const productoIndexGlobal = index + grupoIndex * 5;
@@ -412,10 +324,10 @@ const Catalogo = () => {
                           <SwiperSlide
                             key={producto.IdProducto}
                             style={{
-                              width: '60vw',
-                              maxWidth: '320px',
+                              width: isMobile ? '45vw' : '18vw',
+                              maxWidth: isMobile ? '200px' : '260px',
                               scrollSnapAlign: 'start',
-                              overflow: 'visible' // ✅ permite que el badge se muestre
+                              overflow: 'visible'
                             }}
                           >
                             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -527,9 +439,11 @@ const Catalogo = () => {
                   }}
                   onClick={() => setMostrarControlesVideo(true)} // tap = muestra controles
                   onCanPlay={(e) => {
-                    const playPromise = e.target.play();
+                    const playPromise = video.play();
                     if (playPromise !== undefined) {
-                      playPromise.catch(err => console.warn("AutoPlay Error:", err));
+                      playPromise.catch(() => {
+                        // Ignorar: el navegador bloqueó el autoplay
+                      });
                     }
                   }}
                 />
@@ -571,15 +485,10 @@ const Catalogo = () => {
             )}
           </Container>
         </motion.div>
-      ) : null}
-      {/* 👇 el loader se queda hasta que termine el fade */}
-      {showRouteLoader && (
-        <div className={`nav-loader ${fadeLoader ? "nav-loader--fade" : ""}`}>
-          <AnimatePresence>
-            <Cargando />
-          </AnimatePresence>
-        </div>
-      )}
+      ) :
+        (
+          <Cargando />
+        )}
     </Box>
   )
 };
