@@ -12,8 +12,9 @@ import "swiper/css";
 
 const promotions = [
   {
+    id: 1,
     title: "🏭Producción para mayoristas",
-    description: "Confeccionamos prendas por volumen para boutiques, marcas independientes y negocios de moda.",
+    description: "Confección desde 5 a 300 (vestidos, pantalones, polerones y más). Para colegios, negocios, eventos o particulares.",
     image: "/Informations-1.webp",
     price: "Consulta con nosotros",
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3))",
@@ -28,6 +29,7 @@ const promotions = [
     ]
   },
   {
+    id: 2,
     title: "✂️Confección de nuestro taller",
     description: "Vendemos directamente prendas producidas en nuestro taller, listas para entrega o personalización.",
     image: "/Informations-2.webp",
@@ -44,6 +46,7 @@ const promotions = [
     ]
   },
   {
+    id: 3,
     title: "🚚Envíos a todo Chile",
     description: "Despachamos nuestras confecciones a cualquier región de Chile, con atención directa y seguimiento.",
     image: "/Informations-3.webp",
@@ -157,6 +160,7 @@ function Informations({ informationsRef, triggerInformations }) {
                 textTransform: "uppercase",
                 letterSpacing: "2px",
                 fontSize: { xs: "1.2rem", md: "1.6rem" },
+                color: "white",
                 background: "linear-gradient(90deg, #ffffff, #f5f5f5)",
                 WebkitBackgroundClip: "text",
                 color: "white",
@@ -203,35 +207,50 @@ function Informations({ informationsRef, triggerInformations }) {
                         alignItems: "flex-start",
                       }}
                     >
-                      {/* Badge Popular */}
-                      {promo.title === "🏭Producción para mayoristas" && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={showPopularBadge ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
-                          transition={{ duration: 0.6, ease: "easeOut" }}
-                          style={{
-                            position: "absolute",
-                            top: "-14px",
-                            left: 12,
-                            background: "linear-gradient(90deg, #FF512F, #DD2476)", // degradado moderno
-                            color: "white",
-                            borderRadius: "6px 6px 0 0",
-                            padding: "6px 46px",
-                            fontSize: "0.8rem",
-                            fontWeight: 700,
-                            letterSpacing: "0.5px",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "4px",
-                            boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
-                            zIndex: 2,
-                          }}
-                        >
-                          Popular
-                        </motion.div>
-                      )}
+                      {/* Contenedor del Badge debajo de la card */}
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          zIndex: 0,      // 👈 este contexto queda detrás
+                          pointerEvents: "none", // evita bloquear clics de la card
+                        }}
+                      >
+                        {promo.id === 1 && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 60 }}
+                            animate={showPopularBadge ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            style={{
+                              position: "absolute",
+                              top: "-16px",
+                              left: 8,
+                              background: "linear-gradient(#f14c2e, #d8452e)",
+                              color: "white",
+                              borderTopLeftRadius: "8px",
+                              borderTopRightRadius: "8px",
+                              padding: "6px 16px",
+                              fontSize: "0.75rem",
+                              fontWeight: 600,
+                              height: "22px",
+                              minWidth: "110px",
+                              textAlign: "center",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              gap: 6,
+                              boxShadow: "0 0 12px 2px rgba(255, 105, 0, 0.6)",
+                              border: "2px solid #ff6a00",
+                            }}
+                          >
+                            Popular
+                          </motion.div>
+                        )}
+                      </Box>
 
-                      {/* Card Principal */}
+                      {/* Card Principal (encima) */}
                       <Box
                         sx={{
                           width: "100%",
@@ -242,9 +261,10 @@ function Informations({ informationsRef, triggerInformations }) {
                           boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
                           position: "relative",
                           bgcolor: "white",
-                          zIndex: 1,
+                          zIndex: 2,   // 👈 card siempre sobre el badge
                         }}
                       >
+
                         {/* Imagen de fondo con overlay */}
                         <Box
                           sx={{
@@ -353,13 +373,24 @@ function Informations({ informationsRef, triggerInformations }) {
                               gap: "8px",
                             }}
                           >
-                            ✨ Cotizar
+                            <Box
+                              component="img"
+                              src="/clic.jpg"
+                              alt="Ícono de clic"
+                              sx={{
+                                width: 20,
+                                height: 20,
+                                userSelect: "none",
+                                filter: "invert(1) brightness(2)",
+                              }}
+                            />  Cotizar
                           </motion.button>
                         </Box>
                       </Box>
                     </Box>
                   </SwiperSlide>
                 ))}
+
 
               </Swiper>
 

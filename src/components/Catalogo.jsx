@@ -159,23 +159,20 @@ const Catalogo = () => {
             maxWidth={false}
             disableGutters
             sx={{
-              overflowX: 'hidden',
-              minHeight: '100vh',
-              width: '100%', // ✅ CAMBIO AQUÍ
+              overflowX: "hidden",        // 👈 solo esto
+              minHeight: "100vh",
+              width: "100%",
               py: 14,
-              px: 1.2, // Puedes mantener esto ahora sin problema
-              position: 'relative',
-              overflow: 'hidden',
+              px: 1.2,
+              position: "relative",
               backgroundImage: isMobile
-                ? 'url(fondo-blizz-ivelpink.webp)'
-                : 'url(fondo-blizz-ivelpink.webp)',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              backgroundAttachment: 'fixed',
-              backgroundPosition: 'center',
+                ? "url(fondo-blizz-ivelpink.webp)"
+                : "url(fondo-blizz-ivelpink.webp)",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
             }}
           >
-
 
             {
               isMobile ? (
@@ -355,26 +352,151 @@ const Catalogo = () => {
 
                 ))
               ) : (
+                <>
+                  <Grid container spacing={2}>
+                    {/* Columna izquierda con productos */}
+                    <Grid item xs={12} md={6}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          mb: 0,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            fontWeight: "bold",
+                            fontSize: "1rem",
+                            color: "white",
+                            ml: 1,
+                          }}
+                        >
+                          Catálogo de productos
+                        </Box>
 
-                // Vista desktop (Grid exacto con 5 productos por fila)
-                <Grid container spacing={2}>
-                  {productos.map((producto, index) => (
-                    <Grid item md={12 / 5} key={producto.IdProducto}>
-                      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <Productos
-                          index={index}
-                          producto={producto}
-                          girado={productoActivo === index}
-                          onGirar={() =>
-                            setProductoActivo(productoActivo === index ? null : index)
-                          }
-                          FormatearPesos={FormatearPesos}
-                          CalcularValorOld={CalcularValorOld}
-                        />
+                        <Box sx={{ width: 40, textAlign: "right" }}>
+                          {showArrow.desktop !== false ? (
+                            animarFlecha ? (
+                              <motion.div
+                                animate={{ x: [0, 5, 0] }}
+                                transition={{ duration: 1.5, repeat: 1, ease: "easeInOut" }}
+                              >
+                                <IconButton
+                                  onClick={() => {
+                                    const swiper = swiperRefs.current.desktop;
+                                    if (swiper) swiper.slideNext();
+                                  }}
+                                  sx={{
+                                    color: "white",
+                                    boxShadow: "none",
+                                    padding: 0.5,
+                                    "&:hover": { backgroundColor: "rgba(0,0,0,0.4)" },
+                                  }}
+                                >
+                                  <ArrowForwardIcon fontSize="large" sx={{ fontSize: "24px" }} />
+                                </IconButton>
+                              </motion.div>
+                            ) : (
+                              <IconButton
+                                onClick={() => {
+                                  const swiper = swiperRefs.current.desktop;
+                                  if (swiper) swiper.slideNext();
+                                }}
+                                sx={{
+                                  color: "white",
+                                  boxShadow: "none",
+                                  padding: 0.5,
+                                  "&:hover": { backgroundColor: "rgba(0,0,0,0.4)" },
+                                }}
+                              >
+                                <ArrowForwardIcon fontSize="large" sx={{ fontSize: "24px" }} />
+                              </IconButton>
+                            )
+                          ) : (
+                            <Box sx={{ width: 40 }} />
+                          )}
+                        </Box>
                       </Box>
+
+                      <Swiper
+                        modules={[Virtual]}
+                        slidesPerView={1}
+                        spaceBetween={20}
+                        onSwiper={(swiper) => (swiperRefs.current.desktop = swiper)}
+                        style={{ padding: "10px" }}
+                      >
+                        {chunkProductos(productos, 8).map((grupo, grupoIndex) => (
+                          <SwiperSlide key={`desktop-slide-${grupoIndex}`}>
+                            <Grid container spacing={2}>
+                              {Array.from({ length: 9 }).map((_, slotIndex) => {
+                                const producto = grupo[slotIndex];
+                                return (
+                                  <Grid
+                                    item
+                                    xs={12}
+                                    sm={4} // 12/4 = 3 columnas por fila
+                                    key={producto ? producto.IdProducto : `empty-${slotIndex}`}
+                                    sx={{
+                                      display: "flex",
+                                      justifyContent: "center",
+                                    }}
+                                  >
+                                    {producto ? (
+                                      <Box
+                                        sx={{
+                                          width: { xs: "45vw", md: "32vw" },
+                                          maxWidth: { xs: "220px", md: "240px" },
+                                          display: "flex",
+                                          justifyContent: "center",
+                                        }}
+                                      >
+                                        <Productos
+                                          index={slotIndex}
+                                          producto={producto}
+                                          girado={productoActivo === slotIndex}
+                                          onGirar={() =>
+                                            setProductoActivo(
+                                              productoActivo === slotIndex ? null : slotIndex
+                                            )
+                                          }
+                                          FormatearPesos={FormatearPesos}
+                                          CalcularValorOld={CalcularValorOld}
+                                        />
+                                      </Box>
+                                    ) : (
+                                      <Box
+                                        sx={{
+                                          width: { xs: "45vw", md: "12vw" },
+                                          maxWidth: { xs: "200px", md: "220px" },
+                                        }}
+                                      />
+                                    )}
+                                  </Grid>
+                                );
+                              })}
+                            </Grid>
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
                     </Grid>
-                  ))}
-                </Grid>
+
+                    {/* Columna derecha con imagen */}
+                    <Grid item xs={12} md={6}>
+                      <Box
+                        component="img"
+                        src="catalogo-img.png"
+                        alt="Catálogo"
+                        sx={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+
+                </>
               )}
 
 

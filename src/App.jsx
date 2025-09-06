@@ -52,11 +52,6 @@ function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const areasSection = document.getElementById("areas-section");
-      if (areasSection) {
-        const rect = areasSection.getBoundingClientRect();
-        setShowContacto(rect.top < window.innerHeight * 0.5);
-      }
       setShowArrow(window.scrollY > 300);
     };
 
