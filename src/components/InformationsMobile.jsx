@@ -14,7 +14,7 @@ const promotions = [
   {
     id: 1,
     title: "🏭Producción para mayoristas",
-    description: "Confección desde 5 a 300 (vestidos, pantalones, polerones y más). Para colegios, negocios, eventos o particulares.",
+    description: "Traenos tu muestra y producimos lo que necesites: vestidos, pantalones, polerones y más, para colegios, empresas, eventos o uso personal.",
     image: "/Informations-1.webp",
     price: "Consulta con nosotros",
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3))",
@@ -31,7 +31,7 @@ const promotions = [
   {
     id: 2,
     title: "✂️Confección de nuestro taller",
-    description: "Vendemos directamente prendas producidas en nuestro taller, listas para entrega o personalización.",
+    description: "Ofrecemos prendas confeccionadas en nuestro taller, listas para entrega inmediata o con personalización a pedido.",
     image: "/Informations-2.webp",
     price: "Consulta con nosotros",
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2))",
@@ -48,7 +48,7 @@ const promotions = [
   {
     id: 3,
     title: "🚚Envíos a todo Chile",
-    description: "Despachamos nuestras confecciones a cualquier región de Chile, con atención directa y seguimiento.",
+    description: "Realizamos envíos de nuestras confecciones a todo Chile, con atención dedicada, rapidez y seguimiento constante.",
     image: "/Informations-3.webp",
     price: "Consulta con nosotros",
     bgColor: "linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2))",
@@ -317,16 +317,20 @@ function Informations({ informationsRef, triggerInformations }) {
                               variant="body2"
                               sx={{
                                 textAlign: "left",
-                                fontSize: "0.9rem",
+                                fontSize: "0.73rem",
                                 color: "#f5f5f5",
                                 background: "rgba(0,0,0,0.4)",
                                 borderRadius: "6px",
                                 p: 1,
-                                lineHeight: 1.4,
+                                lineHeight: 1.3,
+                                display: "flex",
+                                alignItems: "center",
+                                minHeight: 45,
                               }}
                             >
                               {promo.description}
                             </Typography>
+
                           </Box>
                           {/* Lista de descriptores */}
                           <Box component="ul" sx={{ pl: 2, mb: 5 }}>

@@ -221,7 +221,7 @@ function Features({ videoReady, informationsRef }) {
                     display: "flex",
                     alignItems: "center",
                     flexWrap: "nowrap",
-                    gap: { xs: 1, sm: 1 },
+                    gap: { xs: 1.1, sm: 1 },
                     overflow: "hidden",
                     fontSize: { xs: "0.65rem", sm: "0.9rem" },
                   }}

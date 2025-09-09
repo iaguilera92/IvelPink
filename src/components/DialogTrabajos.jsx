@@ -19,11 +19,11 @@ function RelojAnimado() {
     <Box
       sx={{
         position: "relative",
-        width: 32,
-        height: 32,
+        width: 28,
+        height: 28,
         borderRadius: "50%",
         border: "2px solid #ff5e9d", // 🌸 borde rosado fuerte
-        bgcolor: "#fff0f6", // 💗 fondo rosado muy claro (pastel)
+        bgcolor: "#fff0f6", // 💗 fondo rosado pastel
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -36,15 +36,16 @@ function RelojAnimado() {
           position: "absolute",
           width: 2,
           height: "40%",
-          bgcolor: "#ff4081", // 🌸 aguja rosado vibrante
+          bgcolor: "#ff4081", // 🌸 aguja vibrante
           borderRadius: 1,
-          top: "10%",
+          bottom: "50%",           // ⬅️ anclamos al centro exacto
           left: "47%",
-          transformOrigin: "bottom center",
+          transform: "translateX(-50%)",
+          transformOrigin: "bottom center", // pivote en el centro del reloj
           animation: "spin 5s linear infinite",
           "@keyframes spin": {
-            "0%": { transform: "rotate(0deg)" },
-            "100%": { transform: "rotate(360deg)" },
+            "0%": { transform: "translateX(-50%) rotate(0deg)" },
+            "100%": { transform: "translateX(-50%) rotate(360deg)" },
           },
         }}
       />
@@ -59,13 +60,15 @@ function RelojAnimado() {
           height: 6,
           borderRadius: "50%",
           bgcolor: "#ff4081",
-          transform: "translate(-50%, -50%)",   // ✅ centrado perfecto
+          transform: "translate(-50%, -50%)",
           zIndex: 2,
         }}
       />
     </Box>
   );
 }
+
+
 const ContadorAnimado = ({ value, delay = 0.5, duration = 2 }) => {
   const count = useMotionValue(0);
   const [display, setDisplay] = useState(0);
@@ -157,8 +160,8 @@ export default function DialogTrabajos({
           fontWeight: 700,
           color: "#FFF",
           fontFamily: "'Poppins', sans-serif",
-          py: 2,
-          borderBottom: "1px solid white",
+          py: { xs: 1, sm: 1.5 },
+          borderBottom: "1px solid rgba(255,167,38,.35)",
           position: "relative",
           overflow: "hidden",
 
@@ -221,7 +224,7 @@ export default function DialogTrabajos({
             top: 8,
             right: 8,
             color: "#FFF",
-            zIndex: 3, // 👈 más arriba que ::before y ::after
+            zIndex: 4, // 👈 más arriba que ::before y ::after
             "&:hover": { backgroundColor: "rgba(255,255,255,.15)" },
 
             // animación al abrir
@@ -262,7 +265,7 @@ export default function DialogTrabajos({
               letterSpacing: { xs: "0.3px", sm: "1px" },
               fontFamily: "'Poppins', sans-serif",
               color: "#fff",
-              fontSize: { xs: "1.1rem", sm: "1.25rem" }, // ajuste fino
+              fontSize: { xs: "1rem", sm: "1.25rem" }, // ajuste fino
             }}
           >
             Confecciones Activas
@@ -274,12 +277,12 @@ export default function DialogTrabajos({
         {trabajos.length > 0 ? (
           <Box
             sx={{
-              mt: 1,
+              mt: isMobile ? 0.5 : 1,
               display: "flex",
               justifyContent: "center",
-              gap: 2,
-              flexDirection: "row",   // 👈 siempre fila
-              flexWrap: "nowrap",     // 👈 evita salto a segunda línea
+              gap: 1.5,
+              flexDirection: "row",
+              flexWrap: "nowrap",
             }}
           >
             {/* Mayoristas */}
@@ -346,7 +349,6 @@ export default function DialogTrabajos({
                 py: { xs: 1.2, sm: 2 },
                 borderRadius: 3,
                 background: "linear-gradient(135deg, rgba(100,181,246,0.9), rgba(3,169,244,0.7))",
-                // 💧 celeste claro → aqua
                 boxShadow: {
                   xs: "0 4px 14px rgba(0,0,0,.25), 0 0 12px rgba(100,181,246,.45)",
                   sm: "0 6px 20px rgba(0,0,0,.35), 0 0 16px rgba(3,169,244,.5)",
@@ -423,37 +425,54 @@ export default function DialogTrabajos({
             <DialogContent
               sx={{
                 background: "linear-gradient(180deg, #E3F2FD 0%, #E1F5FE 100%)",
-                py: isMobile ? 0 : 2.5,
-                mb: 0
+                py: 0.8,
+                px: 1.2,
+                mb: 0,
               }}
             >
-              {trabajos.length === 0 && (
-                <Box sx={{ py: 2 }}>
-                  <Typography variant="body2" sx={{ color: "#5D4037", textAlign: "center" }}>
-                    Pronto verás aquí tus próximos desarrollos.
-                  </Typography>
-                </Box>
-              )}
-
-              <Box sx={{ mt: { xs: 1.5, sm: 2.5 } }}>
+              <Box sx={{ mt: { xs: 0.5, sm: 0.5 } }}>
                 {trabajos
-                  .slice() // 👈 evita mutar el state original
+                  .slice()
                   .sort((a, b) => {
-                    // 1) Priorizar TipoTrabajo=2
+                    if (a.TipoTrabajo === 1 && b.TipoTrabajo !== 1) return 1;
+                    if (a.TipoTrabajo !== 1 && b.TipoTrabajo === 1) return -1;
+
                     if (a.TipoTrabajo === 2 && b.TipoTrabajo !== 2) return -1;
                     if (a.TipoTrabajo !== 2 && b.TipoTrabajo === 2) return 1;
 
-                    // 2) Ordenar por % de avance
                     const ratioA = a.StockSolicitado > 0 ? a.StockActual / a.StockSolicitado : 0;
                     const ratioB = b.StockSolicitado > 0 ? b.StockActual / b.StockSolicitado : 0;
 
-                    return ratioA - ratioB; // menor avance primero
+                    return ratioA - ratioB;
                   })
-                  .map((t) => (
-                    <Trabajos key={`${t.Trabajo}-${t.Id}`} trabajo={t} />
-                  ))}
+                  .map((t) => {
+                    const completado = t.StockSolicitado > 0 && t.StockActual >= t.StockSolicitado;
+                    return (
+                      <Box
+                        key={`${t.Trabajo}-${t.Id}`}
+                        sx={{
+                          border: "1px solid rgba(25,118,210,0.25)",
+                          borderRadius: 1,
+                          py: 0.3,
+                          px: 1.2,
+                          background: completado
+                            ? "linear-gradient(180deg, #ffeef5 0%, #ffffff 100%)"
+                            : "#fff",
+
+                          boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
+                          mb: 0.4,
+                        }}
+                      >
+                        <Trabajos trabajo={t} />
+                      </Box>
+                    );
+                  })}
               </Box>
+
+
+
             </DialogContent>
+
 
           </motion.div>
         )}
@@ -464,7 +483,7 @@ export default function DialogTrabajos({
       <DialogActions
         sx={{
           px: 2,
-          py: 0.8,
+          py: 0.6,
           background: "linear-gradient(90deg,#BBDEFB,#90CAF9)", // 💧 celeste más fuerte
           borderTop: "1px solid rgba(33,150,243,.35)", // azul un poco más marcado
         }}
@@ -479,7 +498,7 @@ export default function DialogTrabajos({
             variant="contained"
             onClick={onPrimaryClick}
             sx={{
-              height: 42,
+              height: 34,
               position: "relative",
               overflow: "hidden",
               minWidth: 140,
