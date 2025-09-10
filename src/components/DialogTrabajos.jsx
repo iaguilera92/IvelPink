@@ -111,6 +111,24 @@ export default function DialogTrabajos({
   const confeccionesIvelPink = trabajos.filter(t => t.TipoTrabajo === 1).length;
   const [showContent, setShowContent] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const ultimaFecha = (() => {
+    if (!trabajos.length) return null;
+
+    const ultimaFechaReal = new Date(
+      Math.max(...trabajos.map(t => new Date(t.FechaCreacion).getTime()))
+    );
+
+    const hoy = new Date();
+    const limite = new Date(hoy);
+    limite.setDate(hoy.getDate() - 3);
+
+    // Si la última fecha es más antigua que hoy - 3 días → usar hoy - 3 días
+    const fechaFinal = ultimaFechaReal < limite ? limite : ultimaFechaReal;
+
+    return fechaFinal.toLocaleDateString("es-CL");
+  })();
+
+
 
   //EXPANSIÓN
   useEffect(() => {
@@ -425,7 +443,7 @@ export default function DialogTrabajos({
             <DialogContent
               sx={{
                 background: "linear-gradient(180deg, #E3F2FD 0%, #E1F5FE 100%)",
-                py: 0.8,
+                py: 0.5,
                 px: 1.2,
                 mb: 0,
               }}
@@ -469,6 +487,21 @@ export default function DialogTrabajos({
                   })}
               </Box>
 
+              {/* Fecha última actualización */}
+              {ultimaFecha && (
+                <Box
+                  sx={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Typography
+                    variant="caption"
+                    sx={{ fontSize: "0.65rem", fontWeight: 500, color: "#1976d2", lineHeight: 1.3 }}
+                  >
+                    📅 Última actualización: {ultimaFecha}
+                  </Typography>
+                </Box>
+              )}
 
 
             </DialogContent>
