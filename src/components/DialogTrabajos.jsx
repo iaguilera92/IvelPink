@@ -8,7 +8,7 @@ import {
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { motion, AnimatePresence, useMotionValue, useTransform, animate } from "framer-motion";
 import Trabajos from "./Trabajos";
-
+import { cargarTrabajos } from "../helpers/HelperTrabajos";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -106,27 +106,26 @@ export default function DialogTrabajos({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [armed, setArmed] = React.useState(false);
+  const [localTrabajos, setLocalTrabajos] = useState(trabajos);
 
-  const mayoristas = trabajos.filter(t => t.TipoTrabajo === 2).length;
-  const confeccionesIvelPink = trabajos.filter(t => t.TipoTrabajo === 1).length;
+  const mayoristas = localTrabajos.filter(t => t.TipoTrabajo === 2).length;
+  const confeccionesIvelPink = localTrabajos.filter(t => t.TipoTrabajo === 1).length;
   const [showContent, setShowContent] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const ultimaFecha = (() => {
-    if (!trabajos.length) return null;
+  const ultimaFecha = React.useMemo(() => {
+    if (!localTrabajos.length) return null;
 
     const ultimaFechaReal = new Date(
-      Math.max(...trabajos.map(t => new Date(t.FechaCreacion).getTime()))
+      Math.max(...localTrabajos.map(t => new Date(t.FechaCreacion).getTime()))
     );
 
     const hoy = new Date();
     const limite = new Date(hoy);
     limite.setDate(hoy.getDate() - 3);
 
-    // Si la última fecha es más antigua que hoy - 3 días → usar hoy - 3 días
     const fechaFinal = ultimaFechaReal < limite ? limite : ultimaFechaReal;
-
     return fechaFinal.toLocaleDateString("es-CL");
-  })();
+  }, [localTrabajos]);
 
 
 
@@ -151,6 +150,21 @@ export default function DialogTrabajos({
     }
     return () => clearTimeout(t);
   }, [open]);
+
+  // ACTUALIZAR TRABAJOS S3
+  useEffect(() => {
+    if (open) {
+      const timestamp = Date.now();
+      cargarTrabajos(
+        `https://ivelpink.s3.us-east-2.amazonaws.com/Trabajos.xlsx?t=${timestamp}`
+      ).then((data) => {
+        // 🔹 Filtrar solo los trabajos activos (Estado = 1)
+        const activos = data.filter(t => Number(t.Estado) === 1);
+        setLocalTrabajos(activos);
+      });
+    }
+  }, [open]);
+
 
   return (
     <Dialog
@@ -292,7 +306,7 @@ export default function DialogTrabajos({
 
 
 
-        {trabajos.length > 0 ? (
+        {localTrabajos.length > 0 ? (
           <Box
             sx={{
               mt: isMobile ? 0.5 : 1,
@@ -449,7 +463,7 @@ export default function DialogTrabajos({
               }}
             >
               <Box sx={{ mt: { xs: 0.5, sm: 0.5 } }}>
-                {trabajos
+                {localTrabajos
                   .slice()
                   .sort((a, b) => {
                     if (a.TipoTrabajo === 1 && b.TipoTrabajo !== 1) return 1;
@@ -496,7 +510,7 @@ export default function DialogTrabajos({
                 >
                   <Typography
                     variant="caption"
-                    sx={{ fontSize: "0.65rem", fontWeight: 500, color: "#1976d2", lineHeight: 1.3 }}
+                    sx={{ fontSize: "0.65rem", fontWeight: 500, color: "#1976d2", lineHeight: 1.1 }}
                   >
                     📅 Última actualización: {ultimaFecha}
                   </Typography>

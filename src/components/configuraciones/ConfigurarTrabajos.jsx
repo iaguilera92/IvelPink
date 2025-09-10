@@ -189,6 +189,7 @@ const ConfigurarTrabajos = () => {
         nuevoStockActual: Number(trabajo.StockActual),
         nuevoStockSolicitado: Number(trabajo.StockSolicitado),
         nuevoEstado: Number(trabajo.Estado),
+        fechaCreacion: trabajo.FechaCreacion,
       };
 
       const url = `${window.location.hostname === "localhost"
