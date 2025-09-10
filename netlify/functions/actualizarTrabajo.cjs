@@ -57,18 +57,30 @@ exports.handler = async (event) => {
         let trabajoFinal = null;
 
         const nuevosDatos = datos.map((row) => {
-            if (String(row.Trabajo).trim().toLowerCase() === String(Trabajo).trim().toLowerCase()) {
+            if (
+                String(row.Trabajo).trim().toLowerCase() ===
+                String(Trabajo).trim().toLowerCase()
+            ) {
                 modificado = true;
                 trabajoFinal = {
                     ...row,
-                    StockActual: typeof nuevoStockActual === "number" ? nuevoStockActual : row.StockActual,
-                    StockSolicitado: typeof nuevoStockSolicitado === "number" ? nuevoStockSolicitado : row.StockSolicitado,
-                    Estado: nuevoEstado !== undefined ? nuevoEstado : row.Estado,
+                    StockActual:
+                        typeof nuevoStockActual === "number"
+                            ? nuevoStockActual
+                            : row.StockActual,
+                    StockSolicitado:
+                        typeof nuevoStockSolicitado === "number"
+                            ? nuevoStockSolicitado
+                            : row.StockSolicitado,
+                    Estado:
+                        nuevoEstado !== undefined ? nuevoEstado : row.Estado,
+                    FechaCreacion: new Date().toISOString(),
                 };
                 return trabajoFinal;
             }
             return row;
         });
+
 
         if (!modificado) {
             return {
