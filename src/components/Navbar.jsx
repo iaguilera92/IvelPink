@@ -498,7 +498,7 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
                       fontFamily: 'Poppins, sans-serif',
                     }}
                   >
-                    Conecta con nuestro equipo y trabaja con nosotros.
+                    Conecta y trabaja con nosotros.
                   </Typography>
 
 
@@ -554,7 +554,7 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
             )}
           </AnimatePresence>
           {/* Administración */}
-          {open && mostrarAdmin && (
+          {open && (
             <motion.div
               variants={bienvenidaVariants}
               initial="hidden"
