@@ -14,6 +14,8 @@ import { cargarPaseMensual } from "../helpers/HelperPaseMensual";
 export default function DialogPaseMensual({ open, onClose, analyticsDisponible }) {
   const montoBase = 10000;
   const [monto, setMonto] = useState(montoBase);
+  const motionValue = useMotionValue(monto);
+  const [displayMonto, setDisplayMonto] = useState(monto);
 
   const [misiones, setMisiones] = useState([
     { id: 1, descuento: 0.025, recompensa: "2,5% descuento", descripcion: "Compartir un anuncio de Plataformas web", estado: "pendiente", color: "linear-gradient(135deg,#6EC6FF,#2196F3,#1565C0)", tipo: "pequeña", imagen: "/facebook-insta.png", width: 70, height: 40 },
@@ -33,9 +35,6 @@ export default function DialogPaseMensual({ open, onClose, analyticsDisponible }
 
 
 
-  const motionValue = useMotionValue(monto);
-  const [displayMonto, setDisplayMonto] = useState(monto);
-
   // S3 PASE MENSUAL
   useEffect(() => {
     const fetchPase = async () => {
@@ -49,7 +48,7 @@ export default function DialogPaseMensual({ open, onClose, analyticsDisponible }
     fetchPase();
   }, []);
 
-
+  //MONTO
   useEffect(() => {
     const controls = animate(motionValue, monto, {
       duration: 1.2, // duración de la animación
