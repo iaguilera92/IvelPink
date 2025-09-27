@@ -59,18 +59,17 @@ export default function DialogPaseMensual({ open, onClose, analyticsDisponible }
     return () => controls.stop();
   }, [monto]);
 
-  const handleAccion = async (id) => {
+
+  //ACTUALIZAR PASE MENSUAL
+  const handleAccion = async (id, cliente) => {
     setMisiones((prev) => {
-      // Si ya está en revisión/aprobado/rechazado → no hago nada
       const mision = prev.find((m) => m.id === id);
       if (!mision || mision.estado !== "pendiente") return prev;
 
-      // ⚡ Actualizo localmente a "revision" (optimistic UI)
       const updated = prev.map((m) =>
         m.id === id ? { ...m, estado: "revision" } : m
       );
 
-      // 🔄 Llamo al backend para reflejar en el Excel de S3
       const misionMap = {
         1: "CompartirAnuncio",
         2: "PagarSuscripcionAntes",
@@ -79,23 +78,17 @@ export default function DialogPaseMensual({ open, onClose, analyticsDisponible }
         5: "ConseguirCliente",
       };
       const campo = misionMap[id];
-      const SitioWeb = window.location.hostname;
+      const SitioWeb = cliente?.sitioWeb || window.location.hostname;
 
       (async () => {
         try {
-          const url = `${window.location.hostname === "localhost"
-            ? "http://localhost:8888"
-            : ""
+          const url = `${window.location.hostname === "localhost" ? "http://localhost:8888" : ""
             }/.netlify/functions/actualizarPaseMensual`;
 
           const response = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              SitioWeb,
-              campo,
-              valor: 1, // 1 = usuario marcó la misión (en revisión)
-            }),
+            body: JSON.stringify({ SitioWeb, campo, valor: 1 }),
           });
 
           const data = await response.json();
@@ -109,7 +102,6 @@ export default function DialogPaseMensual({ open, onClose, analyticsDisponible }
       return updated;
     });
   };
-
 
 
   // 💰 Recalcular monto automáticamente cuando llegan misiones (aprobadas/revisión)
