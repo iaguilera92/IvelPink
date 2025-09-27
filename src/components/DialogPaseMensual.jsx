@@ -26,13 +26,17 @@ export default function DialogPaseMensual({ open, onClose, analyticsDisponible }
   ]);
 
   const theme = useTheme();
+
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isSmallMobile = useMediaQuery("(max-width:360px)");
-  const isLargeMobile = useMediaQuery("(min-width:389px) and (max-width:600px)");
+  const isSmallMobile = useMediaQuery("(max-width:375px)");      // iPhone SE y similares
+  const isIphone14 = useMediaQuery("(device-width:390px)");      // iPhone 14 / 14 Plus
+  const isLargeMobile = useMediaQuery("(min-width:394px) and (max-width:600px)"); // iPhone 14 Pro Max y otros grandes
 
-  // 📐 Ajuste global de escala
-  const scaleFactor = isSmallMobile ? 0.85 : isLargeMobile ? 1 : isMobile ? 0.9 : 1;
-
+  const scaleFactor =
+    isSmallMobile || isIphone14 ? 0.85 : // 👈 iPhone SE y iPhone 14
+      isLargeMobile ? 1 :                  // 👈 iPhone 14 Pro Max y otros grandes
+        isMobile ? 0.9 :                      // 👈 resto de móviles
+          1;                                   // 👈 desktop
 
 
   // S3 PASE MENSUAL
