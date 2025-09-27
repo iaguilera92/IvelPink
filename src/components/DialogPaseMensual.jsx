@@ -28,15 +28,16 @@ export default function DialogPaseMensual({ open, onClose, analyticsDisponible }
   const theme = useTheme();
 
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isSmallMobile = useMediaQuery("(max-width:375px)");      // iPhone SE y similares
-  const isIphone14 = useMediaQuery("(device-width:390px)");      // iPhone 14 / 14 Plus
-  const isLargeMobile = useMediaQuery("(min-width:394px) and (max-width:600px)"); // iPhone 14 Pro Max y otros grandes
+  const isSmallMobile = useMediaQuery("(max-width:375px)"); // iPhone SE y similares
+  const isMediumMobile = useMediaQuery("(min-width:376px) and (max-width:414px)"); // iPhone 12/13/14 base
+  const isLargeMobile = useMediaQuery("(min-width:415px) and (max-width:600px)");  // Pro Max y otros grandes
 
   const scaleFactor =
-    isSmallMobile || isIphone14 ? 0.85 : // 👈 iPhone SE y iPhone 14
-      isLargeMobile ? 1 :                  // 👈 iPhone 14 Pro Max y otros grandes
-        isMobile ? 0.9 :                      // 👈 resto de móviles
-          1;                                   // 👈 desktop
+    isSmallMobile ? 0.95 :         // 👉 iPhone SE → un poco más ancho
+      isMediumMobile ? 0.9 :         // 👉 iPhones medios
+        isLargeMobile ? 1 :            // 👉 grandes
+          isMobile ? 0.9 :               // 👉 fallback móviles
+            1;                             // 👉 desktop
 
 
   // S3 PASE MENSUAL
@@ -234,11 +235,12 @@ export default function DialogPaseMensual({ open, onClose, analyticsDisponible }
             <DialogContent
               sx={{
                 py: 1,
-                px: 1.3,
-                transform: `scale(${scaleFactor})`, // 👈 escala todo el contenido
-                transformOrigin: "top center",       // se ajusta desde arriba
+                px: isSmallMobile ? 0 : 1.4,
+                transform: `scale(${scaleFactor})`,
+                transformOrigin: "top center",
               }}
             >
+
               {/* Texto de suscripción actual con borde */}
               <Box
                 sx={{
