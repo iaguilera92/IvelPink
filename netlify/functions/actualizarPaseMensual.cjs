@@ -2,13 +2,13 @@ const AWS = require("aws-sdk");
 const XLSX = require("xlsx");
 require("dotenv").config();
 
-const BUCKET_NAME = process.env.BUCKET_NAME;
-const REGION = process.env.MY_AWS_REGION || "us-east-1";
+const BUCKET_NAME = process.env.BUCKET_NAME_PLATAFORMAS_WEB;
+const REGION = process.env.MY_AWS_REGION_PLATAFORMAS_WEB || "us-east-2";
 const FILE_KEY = "PaseMensual.xlsx";
 
 AWS.config.update({
-    accessKeyId: process.env.MY_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.MY_AWS_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.MY_AWS_ACCESS_KEY_ID_PLATAFORMAS_WEB,
+    secretAccessKey: process.env.MY_AWS_SECRET_ACCESS_KEY_PLATAFORMAS_WEB,
     region: REGION,
 });
 
@@ -29,6 +29,21 @@ const normalizeHost = (v) =>
         .replace(/\/.*$/, "")
         .replace(/:\d+$/, "")
         .trim();
+
+// 📌 Campos de misiones + estados a resetear
+const camposMisiones = [
+    "CompartirAnuncio",
+    "PagarSuscripcionAntes",
+    "ConexionMensual",
+    "VisitasMensual",
+    "ConseguirCliente",
+    "CompartirAnuncioEstado",
+    "PagarSuscripcionAntesEstado",
+    "ConexionMensualEstado",
+    "VisitasMensualEstado",
+    "ConseguirClienteEstado",
+];
+
 
 exports.handler = async (event) => {
     if (event.httpMethod === "OPTIONS") {
@@ -55,9 +70,6 @@ exports.handler = async (event) => {
             };
         }
 
-        // 📝 log entrada
-        console.log("👉 Petición recibida:", { SitioWeb, campo, valor });
-
         // Leer Excel desde S3
         const s3Data = await s3
             .getObject({ Bucket: BUCKET_NAME, Key: FILE_KEY })
@@ -77,14 +89,25 @@ exports.handler = async (event) => {
             if (rowHost === sitioNormalizado) {
                 console.log(`✅ Match encontrado en fila ${i + 2}:`, row.SitioWeb);
                 modificado = true;
-                rowModificada = {
-                    ...row,
-                    [campo]: valor,
-                    fechaEdicion: new Date().toLocaleString("es-CL", {
-                        timeZone: "America/Santiago",
-                    }),
-                };
-                return rowModificada;
+
+                let nuevaFila = { ...row };
+
+                if (valor === 0 && camposMisiones.includes(campo)) {
+                    // 🔄 Resetear TODOS los campos y estados a 0
+                    camposMisiones.forEach((c) => {
+                        nuevaFila[c] = 0;
+                    });
+                } else {
+                    // 🔄 Caso normal: solo actualiza el campo recibido
+                    nuevaFila[campo] = valor;
+                }
+
+                nuevaFila["FechaEdicion"] = new Date().toLocaleString("es-CL", {
+                    timeZone: "America/Santiago",
+                });
+
+                rowModificada = nuevaFila;
+                return nuevaFila;
             } else {
                 if (i < 5) {
                     console.log(`⏭️ No match fila ${i + 2}:`, row.SitioWeb, "→", rowHost);
