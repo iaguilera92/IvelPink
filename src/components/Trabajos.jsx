@@ -138,7 +138,7 @@ const Trabajos = ({ trabajo }) => {
           {trabajo.TipoTrabajo === 1 && (
             <Box
               component="img"
-              src="/logo-ivelpink.png"
+              src="/logo-oficial.png"
               alt="logo ivelpink"
               sx={{
                 width: 48,

@@ -15,7 +15,7 @@ const letterVariants = {
         transition: { delay: 0.4 + i * 0.04 }, // puedes ajustar el tiempo
     }),
 };
-const textoAnimado = "Nuestros trabajos";
+const textoAnimado = "Así trabajamos";
 
 
 const SeccionDestacada = () => {
@@ -100,7 +100,7 @@ const SeccionDestacada = () => {
                     style={{ backgroundColor: 'white', color: 'black' }}
                 >
 
-                    <Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
                         <Typography
                             variant="h4"
                             gutterBottom
@@ -108,13 +108,12 @@ const SeccionDestacada = () => {
                             sx={{
                                 fontFamily: "'Montserrat', Helvetica, Arial, sans-serif",
                                 fontSize: { xs: "1.5rem", md: "2rem" },
-                                paddingLeft: { xs: "100px", md: "30px" },
-                                paddingRight: { xs: "100px", md: "30px" },
                                 letterSpacing: "3px",
                                 my: 0,
                                 display: "flex",
                                 flexWrap: "wrap",
                                 alignItems: "center",
+                                justifyContent: "center",
                                 position: "relative",
                                 zIndex: 1,
                                 backgroundColor: "transparent",
@@ -126,7 +125,7 @@ const SeccionDestacada = () => {
                                 animate={inView || hasAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                                 transition={{ delay: 0.3 }}
                                 style={{
-                                    color: "#8B4513",
+                                    color: "#38BDF8",
                                     fontWeight: "bold",
                                     marginRight: "1px",
                                     marginTop: "-4px",
@@ -156,13 +155,23 @@ const SeccionDestacada = () => {
                             ))}
                         </Typography>
 
-                        {/* Video que reemplaza "En desarrollo..." */}
-                        <Box
-                            ref={ref}
+                        <Typography
                             sx={{
-                                mt: 2,
-                                ml: 7,
-                                alignSelf: 'flex-end', // 👈 lo empuja a la derecha del panel
+                                fontFamily: "'Poppins', sans-serif",
+                                fontSize: "0.85rem",
+                                color: "rgba(0,0,0,0.55)",
+                                textAlign: "center",
+                                mt: 0.5,
+                                mb: 1,
+                            }}
+                        >
+                            Calidad en cada prenda.
+                        </Typography>
+
+                        {/* Video */}
+                        <Box
+                            sx={{
+                                mt: 1,
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',

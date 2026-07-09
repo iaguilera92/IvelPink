@@ -118,7 +118,7 @@ const Cargando = () => {
                 sx={{
                     position: 'absolute',
                     inset: 0,
-                    backgroundImage: isMobile ? 'url(fondo-ivelpink-mobile.webp)' : 'url(footer-ivelpink.avif)',
+                    backgroundImage: isMobile ? 'url(fondo-ivelpink-mobile.webp)' : 'url(fondo-footer.avif)',
                     backgroundSize: 'cover',
                     backgroundPosition: { xs: 'center 100%', md: 'center 100%' },
                     backgroundRepeat: 'no-repeat',
@@ -181,7 +181,7 @@ const Cargando = () => {
                         style={{ position: 'relative', zIndex: 2 }}
                     >
                         <img
-                            src="/logo-ivelpink.png"
+                            src="/logo-oficial.png"
                             alt="Logo"
                             style={{
                                 width: 245,

@@ -165,12 +165,7 @@ const Catalogo = () => {
               py: 14,
               px: 1.2,
               position: "relative",
-              backgroundImage: isMobile
-                ? "url(fondo-blizz-ivelpink.webp)"
-                : "url(fondo-blizz-ivelpink.webp)",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
+              background: "#fef0f5",
             }}
           >
 
@@ -209,7 +204,7 @@ const Catalogo = () => {
                           sx={{
                             width: 16,
                             height: 16,
-                            filter: 'invert(1)',
+                            filter: 'none',
                             alignSelf: 'center',
                             mt: 0,
                           }}
@@ -221,7 +216,7 @@ const Catalogo = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'center',
-                            color: 'white',
+                            color: '#2a1520',
                             fontFamily: '"Segoe UI", sans-serif',
                             lineHeight: 1.2,
                           }}
@@ -262,10 +257,10 @@ const Catalogo = () => {
                                   if (swiper) swiper.slideNext();
                                 }}
                                 sx={{
-                                  color: "white",
+                                  color: "#d4477a",
                                   boxShadow: "none",
                                   padding: 0.5,
-                                  "&:hover": { backgroundColor: "rgba(0,0,0,0.4)" },
+                                  "&:hover": { backgroundColor: "rgba(212,71,122,0.1)" },
                                 }}
                               >
                                 <ArrowForwardIcon fontSize="large" sx={{ fontSize: "24px" }} />
@@ -368,7 +363,7 @@ const Catalogo = () => {
                           sx={{
                             fontWeight: "bold",
                             fontSize: "1rem",
-                            color: "white",
+                            color: "#2a1520",
                             ml: 1,
                           }}
                         >
@@ -404,10 +399,10 @@ const Catalogo = () => {
                                   if (swiper) swiper.slideNext();
                                 }}
                                 sx={{
-                                  color: "white",
+                                  color: "#d4477a",
                                   boxShadow: "none",
                                   padding: 0.5,
-                                  "&:hover": { backgroundColor: "rgba(0,0,0,0.4)" },
+                                  "&:hover": { backgroundColor: "rgba(212,71,122,0.1)" },
                                 }}
                               >
                                 <ArrowForwardIcon fontSize="large" sx={{ fontSize: "24px" }} />

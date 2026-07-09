@@ -10,7 +10,7 @@ function Home({ informationsRef, setVideoReady }) {
     return (
         <Box>
             <Hero informationsRef={informationsRef} setVideoReady={setVideoReady} />
-            <Box>
+            <Box id="features-section">
                 <Features videoReady={showApp} informationsRef={informationsRef} />
             </Box>
         </Box>

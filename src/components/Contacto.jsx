@@ -8,7 +8,7 @@ import { MapContainer, TileLayer, Marker, useMapEvent } from "react-leaflet";
 import L from "leaflet";
 import ContactoForm from './ContactoForm';
 
-const finalPosition = [-33.435054, -70.688067];
+const finalPosition = [-33.3967, -70.7267];
 
 const letterVariants = {
   hidden: { opacity: 0, x: -20 },
@@ -177,7 +177,7 @@ function Contacto() {
                   animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                   transition={{ delay: 0.3 }}
                   style={{
-                    color: "rgb(155 34 97)",
+                    color: "#38BDF8",
                     fontWeight: "bold",
                     fontSize: isMobile ? "1.3rem" : "1.3rem",
                     display: "inline-block",

@@ -177,7 +177,7 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
       >
         <Box
           sx={{
-            backgroundColor: "#c62828",
+            backgroundColor: "#d4477a",
             height: { xs: 30, sm: 32 },
             px: 2,
             display: "flex",
@@ -274,7 +274,7 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
                       style={{ cursor: "pointer" }}
                     >
                       <motion.img
-                        src="/logo-ivelpink.png"
+                        src="/logo-oficial.png"
                         alt="Logo"
                         onClick={LogoInicio}
                         initial={{ opacity: 0, x: -200 }}
@@ -467,7 +467,7 @@ function Navbar({ contactoRef, informationsRef, videoReady }) {
                   <Box sx={{ display: "flex", alignItems: "center", mb: 0 }}>
                     <Box
                       component="img"
-                      src="/logo-ivelpink.png"
+                      src="/logo-oficial.png"
                       alt="Bienvenidos"
                       sx={{
                         width: 110,

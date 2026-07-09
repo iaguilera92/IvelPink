@@ -31,7 +31,7 @@ const Evidencias = () => {
             transition: { delay: 0.4 + i * 0.04 }, // puedes ajustar el tiempo
         }),
     };
-    const textoAnimado = "Nuestros trabajos";
+    const textoAnimado = "Así trabajamos";
     const handleSnackbarClose = (_, reason) => {
         if (reason === 'clickaway') return;
         setSnackbarOpen(false);
@@ -87,7 +87,7 @@ const Evidencias = () => {
     }, [imagenInView]);
 
     return (
-        <Box sx={{ width: '100%', position: 'relative', mt: '-80px' }}>
+        <Box sx={{ width: '100%', position: 'relative', mt: { xs: 0, md: '-80px' } }}>
             {/* Sección 1 */}
 
             {/* Contenedor con el texto en movimiento */}
@@ -96,11 +96,7 @@ const Evidencias = () => {
                     position: 'relative',
                     height: isMobile ? '60vh' : '40vh',
                     pt: { xs: 8, sm: 10 },
-                    backgroundImage: `url('fondo-areas1.avif')`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundAttachment: 'scroll',
-                    backgroundRepeat: 'no-repeat',
+                    background: '#fef0f5',
                     zIndex: 1, // importante para layering
                 }}
             >
@@ -112,13 +108,13 @@ const Evidencias = () => {
                         top: '30px',
                         left: 0,
                         right: 0,
-                        zIndex: 2,
+                        zIndex: 4,
                     }}
                 >
                     <motion.div
                         initial={{ x: '100vw' }}
                         animate={{ x: '-100%' }}
-                        transition={{ repeat: Infinity, duration: 4, ease: 'linear' }}
+                        transition={{ repeat: Infinity, duration: 8, ease: 'linear' }}
                         style={{
                             display: 'inline-block',
                             whiteSpace: 'nowrap',
@@ -128,13 +124,13 @@ const Evidencias = () => {
                             sx={{
                                 fontSize: { xs: '2.2rem', sm: '2.8rem', md: '3.5rem' },
                                 fontWeight: 600,
-                                color: 'white',
+                                color: '#3a1028',
                                 fontFamily: `'Montserrat', 'Segoe UI', sans-serif`,
-                                textShadow: '1px 1px 4px rgba(0,0,0,0.2)',
+                                textShadow: 'none',
                                 px: 4,
                             }}
                         >
-                            Tu marca, tan única como un {' '}<span style={{ color: '#99D7F2' }}>tulipán entre rosas.</span>
+                            Tu marca, tan única como un {' '}<span style={{ color: '#d4477a' }}>tulipán entre rosas.</span>
 
                         </Typography>
                     </motion.div>
@@ -205,10 +201,7 @@ const Evidencias = () => {
             <Box
                 sx={{
                     position: 'relative',
-                    backgroundImage: `url('/fondo-blanco2.png')`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
+                    background: '#99D7F2',
                     pt: isMobile ? 0 : 0,
                     pb: 4,
                     px: { xs: 2, sm: 4 },
@@ -231,10 +224,7 @@ const Evidencias = () => {
                         clipPath: isMobile
                             ? "polygon(0 0, 50% 40%, 100% 0, 100% 100%, 0 100%)"
                             : "polygon(0 0, 50% 70%, 100% 0, 100% 100%, 0 100%)",
-                        backgroundImage: `url('/fondo-blanco2.png')`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
+                        background: '#99D7F2',
                         pointerEvents: 'none',
                     }}
                 />
@@ -251,7 +241,7 @@ const Evidencias = () => {
                         <Box
                             sx={{
                                 zIndex: 3,
-                                background: "#99D7F2",
+                                background: "linear-gradient(135deg, #3a1028 0%, #d4477a 100%)",
                                 borderRadius: 4,
                                 p: { xs: 2, sm: 4 },
                                 boxShadow: '0 8px 30px rgba(0, 0, 0, 0.25)',
@@ -260,60 +250,33 @@ const Evidencias = () => {
                             }}
                         >
                             <Typography
-                                variant="h4"
-                                gutterBottom
                                 component="div"
                                 sx={{
-                                    fontFamily: '"Poppins", sans-serif',
-                                    fontSize: { xs: "1.5rem", md: "2rem" },
-                                    paddingX: { xs: "10px", md: "30px" }, // 👈 mejor usar paddingX para izquierda y derecha
-                                    paddingY: { xs: "10px", md: "20px" }, // 👈 también puedes darle arriba/abajo si quieres más aire
-                                    letterSpacing: "3px",
-                                    my: 0,
-                                    display: "flex",
-                                    flexWrap: "wrap",
-                                    justifyContent: "center", // 👈 ahora el contenido dentro queda al centro
-                                    alignItems: "center",
-                                    backgroundColor: "transparent",
-                                    color: "white",
-                                    textAlign: "center", // 👈 adicional para asegurar texto centrado
+                                    fontFamily: "'Poppins', sans-serif",
+                                    fontWeight: 800,
+                                    fontSize: { xs: "1.6rem", md: "2.2rem" },
+                                    px: { xs: 1, md: 3 },
+                                    pt: { xs: 1.5, md: 2.5 },
+                                    pb: 0,
+                                    letterSpacing: "2px",
+                                    textAlign: "center",
+                                    color: "#ffffff",
+                                    textTransform: "uppercase",
                                 }}
                             >
-                                {/* Barra | café al inicio */}
-                                <motion.span
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={inView || hasAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                                    transition={{ delay: 0.3 }}
-                                    style={{
-                                        color: "#8B4513",
-                                        fontWeight: "bold",
-                                        marginRight: "4px",
-                                        marginTop: "-4px",
-                                        fontSize: "0.9em",
-                                        lineHeight: 1,
-                                        display: "inline-block",
-                                        transform: "translateY(2px)",
-                                    }}
-                                >
-                                    |
-                                </motion.span>
-
-                                {/* Texto animado letra por letra */}
-                                {textoAnimado.split("").map((char, i) => (
-                                    <motion.span
-                                        key={i}
-                                        custom={i}
-                                        variants={letterVariants}
-                                        initial="hidden"
-                                        animate={inView || hasAnimated ? "visible" : "hidden"}
-                                        style={{
-                                            display: "inline-block",
-                                            whiteSpace: "pre",
-                                        }}
-                                    >
-                                        {char}
-                                    </motion.span>
-                                ))}
+                                {textoAnimado}
+                            </Typography>
+                            <Typography
+                                sx={{
+                                    fontFamily: "'Albert Sans', sans-serif",
+                                    fontSize: { xs: "0.8rem", md: "0.95rem" },
+                                    color: "rgba(255,255,255,0.7)",
+                                    textAlign: "center",
+                                    mt: 0.5,
+                                    mb: 1,
+                                }}
+                            >
+                                Conoce nuestro proceso de confección
                             </Typography>
                             <Box
                                 ref={videoRef} // 🎯 lo ligamos al observer

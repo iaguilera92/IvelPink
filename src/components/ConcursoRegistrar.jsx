@@ -374,7 +374,7 @@ const ConcursoRegistrar = ({ open, onClose }) => {
 
                                 <Box
                                     component="img"
-                                    src="/logo-ivelpink.png"
+                                    src="/logo-oficial.png"
                                     alt="IvelPink"
                                     sx={{
                                         height: 28,
