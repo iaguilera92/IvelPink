@@ -10,6 +10,7 @@ import VerifiedRoundedIcon from "@mui/icons-material/VerifiedRounded";
 import Groups2RoundedIcon from "@mui/icons-material/Groups2Rounded";
 import LocalShippingRoundedIcon from "@mui/icons-material/LocalShippingRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+import PersonalizarBikini from "./PersonalizarBikini";
 
 const features = [
   { icon: <PrecisionManufacturingRoundedIcon />, label: "Producción\npor mayor" },
@@ -20,6 +21,7 @@ const features = [
 
 function Hero({ informationsRef, setVideoReady }) {
   const [showContent, setShowContent] = useState(false);
+  const [openPersonalizar, setOpenPersonalizar] = useState(false);
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -182,10 +184,7 @@ function Hero({ informationsRef, setVideoReady }) {
                   Solicitar Cotización
                 </Button>
                 <Button
-                  onClick={() => {
-                    const el = document.getElementById('features-section');
-                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }}
+                  onClick={() => setOpenPersonalizar(true)}
                   startIcon={<CheckroomRoundedIcon />}
                   sx={{
                     px: { xs: 1.5, sm: 3.5 },
@@ -207,7 +206,7 @@ function Hero({ informationsRef, setVideoReady }) {
                     },
                   }}
                 >
-                  Nuestros Trabajos
+                  Personaliza tu bikini
                 </Button>
               </Box>
             </motion.div>
@@ -287,6 +286,7 @@ function Hero({ informationsRef, setVideoReady }) {
         </Container>
       </Box>
 
+      <PersonalizarBikini open={openPersonalizar} onClose={() => setOpenPersonalizar(false)} />
     </Box>
   );
 }
